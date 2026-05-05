@@ -1,0 +1,134 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { AboutSectionHeader } from "@/components/about/AboutSectionHeader";
+import { aboutPageData } from "@/lib/about-page-data";
+import { cn } from "@/lib/utils";
+
+// Animation for the grid container
+const gridVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+  },
+};
+
+// Heavy, mechanical drop-in animation for each "steel plate"
+const plateVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.98 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1, 
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } 
+  },
+};
+
+export function HomeCharterSection() {
+  const { charter } = aboutPageData;
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-10%" });
+
+  return (
+    <section className="relative bg-background pt-16 pb-24 md:pt-32 lg:pb-40 overflow-hidden">
+      
+      {/* 1. STRUCTURAL BLUEPRINT BACKGROUND */}
+      <div className="absolute inset-0 z-0 pointer-events-none flex justify-center opacity-60">
+        <div 
+          className="absolute inset-0"
+          style={{ 
+            backgroundImage: `
+              linear-gradient(var(--iba-navy) 1px, transparent 1px), 
+              linear-gradient(90deg, var(--iba-navy) 1px, transparent 1px)
+            `,
+            backgroundSize: '120px 120px',
+            opacity: 0.03
+          }} 
+        />
+        {/* Faux Rivets/Nodes at Grid Intersections */}
+        <div 
+          className="absolute inset-0"
+          style={{ 
+            backgroundImage: `radial-gradient(circle at 0 0, var(--iba-navy) 2px, transparent 3px)`,
+            backgroundSize: '120px 120px',
+            opacity: 0.08
+          }} 
+        />
+      </div>
+
+      {/* HEADER CONTENT */}
+      <div className="relative z-10 mx-auto max-w-[90rem] px-5 sm:px-8 md:px-16 lg:px-20">
+        <AboutSectionHeader
+          variant="white"
+          waterNumber={charter.waterNumber}
+          badge={charter.badge}
+          kicker={charter.kicker}
+          title={
+            <>
+              {charter.headline}{" "}
+              <span className="text-iba-sky">
+                {charter.headlineAccent}
+              </span>
+            </>
+          }
+          lead={charter.intro}
+          className="mb-12 md:mb-16"
+        />
+
+        {/* 2. CREATIVE STRUCTURAL GRID (The "Steel Plates") */}
+        <motion.div 
+          ref={containerRef}
+          variants={gridVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="grid auto-rows-[180px] grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-16"
+        >
+          {charter.principles.map((label, idx) => {
+            // Create an irregular interlocking layout
+            // Make the 1st and 6th panels span two columns to look like heavy cross-beams
+            const isWide = idx === 0 || idx === 5 || idx === 8;
+            
+            return (
+              <motion.div
+                key={`principle-${idx}`}
+                variants={plateVariants}
+                className={cn(
+                  "group relative flex flex-col justify-between border border-iba-navy/20 bg-white p-6 md:p-8 transition-colors duration-300 hover:bg-iba-navy",
+                  isWide ? "md:col-span-2" : "col-span-1"
+                )}
+              >
+                {/* Structural Corner Joints (Crosshairs) */}
+                <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-iba-navy transition-colors group-hover:border-iba-sky" />
+                <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-iba-navy transition-colors group-hover:border-iba-sky" />
+                <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-iba-navy transition-colors group-hover:border-iba-sky" />
+                <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-iba-navy transition-colors group-hover:border-iba-sky" />
+
+                {/* Serial Number / Index */}
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs font-bold text-iba-navy/40 transition-colors group-hover:text-iba-sky">
+                    ID_0{idx + 1}
+                  </span>
+                  
+                  {/* Decorative Bolt Icon */}
+                  <span className="text-iba-navy/20 transition-colors group-hover:text-iba-sky/50 text-[10px]">
+                    ⬢
+                  </span>
+                </div>
+
+                {/* The Core Principle Text */}
+                <h3 className="font-sans text-2xl md:text-3xl font-black uppercase tracking-tight text-iba-navy transition-colors group-hover:text-white">
+                  {label}
+                </h3>
+
+                {/* Industrial Hover Sweep Effect (Slides in from the left) */}
+                <div className="absolute bottom-0 left-0 h-1 w-0 bg-iba-sky transition-all duration-500 ease-out group-hover:w-full" />
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </div>
+    </section>
+  );
+}

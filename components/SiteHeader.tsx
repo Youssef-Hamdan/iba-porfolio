@@ -1,0 +1,171 @@
+"use client";
+
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import { Menu, X, ArrowRight } from "lucide-react";
+import { BrandLogo } from "@/components/BrandLogo";
+
+const nav = [
+  { href: "/about", label: "À Propos" },
+  { href: "/projects", label: "Projets" },
+  { href: "/products", label: "Produits" },
+  { href: "/quotation", label: "Quotation" },
+];
+
+export function SiteHeader() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  // Utilisation de useScroll de Framer Motion pour des performances optimales
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() || 0;
+    
+    // Gérer l'ombre du header
+    if (latest > 20) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+
+    // Gérer l'apparition/disparition du header
+    // On cache si on descend (latest > previous) ET qu'on a dépassé 150px
+    if (latest > previous && latest > 150) {
+      setHidden(true);
+    } else {
+      // On affiche si on remonte
+      setHidden(false);
+    }
+  });
+
+  // Empêcher le scroll du body quand le menu mobile est ouvert
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [open]);
+
+  return (
+    <motion.header
+      // Animations de la position Y
+      variants={{
+        visible: { y: 0 },
+        hidden: { y: "-100%" },
+      }}
+      animate={hidden && !open ? "hidden" : "visible"} // Ne pas cacher si le menu mobile est ouvert
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      className={`fixed top-0 z-50 w-full border-b border-iba-navy/10 bg-white transition-shadow duration-300 ${
+        scrolled ? "shadow-sm" : "shadow-none"
+      }`}
+    >
+      <div
+        className={`relative mx-auto flex w-full max-w-[90rem] items-center transition-[padding] duration-300 ${
+          scrolled ? "py-0.5 sm:py-0" : "py-0.5 sm:py-0"
+        } px-5 pr-3 sm:px-8 sm:pr-4 md:px-16 lg:px-20`}
+      >
+        {/* Logo — gauche */}
+        <div className="flex min-w-0 flex-1 items-center justify-start">
+          <Link
+            href="/"
+            className="flex shrink-0 items-center leading-none transition-opacity hover:opacity-90"
+            aria-label="International Business Alliance"
+          >
+            <BrandLogo
+              priority
+              className="h-9 w-auto max-w-[min(52vw,220px)] object-contain object-left sm:h-10 sm:max-w-[260px] md:h-11 lg:h-12"
+            />
+          </Link>
+        </div>
+
+        {/* Navigation — centrée (colonnes flex-1 égales de chaque côté) */}
+        <nav
+          className="hidden shrink-0 items-center gap-6 whitespace-nowrap md:flex lg:gap-10"
+          aria-label="Principal"
+        >
+          {nav.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="group relative text-sm font-bold uppercase tracking-widest text-iba-navy transition-colors hover:text-iba-blue"
+            >
+              {item.label}
+              <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-iba-blue transition-all duration-300 ease-out group-hover:w-full" />
+            </Link>
+          ))}
+        </nav>
+
+        {/* Menu mobile puis contact — aligné au bord droit de la zone header */}
+        <div className="flex min-w-0 flex-1 items-center justify-end gap-2 sm:gap-3">
+          <button
+            type="button"
+            className="group relative z-50 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-iba-navy/5 text-iba-navy transition-colors hover:bg-iba-navy hover:text-white md:hidden"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+
+          <Link
+            href="/contact"
+            className="hidden shrink-0 items-center justify-center rounded-md bg-iba-navy px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-iba-blue md:inline-flex"
+          >
+            Nous Contacter
+          </Link>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="absolute inset-x-0 top-full border-b border-iba-navy/10 bg-white px-4 py-4 shadow-md sm:px-6 md:hidden"
+          >
+            <nav className="flex flex-col gap-2" aria-label="Mobile">
+              {nav.map((item, i) => (
+                <motion.div
+                  key={item.href}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1, duration: 0.3 }}
+                >
+                  <Link
+                    href={item.href}
+                    className="group flex items-center justify-between rounded-2xl px-4 py-4 text-xl font-black uppercase tracking-wide text-iba-navy transition-colors hover:bg-iba-navy/5 hover:text-iba-blue"
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                    <ArrowRight className="h-5 w-5 opacity-0 transition-all group-hover:translate-x-2 group-hover:opacity-100" />
+                  </Link>
+                </motion.div>
+              ))}
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: nav.length * 0.1, duration: 0.3 }}
+                className="mt-6 border-t border-iba-navy/10 pt-6"
+              >
+                <Link
+                  href="/contact"
+                  onClick={() => setOpen(false)}
+                  className="flex w-full items-center justify-center rounded-md bg-iba-navy px-6 py-4 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-iba-blue"
+                >
+                  Nous Contacter
+                </Link>
+              </motion.div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
+  );
+}
