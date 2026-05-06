@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import {
   Search,
   Plus,
@@ -12,29 +13,57 @@ import {
   Mail,
   Phone,
   CheckCircle2,
+  ArrowRight,
 } from "lucide-react";
+import { SectionWave } from "@/components/SectionWave";
 import { cn } from "@/lib/utils";
+import type { QuoteFieldKey } from "@/app/api/quote/route";
 
 // Importer vos données de produits existantes
-import { allProducts, productCategories } from "@/lib/products"; 
+import { allProducts, productCategories } from "@/lib/products";
+
+type FieldErrors = Partial<Record<QuoteFieldKey, string>>;
 
 type SelectedItem = {
   id: string;
   name: string;
   categoryLabel: string;
   quantity: number;
-}
+};
+
+const fade = {
+  initial: { opacity: 0, y: 30 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-100px" },
+  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
+};
 
 export default function QuotePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [deliveryHint, setDeliveryHint] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
   // Form State
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
+
+  const clearFieldError = (key: QuoteFieldKey) => {
+    setFieldErrors((prev) => {
+      if (!prev[key]) return prev;
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
+  };
+
+  const fieldBorderClass = (hasError: boolean) =>
+    cn(
+      hasError &&
+        "border-red-400 focus:border-red-500 focus:ring-red-500/40 aria-[invalid=true]:border-red-400",
+    );
 
   // Filtrer les produits pour la barre de recherche
   const searchResults = useMemo(() => {
@@ -59,6 +88,7 @@ export default function QuotePage() {
     }
     setSearchQuery("");
     setIsSearchFocused(false);
+    clearFieldError("items");
   };
 
   // Modifier la quantité
@@ -82,6 +112,7 @@ export default function QuotePage() {
     e.preventDefault();
     setSubmitError(null);
     setDeliveryHint(null);
+    setFieldErrors({});
     setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
@@ -103,9 +134,13 @@ export default function QuotePage() {
       const json = (await res.json().catch(() => ({}))) as {
         error?: string;
         deliveryHint?: string;
+        errors?: FieldErrors;
       };
 
       if (!res.ok) {
+        if (json.errors && typeof json.errors === "object") {
+          setFieldErrors(json.errors);
+        }
         setSubmitError(
           typeof json.error === "string"
             ? json.error
@@ -114,6 +149,7 @@ export default function QuotePage() {
         return;
       }
 
+      setFieldErrors({});
       setDeliveryHint(
         typeof json.deliveryHint === "string" ? json.deliveryHint : null,
       );
@@ -128,71 +164,59 @@ export default function QuotePage() {
   return (
     <main className="flex min-h-screen flex-col bg-background selection:bg-iba-sky selection:text-white">
       
-      {/* 1. ARCHITECTURAL HERO SECTION */}
-      <section className="relative overflow-hidden bg-iba-navy pt-[calc(6rem+2rem)] pb-16 md:pt-[calc(8rem+2rem)] md:pb-24 text-white border-b-4 border-iba-sky">
-        
-        {/* Blueprint Background */}
-        <div className="absolute inset-0 z-0 opacity-[0.05] mix-blend-screen"
-          style={{ 
-            backgroundImage: `linear-gradient(rgba(255, 255, 255, 1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 1) 1px, transparent 1px)`,
-            backgroundSize: '40px 40px' 
-          }} 
+      {/* 1. Hero — même logique que Projects : ciel, grille marine, accroche en bandeau tiers (max-w-4xl + paragraphe bordé) */}
+      <section className="relative overflow-hidden bg-iba-sky pt-[calc(6rem+2rem)] pb-24 text-white md:pt-[calc(8rem+2rem)] md:pb-32">
+        <div className="pointer-events-none absolute -right-24 top-1/4 h-[480px] w-[480px] rounded-full bg-white/[0.06] blur-[100px]" aria-hidden />
+
+        <div
+          className="absolute inset-0 z-0 opacity-[0.04]"
+          style={{
+            backgroundImage: `linear-gradient(var(--iba-navy) 1px, transparent 1px), linear-gradient(90deg, var(--iba-navy) 1px, transparent 1px)`,
+            backgroundSize: "40px 40px",
+          }}
         />
-        
+
         <div className="relative z-10 mx-auto max-w-[90rem] px-5 sm:px-8 md:px-16 lg:px-20">
-          {/* Règle des tiers : ~2/3 titre (poids visuel gauche), ~1/3 texte d’appui */}
-          <div className="grid min-h-[min(52vh,36rem)] grid-cols-1 items-end gap-10 pb-2 lg:grid-cols-3 lg:gap-x-12 lg:gap-y-14">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="relative lg:col-span-2"
+          <motion.div {...fade} className="max-w-4xl">
+            <div
+              className="absolute -left-6 -top-10 -z-10 select-none text-[8rem] font-black leading-none text-white/[0.06] md:-left-10 md:-top-16 md:text-[12rem]"
+              aria-hidden
             >
-              <div className="absolute -left-6 -top-10 -z-10 select-none text-[8rem] font-black leading-none text-transparent md:-left-10 md:-top-16 md:text-[12rem] [-webkit-text-stroke:2px_rgba(255,255,255,0.05)]">
-                REQ
-              </div>
+              REQ
+            </div>
 
-              <div className="mb-6 flex items-center gap-4">
-                <span className="flex items-center gap-2 rounded-sm border border-iba-sky/30 bg-iba-sky/10 px-4 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-iba-sky backdrop-blur-md">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-iba-sky" />
-                  Formulaire d&apos;acquisition
-                </span>
-                <div className="h-px flex-1 bg-gradient-to-r from-iba-sky/30 to-transparent lg:max-w-[66%]" />
-              </div>
+            <div className="mb-6 flex items-center gap-4">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md">
+                <span className="h-1.5 w-1.5 rounded-full bg-iba-navy shadow-[0_0_8px_rgba(40,37,97,0.5)]" />
+                Formulaire d&apos;acquisition
+              </span>
+              <div className="h-px flex-1 bg-gradient-to-r from-iba-navy/35 to-transparent" aria-hidden />
+            </div>
 
-              <h1 className="mt-4 text-5xl font-black uppercase leading-[0.95] tracking-tighter text-white sm:text-6xl md:text-7xl xl:text-8xl">
-                Demande de{" "}
-                <span className="bg-gradient-to-r from-white via-iba-sky to-iba-blue bg-clip-text text-transparent">
-                  Devis
-                </span>
-              </h1>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="lg:col-span-1 lg:self-end lg:border-l lg:border-iba-sky/25 lg:pl-8"
-            >
-              <p className="max-w-md text-base font-medium leading-relaxed text-white/70 md:text-lg">
-                Configurez vos besoins en matériaux pour votre prochain chantier. Notre équipe technique vous fournira une cotation précise dans les plus brefs délais.
-              </p>
-            </motion.div>
-          </div>
+            <h1 className="mt-4 text-5xl font-black uppercase leading-[0.95] tracking-tighter text-white sm:text-6xl md:text-8xl">
+              Demande de{" "}
+              <span className="text-iba-navy">devis</span>
+            </h1>
+            <p className="mt-8 max-w-2xl border-l-2 border-iba-navy pl-6 text-lg font-medium leading-relaxed text-white/85 md:text-xl">
+              Configurez vos besoins en matériaux pour votre prochain chantier. Notre équipe technique vous fournira une cotation précise dans les plus brefs délais.
+            </p>
+          </motion.div>
         </div>
+        <SectionWave edge="bottom" fillClassName="fill-background" heightClassName="h-12 md:h-16" />
       </section>
 
-      {/* 2. THE QUOTATION FORM (TECHNICAL MANIFEST) */}
-      <section className="relative bg-background py-16 md:py-24">
-        <div className="absolute inset-0 z-0 opacity-40 pointer-events-none"
-          style={{ 
+      {/* 2. THE QUOTATION FORM (TECHNICAL MANIFEST) — ligne verticale au centre comme Projects */}
+      <section className="relative bg-background py-16 md:py-24 lg:py-32">
+        <div className="absolute left-1/2 top-0 bottom-0 hidden w-px -translate-x-1/2 bg-iba-sky/15 lg:block" aria-hidden />
+
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.05]"
+          style={{
             backgroundImage: `radial-gradient(circle at 0 0, var(--iba-navy) 1px, transparent 2px)`,
-            backgroundSize: '40px 40px',
-            opacity: 0.05
-          }} 
+            backgroundSize: "40px 40px",
+          }}
         />
 
-        <div className="relative z-10 mx-auto max-w-[90rem] px-5 sm:px-8 md:px-12 lg:px-20">
+        <div className="relative z-10 mx-auto max-w-[90rem] px-5 sm:px-8 md:px-16 lg:px-20">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-16">
           {isSuccess ? (
             <motion.div 
@@ -205,14 +229,14 @@ export default function QuotePage() {
                 Demande Transmise
               </h2>
               <p className="max-w-lg text-lg font-medium text-iba-navy/70">
-                Votre manifeste a été envoyé à notre bureau d'études. Un ingénieur commercial prendra contact avec vous sous 24h ouvrées.
+                Votre manifeste a été envoyé à notre bureau d&apos;études. Un ingénieur commercial prendra contact avec vous sous 24h ouvrées.
               </p>
               {deliveryHint ? (
                 <p className="mt-6 max-w-xl rounded-sm border border-amber-200 bg-amber-50 px-4 py-3 text-left text-sm text-amber-950">
                   {deliveryHint}
                 </p>
               ) : null}
-              <button onClick={() => { setIsSuccess(false); setSelectedItems([]); setSubmitError(null); setDeliveryHint(null); }} className="mt-8 font-mono text-sm font-bold uppercase tracking-widest text-iba-sky hover:text-iba-navy transition-colors">
+              <button onClick={() => { setIsSuccess(false); setSelectedItems([]); setSubmitError(null); setDeliveryHint(null); setFieldErrors({}); }} className="mt-8 font-mono text-sm font-bold uppercase tracking-widest text-iba-sky hover:text-iba-navy transition-colors">
                 Nouveau Devis →
               </button>
             </motion.div>
@@ -235,32 +259,107 @@ export default function QuotePage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/60">Nom complet *</label>
+                    <label htmlFor="quote-name" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/60">Nom complet *</label>
                     <div className="relative">
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-iba-navy/40" />
-                      <input required name="name" type="text" className="w-full border border-iba-navy/20 bg-background pl-12 pr-4 py-3 font-medium text-iba-navy placeholder:text-iba-navy/30 focus:border-iba-sky focus:outline-none focus:ring-1 focus:ring-iba-sky transition-all" placeholder="Jean Dupont" />
+                      <input
+                        id="quote-name"
+                        name="name"
+                        type="text"
+                        required
+                        autoComplete="name"
+                        aria-invalid={fieldErrors.name ? true : undefined}
+                        aria-describedby={fieldErrors.name ? "quote-name-error" : undefined}
+                        onChange={() => clearFieldError("name")}
+                        className={cn(
+                          "w-full border border-iba-navy/20 bg-background pl-12 pr-4 py-3 font-medium text-iba-navy placeholder:text-iba-navy/30 focus:border-iba-sky focus:outline-none focus:ring-1 focus:ring-iba-sky transition-all",
+                          fieldBorderClass(!!fieldErrors.name),
+                        )}
+                        placeholder="Jean Dupont"
+                      />
                     </div>
+                    {fieldErrors.name ? (
+                      <p id="quote-name-error" className="text-sm font-medium text-red-600" role="alert">
+                        {fieldErrors.name}
+                      </p>
+                    ) : null}
                   </div>
                   <div className="space-y-2">
-                    <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/60">Entreprise / Projet</label>
+                    <label htmlFor="quote-company" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/60">Entreprise / Projet</label>
                     <div className="relative">
                       <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-iba-navy/40" />
-                      <input name="company" type="text" className="w-full border border-iba-navy/20 bg-background pl-12 pr-4 py-3 font-medium text-iba-navy placeholder:text-iba-navy/30 focus:border-iba-sky focus:outline-none focus:ring-1 focus:ring-iba-sky transition-all" placeholder="Construction S.A." />
+                      <input
+                        id="quote-company"
+                        name="company"
+                        type="text"
+                        autoComplete="organization"
+                        aria-invalid={fieldErrors.company ? true : undefined}
+                        aria-describedby={fieldErrors.company ? "quote-company-error" : undefined}
+                        onChange={() => clearFieldError("company")}
+                        className={cn(
+                          "w-full border border-iba-navy/20 bg-background pl-12 pr-4 py-3 font-medium text-iba-navy placeholder:text-iba-navy/30 focus:border-iba-sky focus:outline-none focus:ring-1 focus:ring-iba-sky transition-all",
+                          fieldBorderClass(!!fieldErrors.company),
+                        )}
+                        placeholder="Construction S.A."
+                      />
                     </div>
+                    {fieldErrors.company ? (
+                      <p id="quote-company-error" className="text-sm font-medium text-red-600" role="alert">
+                        {fieldErrors.company}
+                      </p>
+                    ) : null}
                   </div>
                   <div className="space-y-2">
-                    <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/60">Adresse Email *</label>
+                    <label htmlFor="quote-email" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/60">Adresse Email *</label>
                     <div className="relative">
                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-iba-navy/40" />
-                      <input required name="email" type="email" className="w-full border border-iba-navy/20 bg-background pl-12 pr-4 py-3 font-medium text-iba-navy placeholder:text-iba-navy/30 focus:border-iba-sky focus:outline-none focus:ring-1 focus:ring-iba-sky transition-all" placeholder="contact@entreprise.com" />
+                      <input
+                        id="quote-email"
+                        required
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        aria-invalid={fieldErrors.email ? true : undefined}
+                        aria-describedby={fieldErrors.email ? "quote-email-error" : undefined}
+                        onChange={() => clearFieldError("email")}
+                        className={cn(
+                          "w-full border border-iba-navy/20 bg-background pl-12 pr-4 py-3 font-medium text-iba-navy placeholder:text-iba-navy/30 focus:border-iba-sky focus:outline-none focus:ring-1 focus:ring-iba-sky transition-all",
+                          fieldBorderClass(!!fieldErrors.email),
+                        )}
+                        placeholder="contact@entreprise.com"
+                      />
                     </div>
+                    {fieldErrors.email ? (
+                      <p id="quote-email-error" className="text-sm font-medium text-red-600" role="alert">
+                        {fieldErrors.email}
+                      </p>
+                    ) : null}
                   </div>
                   <div className="space-y-2">
-                    <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/60">Téléphone *</label>
+                    <label htmlFor="quote-phone" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/60">Téléphone *</label>
                     <div className="relative">
                       <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-iba-navy/40" />
-                      <input required name="phone" type="tel" className="w-full border border-iba-navy/20 bg-background pl-12 pr-4 py-3 font-medium text-iba-navy placeholder:text-iba-navy/30 focus:border-iba-sky focus:outline-none focus:ring-1 focus:ring-iba-sky transition-all" placeholder="+243 ..." />
+                      <input
+                        id="quote-phone"
+                        required
+                        name="phone"
+                        type="tel"
+                        autoComplete="tel"
+                        aria-invalid={fieldErrors.phone ? true : undefined}
+                        aria-describedby={fieldErrors.phone ? "quote-phone-error" : undefined}
+                        onChange={() => clearFieldError("phone")}
+                        className={cn(
+                          "w-full border border-iba-navy/20 bg-background pl-12 pr-4 py-3 font-medium text-iba-navy placeholder:text-iba-navy/30 focus:border-iba-sky focus:outline-none focus:ring-1 focus:ring-iba-sky transition-all",
+                          fieldBorderClass(!!fieldErrors.phone),
+                        )}
+                        placeholder="+243 ..."
+                      />
                     </div>
+                    {fieldErrors.phone ? (
+                      <p id="quote-phone-error" className="text-sm font-medium text-red-600" role="alert">
+                        {fieldErrors.phone}
+                      </p>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -280,15 +379,29 @@ export default function QuotePage() {
 
                 {/* SEARCH BAR (Product Selector) */}
                 <div className="relative mb-8 z-50">
-                  <label className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/60">Rechercher et ajouter un produit</label>
+                  <label htmlFor="quote-product-search" className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/60">Rechercher et ajouter un produit</label>
+                  {fieldErrors.items ? (
+                    <p id="quote-items-error" className="mb-3 text-sm font-medium text-red-600" role="alert">
+                      {fieldErrors.items}
+                    </p>
+                  ) : null}
                   <div className="relative">
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-iba-sky" />
                     <input 
+                      id="quote-product-search"
                       type="text" 
                       value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onChange={(e) => {
+                        setSearchQuery(e.target.value);
+                        clearFieldError("items");
+                      }}
                       onFocus={() => setIsSearchFocused(true)}
-                      className="w-full border-2 border-iba-navy bg-background pl-12 pr-4 py-4 font-bold text-iba-navy placeholder:text-iba-navy/30 focus:border-iba-sky focus:outline-none transition-all" 
+                      aria-invalid={fieldErrors.items ? true : undefined}
+                      aria-describedby={fieldErrors.items ? "quote-items-error" : undefined}
+                      className={cn(
+                        "w-full border-2 border-iba-navy bg-background pl-12 pr-4 py-4 font-bold text-iba-navy placeholder:text-iba-navy/30 focus:border-iba-sky focus:outline-none transition-all",
+                        fieldBorderClass(!!fieldErrors.items),
+                      )}
                       placeholder="Ex: Tôle IBR, Ciment, Sikalite..." 
                     />
                   </div>
@@ -384,8 +497,25 @@ export default function QuotePage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/60">Informations supplémentaires (Lieu de livraison, délais, contraintes)</label>
-                  <textarea name="message" rows={5} className="w-full border border-iba-navy/20 bg-background p-4 font-medium text-iba-navy placeholder:text-iba-navy/30 focus:border-iba-sky focus:outline-none focus:ring-1 focus:ring-iba-sky transition-all resize-none" placeholder="Veuillez préciser le lieu exact de livraison à Kinshasa et toute contrainte d'accès pour les camions lourds..."></textarea>
+                  <label htmlFor="quote-message" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/60">Informations supplémentaires (Lieu de livraison, délais, contraintes)</label>
+                  <textarea
+                    id="quote-message"
+                    name="message"
+                    rows={5}
+                    aria-invalid={fieldErrors.message ? true : undefined}
+                    aria-describedby={fieldErrors.message ? "quote-message-error" : undefined}
+                    onChange={() => clearFieldError("message")}
+                    className={cn(
+                      "w-full border border-iba-navy/20 bg-background p-4 font-medium text-iba-navy placeholder:text-iba-navy/30 focus:border-iba-sky focus:outline-none focus:ring-1 focus:ring-iba-sky transition-all resize-none",
+                      fieldBorderClass(!!fieldErrors.message),
+                    )}
+                    placeholder="Veuillez préciser le lieu exact de livraison à Kinshasa et toute contrainte d&apos;accès pour les camions lourds..."
+                  />
+                  {fieldErrors.message ? (
+                    <p id="quote-message-error" className="text-sm font-medium text-red-600" role="alert">
+                      {fieldErrors.message}
+                    </p>
+                  ) : null}
                 </div>
               </div>
 
@@ -398,7 +528,7 @@ export default function QuotePage() {
                   {submitError}
                 </div>
               ) : null}
-              <div className="flex justify-end lg:justify-start lg:pl-[11.11%]">
+              <div className="flex justify-end lg:justify-start">
                 <button
                   type="submit"
                   disabled={isSubmitting || selectedItems.length === 0}
@@ -462,6 +592,37 @@ export default function QuotePage() {
             </>
           )}
           </div>
+        </div>
+      </section>
+
+      {/* 3. CTA — aligné sur Projects */}
+      <section className="relative overflow-hidden bg-iba-sky py-24 text-center text-white">
+        <div
+          className="absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage: `url(https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop)`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+          aria-hidden
+        />
+        <div className="relative z-10 mx-auto max-w-3xl px-5">
+          <h2 className="mb-6 text-3xl font-black uppercase tracking-tight md:text-5xl">
+            Une question avant{" "}
+            <span className="text-iba-navy">d&apos;envoyer</span> ?
+          </h2>
+          <p className="mb-10 text-lg font-medium text-white/90">
+            Notre équipe peut vous guider sur les matériaux et les délais avant de finaliser votre manifeste.
+          </p>
+          <Link
+            href="/contact"
+            className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-iba-navy px-8 py-4 text-sm font-bold uppercase tracking-widest text-white shadow-lg shadow-iba-navy/25 transition-all hover:bg-white hover:text-iba-navy"
+          >
+            <span className="relative z-10 flex items-center">
+              Contacter IBA
+              <ArrowRight className="ml-3 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+            </span>
+          </Link>
         </div>
       </section>
     </main>

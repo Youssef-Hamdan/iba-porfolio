@@ -18,6 +18,132 @@ export type QuoteLine = {
   quantity: number;
 };
 
+/** Clés renvoyées avec les messages de validation (voir POST /api/quote → `errors`). */
+export type QuoteFieldKey =
+  | "name"
+  | "email"
+  | "company"
+  | "phone"
+  | "message"
+  | "items";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validateQuoteInput(o: Record<string, unknown>): {
+  errors: Partial<Record<QuoteFieldKey, string>>;
+  parsed?: {
+    name: string;
+    email: string;
+    company: string;
+    phone: string;
+    message: string;
+    items: QuoteLine[];
+  };
+} {
+  const errors: Partial<Record<QuoteFieldKey, string>> = {};
+
+  const name = typeof o.name === "string" ? o.name.trim() : "";
+  if (typeof o.name !== "string") {
+    errors.name = "Le format du nom est invalide.";
+  } else if (!name) {
+    errors.name = "Le nom complet est requis.";
+  } else if (name.length > 200) {
+    errors.name = "Le nom ne doit pas dépasser 200 caractères.";
+  }
+
+  const email = typeof o.email === "string" ? o.email.trim() : "";
+  if (typeof o.email !== "string") {
+    errors.email = "Le format de l’e-mail est invalide.";
+  } else if (!email) {
+    errors.email = "L’adresse e-mail est requise.";
+  } else if (!EMAIL_RE.test(email) || email.length > 320) {
+    errors.email = "Saisissez une adresse e-mail valide.";
+  }
+
+  const company = typeof o.company === "string" ? o.company.trim() : "";
+  if (typeof o.company !== "string") {
+    errors.company = "Le format du champ entreprise est invalide.";
+  } else if (company.length > 200) {
+    errors.company = "Entreprise / projet : maximum 200 caractères.";
+  }
+
+  const phone = typeof o.phone === "string" ? o.phone.trim() : "";
+  if (typeof o.phone !== "string") {
+    errors.phone = "Le format du téléphone est invalide.";
+  } else if (!phone) {
+    errors.phone = "Le numéro de téléphone est requis.";
+  } else if (phone.length > 80) {
+    errors.phone = "Le téléphone ne doit pas dépasser 80 caractères.";
+  }
+
+  let message = "";
+  if (typeof o.message === "string") {
+    message = o.message.trim().slice(0, 8000);
+  } else if (o.message !== undefined && o.message !== null) {
+    errors.message = "Le format du message est invalide.";
+  }
+
+  const itemsRaw = Array.isArray(o.items) ? o.items : null;
+  if (!itemsRaw) {
+    errors.items = "La liste des produits doit être un tableau.";
+  } else if (itemsRaw.length === 0) {
+    errors.items = "Ajoutez au moins un produit au manifeste (entre 1 et 50 lignes).";
+  } else if (itemsRaw.length > 50) {
+    errors.items = "Le manifeste ne peut pas dépasser 50 produits.";
+  }
+
+  const items: QuoteLine[] = [];
+  if (itemsRaw && itemsRaw.length > 0 && itemsRaw.length <= 50) {
+    for (const raw of itemsRaw) {
+      if (!raw || typeof raw !== "object") {
+        errors.items =
+          "Une ou plusieurs lignes produit sont invalides (structure attendue : id, nom, catégorie, quantité).";
+        break;
+      }
+      const it = raw as Record<string, unknown>;
+      const id = typeof it.id === "string" ? it.id.trim().slice(0, 80) : "";
+      const pname = typeof it.name === "string" ? it.name.trim().slice(0, 300) : "";
+      const categoryLabel =
+        typeof it.categoryLabel === "string" ? it.categoryLabel.trim().slice(0, 120) : "";
+      const qty =
+        typeof it.quantity === "number" && Number.isFinite(it.quantity)
+          ? Math.floor(it.quantity)
+          : NaN;
+      if (!id || !pname || !Number.isFinite(qty) || qty < 1 || qty > 999_999) {
+        errors.items =
+          "Chaque ligne doit avoir un identifiant, un nom et une quantité entre 1 et 999 999.";
+        break;
+      }
+      items.push({
+        id,
+        name: pname,
+        categoryLabel: categoryLabel || "—",
+        quantity: qty,
+      });
+    }
+    if (!errors.items && items.length !== itemsRaw.length) {
+      errors.items = "Impossible de valider toutes les lignes du manifeste.";
+    }
+  }
+
+  const hasErrors = Object.keys(errors).length > 0;
+  if (hasErrors) {
+    return { errors };
+  }
+
+  return {
+    errors: {},
+    parsed: {
+      name,
+      email,
+      company,
+      phone,
+      message,
+      items,
+    },
+  };
+}
+
 function escapeHtml(text: string): string {
   return text
     .replace(/&/g, "&amp;")
@@ -91,55 +217,18 @@ export async function POST(request: Request) {
   }
 
   const o = body as Record<string, unknown>;
-  const name = typeof o.name === "string" ? o.name.trim() : "";
-  const email = typeof o.email === "string" ? o.email.trim() : "";
-  const company = typeof o.company === "string" ? o.company.trim() : "";
-  const phone = typeof o.phone === "string" ? o.phone.trim() : "";
-  const message = typeof o.message === "string" ? o.message.trim().slice(0, 8000) : "";
-  const itemsRaw = Array.isArray(o.items) ? o.items : [];
-
-  if (!name || name.length > 200) {
-    return NextResponse.json({ error: "Nom invalide." }, { status: 400 });
-  }
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 320) {
-    return NextResponse.json({ error: "Adresse e-mail invalide." }, { status: 400 });
-  }
-  if (company.length > 200 || phone.length > 80) {
-    return NextResponse.json({ error: "Champ trop long." }, { status: 400 });
-  }
-  if (itemsRaw.length === 0 || itemsRaw.length > 50) {
+  const validation = validateQuoteInput(o);
+  if (!validation.parsed) {
     return NextResponse.json(
-      { error: "Ajoutez entre 1 et 50 produits au manifeste." },
+      {
+        error: "Veuillez corriger les champs indiqués.",
+        errors: validation.errors,
+      },
       { status: 400 },
     );
   }
 
-  const items: QuoteLine[] = [];
-  for (const raw of itemsRaw) {
-    if (!raw || typeof raw !== "object") continue;
-    const it = raw as Record<string, unknown>;
-    const id = typeof it.id === "string" ? it.id.trim().slice(0, 80) : "";
-    const pname = typeof it.name === "string" ? it.name.trim().slice(0, 300) : "";
-    const categoryLabel =
-      typeof it.categoryLabel === "string" ? it.categoryLabel.trim().slice(0, 120) : "";
-    const qty =
-      typeof it.quantity === "number" && Number.isFinite(it.quantity)
-        ? Math.floor(it.quantity)
-        : NaN;
-    if (!id || !pname || !Number.isFinite(qty) || qty < 1 || qty > 999_999) {
-      return NextResponse.json({ error: "Une ligne produit est invalide." }, { status: 400 });
-    }
-    items.push({
-      id,
-      name: pname,
-      categoryLabel: categoryLabel || "—",
-      quantity: qty,
-    });
-  }
-
-  if (items.length === 0) {
-    return NextResponse.json({ error: "Lignes produits invalides." }, { status: 400 });
-  }
+  const { name, email, company, phone, message, items } = validation.parsed;
 
   const from =
     process.env.RESEND_FROM_EMAIL?.trim() || "IBA Devis <onboarding@resend.dev>";
