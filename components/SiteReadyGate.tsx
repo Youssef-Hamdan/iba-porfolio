@@ -2,8 +2,8 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { AboutVideoWarmup } from "@/components/AboutVideoWarmup";
 import { SiteReadyContext } from "@/components/site-ready-context";
+import { VimeoVisionProvider } from "@/components/vimeo-vision/VimeoVisionProvider";
 import { VIMEO_PLAYER_SCRIPT_URL } from "@/lib/about-vision-vimeo";
 
 const SESSION_KEY = "iba_site_preload_done";
@@ -91,8 +91,7 @@ export function SiteReadyGate({ children }: { children: React.ReactNode }) {
 
   return (
     <SiteReadyContext.Provider value={siteReady}>
-      {children}
-      <AboutVideoWarmup />
+      <VimeoVisionProvider>{children}</VimeoVisionProvider>
       {loader !== null ? (
         <div
           className={`fixed inset-0 z-[100] flex flex-col items-center justify-center gap-8 bg-background px-6 transition-opacity duration-500 ease-out motion-reduce:transition-none ${
