@@ -22,7 +22,7 @@ const plateVariants = {
     opacity: 1, 
     y: 0, 
     scale: 1, 
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } 
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } 
   },
 };
 
@@ -40,8 +40,8 @@ export function HomeCharterSection() {
           className="absolute inset-0"
           style={{ 
             backgroundImage: `
-              linear-gradient(var(--iba-navy) 1px, transparent 1px), 
-              linear-gradient(90deg, var(--iba-navy) 1px, transparent 1px)
+              linear-gradient(var(--iba-sky) 1px, transparent 1px), 
+              linear-gradient(90deg, var(--iba-sky) 1px, transparent 1px)
             `,
             backgroundSize: '120px 120px',
             opacity: 0.03
@@ -51,7 +51,7 @@ export function HomeCharterSection() {
         <div 
           className="absolute inset-0"
           style={{ 
-            backgroundImage: `radial-gradient(circle at 0 0, var(--iba-navy) 2px, transparent 3px)`,
+            backgroundImage: `radial-gradient(circle at 0 0, var(--iba-sky) 2px, transparent 3px)`,
             backgroundSize: '120px 120px',
             opacity: 0.08
           }} 
@@ -68,7 +68,7 @@ export function HomeCharterSection() {
           title={
             <>
               {charter.headline}{" "}
-              <span className="text-iba-sky">
+              <span className="text-iba-navy">
                 {charter.headlineAccent}
               </span>
             </>
@@ -95,35 +95,35 @@ export function HomeCharterSection() {
                 key={`principle-${idx}`}
                 variants={plateVariants}
                 className={cn(
-                  "group relative flex flex-col justify-between border border-iba-navy/20 bg-white p-6 md:p-8 transition-colors duration-300 hover:bg-iba-navy",
+                  "group relative flex flex-col justify-between border border-iba-sky/20 bg-white p-6 md:p-8 transition-colors duration-300 hover:bg-iba-sky",
                   isWide ? "md:col-span-2" : "col-span-1"
                 )}
               >
                 {/* Structural Corner Joints (Crosshairs) */}
-                <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-iba-navy transition-colors group-hover:border-iba-sky" />
-                <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-iba-navy transition-colors group-hover:border-iba-sky" />
-                <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-iba-navy transition-colors group-hover:border-iba-sky" />
-                <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-iba-navy transition-colors group-hover:border-iba-sky" />
+                <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-iba-sky transition-colors group-hover:border-iba-navy" />
+                <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-iba-sky transition-colors group-hover:border-iba-navy" />
+                <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-iba-sky transition-colors group-hover:border-iba-navy" />
+                <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-iba-sky transition-colors group-hover:border-iba-navy" />
 
                 {/* Serial Number / Index */}
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-iba-navy/40 transition-colors group-hover:text-iba-sky">
+                  <span className="font-mono text-xs font-bold text-iba-sky/40 transition-colors group-hover:text-iba-navy">
                     ID_0{idx + 1}
                   </span>
                   
                   {/* Decorative Bolt Icon */}
-                  <span className="text-iba-navy/20 transition-colors group-hover:text-iba-sky/50 text-[10px]">
+                  <span className="text-iba-sky/20 transition-colors group-hover:text-iba-navy/50 text-[10px]">
                     ⬢
                   </span>
                 </div>
 
                 {/* The Core Principle Text */}
-                <h3 className="font-sans text-2xl md:text-3xl font-black uppercase tracking-tight text-iba-navy transition-colors group-hover:text-white">
+                <h3 className="font-sans text-2xl md:text-3xl font-black uppercase tracking-tight text-iba-sky transition-colors group-hover:text-white">
                   {label}
                 </h3>
 
                 {/* Industrial Hover Sweep Effect (Slides in from the left) */}
-                <div className="absolute bottom-0 left-0 h-1 w-0 bg-iba-sky transition-all duration-500 ease-out group-hover:w-full" />
+                <div className="absolute bottom-0 left-0 h-1 w-0 bg-iba-orange transition-all duration-500 ease-out group-hover:w-full" />
               </motion.div>
             );
           })}

@@ -11,19 +11,19 @@ const parallaxBlocks = [
   {
     src: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2071&auto=format&fit=crop",
     title: "Infrastructure & grands ouvrages",
-    titleNode: <>Infrastructure & <span className="text-iba-navy">grands ouvrages</span></>,
+    titleNode: <>Infrastructure & <span className="text-iba-sky">grands ouvrages</span></>,
     desc: "Maîtrise technique et déploiement de solutions adaptées aux projets urbains et industriels à forte exigence.",
   },
   {
     src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop",
     title: "Commerce & valorisation des filières",
-    titleNode: <>Commerce & <span className="text-iba-navy">valorisation des filières</span></>,
+    titleNode: <>Commerce & <span className="text-iba-sky">valorisation des filières</span></>,
     desc: "Structuration des chaînes de valeur et des partenariats pour soutenir une croissance économique durable.",
   },
   {
     src: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=80&w=2072&auto=format&fit=crop",
     title: "Innovation & standards internationaux",
-    titleNode: <>Innovation & <span className="text-iba-navy">standards internationaux</span></>,
+    titleNode: <>Innovation & <span className="text-iba-sky">standards internationaux</span></>,
     desc: "Alignement sur les meilleures pratiques et intégration continue de solutions performantes et traçables.",
   },
 ];
@@ -41,8 +41,8 @@ export function HomeImpactSection() {
     <section className="relative z-20 w-full bg-background overflow-hidden">
       
       {/* 1. ZONE DARK : STATISTIQUES */}
-      <div className="relative bg-iba-sky py-12 text-white md:py-16">
-        <div className="absolute inset-0 z-0 opacity-10 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-iba-blue via-transparent to-transparent" />
+      <div className="relative bg-iba-navy py-12 text-white md:py-16">
+        <div className="absolute inset-0 z-0 opacity-10 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-iba-orange via-transparent to-transparent" />
 
         <div className="relative z-10 mx-auto w-full max-w-[90rem] px-5 sm:px-8 md:px-16 lg:px-20">
           {/*
@@ -64,7 +64,7 @@ export function HomeImpactSection() {
                 </span>
 
                 <div className="flex items-start gap-3">
-                  <span className="mt-2 h-[2px] w-8 shrink-0 bg-iba-navy" aria-hidden />
+                  <span className="mt-2 h-[2px] w-8 shrink-0 bg-iba-sky" aria-hidden />
                   <p className="text-xs font-bold uppercase tracking-widest text-white/70">
                     01 — IMPACT GLOBAL
                   </p>
@@ -72,7 +72,7 @@ export function HomeImpactSection() {
 
                 <h2 className="text-balance text-4xl font-extrabold uppercase leading-[1.08] tracking-tight text-white md:text-5xl lg:text-6xl">
                   Mesurer le{" "}
-                  <span className="text-iba-navy">
+                  <span className="text-iba-sky">
                     changement
                   </span>
                 </h2>
@@ -82,7 +82,7 @@ export function HomeImpactSection() {
             <div className="flex shrink-0 md:col-span-1 md:justify-end md:pb-1">
               <Link
                 href="/governance"
-                className="group inline-flex items-center text-xs font-bold uppercase tracking-widest text-iba-navy transition-colors hover:text-white"
+                className="group inline-flex items-center text-xs font-bold uppercase tracking-widest text-iba-sky transition-colors hover:text-white"
               >
                 Nos rapports
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -174,22 +174,22 @@ function StatCard({ icon, numericValue, suffix, label }: { icon: React.ReactNode
       
       {/* Icon & Accent Header */}
       <div className="relative z-10 flex items-start justify-between">
-        <div className="flex h-10 w-10 items-center justify-center bg-iba-blue/80 text-white backdrop-blur-sm shadow-md transition-transform duration-300 group-hover:scale-110">
+        <div className="flex h-10 w-10 items-center justify-center bg-iba-orange/80 text-white backdrop-blur-sm shadow-md transition-transform duration-300 group-hover:scale-110">
           <div className="[&>svg]:h-5 [&>svg]:w-5">{icon}</div>
         </div>
-        <div className="mt-5 h-px w-16 bg-gradient-to-r from-iba-navy to-transparent opacity-50" />
+        <div className="mt-5 h-px w-16 bg-gradient-to-r from-iba-sky to-transparent opacity-50" />
       </div>
       
       {/* Main Digital Readout */}
       <div className="relative z-10 mt-auto">
         <h3 className="flex items-baseline font-mono text-5xl font-black tracking-tighter text-white tabular-nums md:text-6xl">
           <motion.span>{rounded}</motion.span>
-          <span className="ml-1 text-2xl font-bold text-iba-navy">{suffix}</span>
+          <span className="ml-1 text-2xl font-bold text-iba-sky">{suffix}</span>
         </h3>
         
         {/* Label with structural connection line */}
         <div className="mt-3 flex items-center gap-3">
-          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-iba-navy shadow-[0_0_8px_rgba(40,37,97,0.8)]" />
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-iba-sky shadow-[0_0_8px_rgba(40,37,97,0.8)]" />
           <p className="font-sans text-[11px] font-bold uppercase tracking-[0.15em] text-white/80">
             {label}
           </p>

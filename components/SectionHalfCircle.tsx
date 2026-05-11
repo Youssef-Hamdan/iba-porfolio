@@ -59,7 +59,7 @@ const SCROLL_SPRING = { stiffness: 120, damping: 20, mass: 0.5 };
 
 export function SectionHalfCircle({
   edge = "top",
-  fillClassName = "fill-iba-sky",
+  fillClassName = "fill-iba-navy",
   className,
   heightClassName,
 }: SectionHalfCircleProps) {

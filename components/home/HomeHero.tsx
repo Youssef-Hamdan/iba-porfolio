@@ -44,7 +44,7 @@ export function HomeHero() {
   return (
     <section
       ref={heroRef}
-      className="relative flex min-h-[100vh] items-center justify-start overflow-hidden bg-iba-navy text-white"
+      className="relative flex min-h-[100vh] items-center justify-start overflow-hidden bg-iba-sky text-white"
     >
       {/* 1. ANIMATED PARALLAX BACKGROUND */}
       <motion.div
@@ -60,7 +60,7 @@ export function HomeHero() {
 
       </motion.div>
 
-      <div className="absolute inset-0 bg-gradient-to-tr from-iba-navy/70 to-transparent mix-blend-multiply" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-iba-sky/70 to-transparent mix-blend-multiply" />
       {/* 2. MAIN CONTENT WITH STAGGERED FADE-IN */}
       <motion.div
         style={{ opacity: contentOpacity }}
@@ -78,7 +78,7 @@ export function HomeHero() {
             className="mb-6 text-4xl font-extrabold leading-tight tracking-tighter drop-shadow-md md:text-6xl lg:text-7xl"
           >
             <span className="text-iba-sky">La Force </span><br className=" hidden md:block" />
-            <span className="text-white italic pr-2">
+            <span className="text-white ">
               qui bâtit
             </span>{" "}
             <span className="text-iba-sky">l&apos;avenir.</span>
@@ -97,7 +97,7 @@ export function HomeHero() {
           <motion.div variants={itemVariants} className="flex w-full flex-col flex-wrap gap-5 sm:w-auto sm:flex-row sm:justify-start">
             <Link
               href="/about"
-              className="group relative overflow-hidden rounded-full bg-iba-blue px-8 py-4 font-semibold text-white shadow-[0_0_30px_rgba(0,102,204,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_50px_rgba(0,102,204,0.6)]"
+              className="group relative overflow-hidden rounded-full bg-iba-orange px-8 py-4 font-semibold text-white shadow-[0_0_30px_rgba(255,157,0,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_50px_rgba(255,157,0,0.6)]"
             >
               <span className="relative z-10">Notre Vision</span>
               {/* Effet de brillance au survol */}

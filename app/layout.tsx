@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { SiteReadyGate } from "@/components/SiteReadyGate";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -24,10 +25,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={`${montserrat.variable} h-full`}>
+      <head>
+        <link rel="preconnect" href="https://player.vimeo.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://i.vimeocdn.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://f.vimeocdn.com" />
+      </head>
       <body className="font-sans flex min-h-full flex-col antialiased">
-        <SiteHeader />
-        {children}
-        <SiteFooter />
+        <SiteReadyGate>
+          <SiteHeader />
+          {children}
+          <SiteFooter />
+        </SiteReadyGate>
       </body>
     </html>
   );

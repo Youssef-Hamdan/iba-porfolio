@@ -9,7 +9,7 @@ export default function HomePage() {
     <main className="flex min-h-screen flex-col bg-background">
       <HomeHero />
       <HomeImpactSection />
-      <HomePillarsSection />
+      {/* <HomePillarsSection /> */}
       <HomePartnersSection />
       {/* <HomeCatalogSection /> */}
     </main>

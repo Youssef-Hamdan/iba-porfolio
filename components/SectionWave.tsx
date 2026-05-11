@@ -1,5 +1,6 @@
 "use client";
 
+import type { RefObject } from "react";
 import { useLayoutEffect, useRef, useState } from "react";
 import {
   type MotionValue,
@@ -53,6 +54,13 @@ type SectionWaveProps = {
    * Top: applied to the wrapper so lift (`-translate-y-full`) is correct.
    */
   heightClassName?: string;
+  /**
+   * When set, scroll-driven wave depth uses this element (e.g. parent `section`)
+   * instead of the wave node — use for top waves so the bump grows as the section approaches.
+   */
+  scrollTargetRef?: RefObject<HTMLElement | null>;
+  /** Passed to `useScroll({ offset })` when driving morph from `scrollTargetRef` (or overrides default). */
+  scrollOffset?: [string, string];
 };
 
 function MorphWavePath({
@@ -79,26 +87,35 @@ function clamp01(v: number) {
 }
 
 /**
- * Full-width IBA wave divider (sky accent by default). Parent must be `position: relative`.
+ * Full-width IBA wave divider (navy accent by default). Parent must be `position: relative`.
  * Scroll: wave stays curved; curvature increases as the divider moves up through the viewport.
  */
 export function SectionWave({
   edge = "bottom",
-  fillClassName = "fill-iba-sky",
+  fillClassName = "fill-iba-navy",
   className,
   heightClassName,
+  scrollTargetRef,
+  scrollOffset,
 }: SectionWaveProps) {
   const ref = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
 
+  const scrollTarget = scrollTargetRef ?? ref;
+  const resolvedOffset: [string, string] =
+    scrollOffset ??
+    (scrollTargetRef ? ["start 0.92", "start 0.18"] : ["start 0.95", "start 0.1"]);
+
   const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 0.95", "start 0.1"],
+    target: scrollTarget,
+    offset: resolvedOffset as never,
   });
 
-  /** Compress scroll into a shorter band so a small viewport pass = full morph (reads clearly). */
+  /** Map viewport progress → morph intensity. */
   const drive = useTransform(scrollYProgress, (p) =>
-    clamp01((p - 0.02) / 0.42),
+    scrollTargetRef
+      ? clamp01((p - 0.03) / 0.55)
+      : clamp01((p - 0.02) / 0.42),
   );
 
   const stiffSpring = { stiffness: 8000, damping: 120, mass: 0.2 };

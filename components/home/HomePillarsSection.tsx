@@ -71,10 +71,10 @@ export function HomePillarsSection() {
   return (
     <section
       id="pillars"
-      className="scroll-mt-20 relative w-full overflow-x-clip bg-iba-sky text-white py-20 md:py-28 lg:py-32"
+      className="scroll-mt-20 relative w-full overflow-x-clip bg-iba-navy text-white py-20 md:py-28 lg:py-32"
       aria-labelledby="pillars-heading"
     >
-      <SectionHalfCircle edge="top" fillClassName="fill-iba-sky" />
+      <SectionHalfCircle edge="top" fillClassName="fill-iba-navy" />
 
       <div
         className="pointer-events-none absolute -right-24 top-1/4 h-[520px] w-[520px] rounded-full bg-white/[0.06] blur-[100px]"
@@ -91,7 +91,7 @@ export function HomePillarsSection() {
               Nos piliers
             </span>
             <div className="flex items-start gap-3">
-              <span className="mt-2 h-[2px] w-8 shrink-0 bg-iba-navy" aria-hidden />
+              <span className="mt-2 h-[2px] w-8 shrink-0 bg-iba-sky" aria-hidden />
               <p className="text-xs font-bold uppercase tracking-widest text-white/70">
                 02 — Axes stratégiques
               </p>
@@ -101,7 +101,7 @@ export function HomePillarsSection() {
               className="text-4xl font-extrabold uppercase leading-[1.08] tracking-tight text-white md:text-5xl lg:text-6xl"
             >
               Ce qui structure{" "}
-              <span className="text-iba-navy">
+              <span className="text-iba-sky">
                 notre action
               </span>
             </h2>
@@ -116,7 +116,7 @@ export function HomePillarsSection() {
           {/* Rail + tabs */}
           <div className="relative max-lg:order-2 lg:col-span-5">
             {/* <div
-              className="pointer-events-none absolute left-[19px] top-3 bottom-3 hidden w-px bg-gradient-to-b from-iba-navy/0 via-iba-navy/15 to-iba-navy/0 md:block"
+              className="pointer-events-none absolute left-[19px] top-3 bottom-3 hidden w-px bg-gradient-to-b from-iba-sky/0 via-iba-sky/15 to-iba-sky/0 md:block"
               aria-hidden
             /> */}
             <div
@@ -139,7 +139,7 @@ export function HomePillarsSection() {
                     className={cn(
                       "group relative flex w-full gap-4 rounded-[1.75rem] border p-4 text-left transition-all duration-300 md:pl-8 md:pr-5 md:py-5",
                       isActive
-                        ? "border-white bg-white shadow-lg shadow-iba-navy/10 ring-1 ring-white/50"
+                        ? "border-white bg-white shadow-lg shadow-iba-sky/10 ring-1 ring-white/50"
                         : "border-white/20 bg-white/[0.05] hover:border-white/30 hover:bg-white/10",
                     )}
                   >
@@ -147,7 +147,7 @@ export function HomePillarsSection() {
                       className={cn(
                         "relative z-10 mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl text-white transition-transform duration-300 md:absolute md:left-0 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:mt-0",
                         isActive
-                          ? "bg-iba-navy shadow-md shadow-iba-navy/25"
+                          ? "bg-iba-sky shadow-md shadow-iba-sky/25"
                           : "bg-white/15 group-hover:scale-105 group-hover:bg-white/25",
                       )}
                       aria-hidden
@@ -160,7 +160,7 @@ export function HomePillarsSection() {
                         <span
                           className={cn(
                             "text-[10px] font-bold uppercase tracking-[0.18em] tabular-nums",
-                            isActive ? "text-iba-sky" : "text-white/50",
+                            isActive ? "text-iba-navy" : "text-white/50",
                           )}
                         >
                           {String(index + 1).padStart(2, "0")}
@@ -169,7 +169,7 @@ export function HomePillarsSection() {
                       <span
                         className={cn(
                           "mt-1 block text-base font-bold uppercase tracking-tight md:text-lg",
-                          isActive ? "text-iba-navy" : "text-white/80",
+                          isActive ? "text-iba-sky" : "text-white/80",
                         )}
                       >
                         {pillar.title}
@@ -180,7 +180,7 @@ export function HomePillarsSection() {
                       className={cn(
                         "mt-1 h-5 w-5 shrink-0 transition-all duration-300",
                         isActive
-                          ? "translate-x-0 text-iba-navy opacity-100"
+                          ? "translate-x-0 text-iba-sky opacity-100"
                           : "-translate-x-1 text-white/30 opacity-0 group-hover:translate-x-0 group-hover:opacity-100",
                       )}
                       aria-hidden
@@ -193,7 +193,7 @@ export function HomePillarsSection() {
 
           {/* Image stage */}
           <div className="relative max-lg:order-1 lg:col-span-7">
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[2.25rem] shadow-2xl shadow-iba-navy/15 ring-1 ring-iba-navy/10 md:aspect-[16/11] lg:rounded-[2.5rem]">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[2.25rem] shadow-2xl shadow-iba-sky/15 ring-1 ring-iba-sky/10 md:aspect-[16/11] lg:rounded-[2.5rem]">
               <AnimatePresence mode="popLayout">
                 <motion.div
                   key={active.imageUrl}
@@ -211,8 +211,8 @@ export function HomePillarsSection() {
                     sizes="(max-width: 1024px) 100vw, 58vw"
                     priority={activeIndex === 0}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-iba-navy/95 via-iba-navy/55 to-transparent" />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-iba-blue/25 to-transparent mix-blend-multiply" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-iba-sky/95 via-iba-sky/55 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-iba-orange/25 to-transparent mix-blend-multiply" />
                 </motion.div>
               </AnimatePresence>
 
@@ -250,8 +250,8 @@ export function HomePillarsSection() {
 
             {/* Floating accent */}
             <div className="absolute -left-4 top-8 z-20 hidden md:flex md:-left-6">
-              <div className="flex items-center gap-2 rounded-full bg-white/95 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-iba-navy shadow-xl ring-1 ring-iba-navy/5 backdrop-blur-md">
-                <span className="h-1.5 w-1.5 rounded-full bg-iba-sky" />
+              <div className="flex items-center gap-2 rounded-full bg-white/95 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-iba-sky shadow-xl ring-1 ring-iba-sky/5 backdrop-blur-md">
+                <span className="h-1.5 w-1.5 rounded-full bg-iba-orange" />
                 Vision intégrée
               </div>
             </div>

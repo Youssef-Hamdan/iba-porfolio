@@ -10,7 +10,7 @@ const nav = [
   { href: "/about", label: "À Propos" },
   { href: "/projects", label: "Projets" },
   { href: "/products", label: "Produits" },
-  { href: "/quotation", label: "Quotation" },
+  { href: "/quotation", label: "Devis" },
 ];
 
 export function SiteHeader() {
@@ -59,7 +59,7 @@ export function SiteHeader() {
       }}
       animate={hidden && !open ? "hidden" : "visible"} // Ne pas cacher si le menu mobile est ouvert
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      className={`fixed top-0 z-50 w-full border-b border-iba-navy/10 bg-white transition-shadow duration-300 ${
+      className={`fixed top-0 z-50 w-full border-b border-iba-sky/10 bg-white transition-shadow duration-300 ${
         scrolled ? "shadow-sm" : "shadow-none"
       }`}
     >
@@ -91,10 +91,11 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="group relative text-sm font-bold uppercase tracking-widest text-iba-navy transition-colors hover:text-iba-blue"
+              prefetch={item.href === "/about" ? true : undefined}
+              className="group relative text-sm font-bold uppercase tracking-widest text-iba-sky transition-colors hover:text-iba-orange"
             >
               {item.label}
-              <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-iba-blue transition-all duration-300 ease-out group-hover:w-full" />
+              <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-iba-orange transition-all duration-300 ease-out group-hover:w-full" />
             </Link>
           ))}
         </nav>
@@ -103,7 +104,7 @@ export function SiteHeader() {
         <div className="flex min-w-0 flex-1 items-center justify-end gap-2 sm:gap-3">
           <button
             type="button"
-            className="group relative z-50 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-iba-navy/5 text-iba-navy transition-colors hover:bg-iba-navy hover:text-white md:hidden"
+            className="group relative z-50 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-iba-sky/5 text-iba-sky transition-colors hover:bg-iba-sky hover:text-white md:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
@@ -113,7 +114,7 @@ export function SiteHeader() {
 
           <Link
             href="/contact"
-            className="hidden shrink-0 items-center justify-center rounded-md bg-iba-navy px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-iba-blue md:inline-flex"
+            className="hidden shrink-0 items-center justify-center rounded-md bg-iba-orange px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-iba-orange/90 md:inline-flex"
           >
             Nous Contacter
           </Link>
@@ -127,7 +128,7 @@ export function SiteHeader() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="absolute inset-x-0 top-full border-b border-iba-navy/10 bg-white px-4 py-4 shadow-md sm:px-6 md:hidden"
+            className="absolute inset-x-0 top-full border-b border-iba-sky/10 bg-white px-4 py-4 shadow-md sm:px-6 md:hidden"
           >
             <nav className="flex flex-col gap-2" aria-label="Mobile">
               {nav.map((item, i) => (
@@ -139,7 +140,8 @@ export function SiteHeader() {
                 >
                   <Link
                     href={item.href}
-                    className="group flex items-center justify-between rounded-2xl px-4 py-4 text-xl font-black uppercase tracking-wide text-iba-navy transition-colors hover:bg-iba-navy/5 hover:text-iba-blue"
+                    prefetch={item.href === "/about" ? true : undefined}
+                    className="group flex items-center justify-between rounded-2xl px-4 py-4 text-xl font-black uppercase tracking-wide text-iba-sky transition-colors hover:bg-iba-sky/5 hover:text-iba-orange"
                     onClick={() => setOpen(false)}
                   >
                     {item.label}
@@ -152,12 +154,12 @@ export function SiteHeader() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: nav.length * 0.1, duration: 0.3 }}
-                className="mt-6 border-t border-iba-navy/10 pt-6"
+                className="mt-6 border-t border-iba-sky/10 pt-6"
               >
                 <Link
                   href="/contact"
                   onClick={() => setOpen(false)}
-                  className="flex w-full items-center justify-center rounded-md bg-iba-navy px-6 py-4 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-iba-blue"
+                  className="flex w-full items-center justify-center rounded-md bg-iba-orange px-6 py-4 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-iba-orange/90"
                 >
                   Nous Contacter
                 </Link>

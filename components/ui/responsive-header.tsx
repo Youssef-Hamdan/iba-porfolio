@@ -44,7 +44,7 @@ export function HeaderDrawer({ open, setOpen, drawerBtn, children }: HeaderDrawe
         <Drawer.Overlay className="fixed inset-0 z-[60] bg-black/35 backdrop-blur-[2px]" />
         <Drawer.Content
           className={cn(
-            "fixed bottom-2 right-2 top-2 z-[70] flex w-[min(100vw-1rem,48rem)] flex-col rounded-xl border border-iba-navy/10 bg-white shadow-xl outline-none",
+            "fixed bottom-2 right-2 top-2 z-[70] flex w-[min(100vw-1rem,48rem)] flex-col rounded-xl border border-iba-sky/10 bg-white shadow-xl outline-none",
             "lg:w-[min(100vw-2rem,56rem)] xl:w-[min(100vw-2rem,72rem)]"
           )}
         >

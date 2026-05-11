@@ -11,86 +11,93 @@ export type CatalogPartner = {
   caption?: string;
 };
 
-/** Construction / materials partners — drop assets into `public/` and point `img` here when ready */
+/** Logos locaux (`public/images/partners/`) — encoder les espaces dans les noms de fichier. */
+const partnerLogo = (filename: string) =>
+  `/images/partners/${encodeURIComponent(filename)}`;
+
+/** Construction / materials partners */
 const partners: CatalogPartner[] = [
   {
     name: "BBC",
-    img: null,
+    img: partnerLogo("BBC logo grey.png"),
     caption: "Matériaux",
   },
   {
-    name: "Sika",
-    img: "https://cdn.simpleicons.org/sika/282561",
-  },
-  {
     name: "Eagle Color",
-    img: null,
+    img: partnerLogo("eagle logo grey.png"),
     caption: "Peintures & finitions",
   },
   {
+    name: "Sika",
+    img: partnerLogo("Logo_Sika.png"),
+    caption: "Mortiers & solutions",
+  },
+  {
     name: "Famico",
-    img: null,
+    img: partnerLogo("fameco logo grey.png"),
+    caption: "Distribution",
+  },
+  {
+    name: "JKL",
+    img: partnerLogo("JKL Logo grey-01.png"),
+    caption: "Distribution",
   },
 ];
 
 /** Repeat sequence so the strip feels full before the infinite clone. */
 const partnersTrack = [...partners, ...partners, ...partners];
 
-function PartnerCard({ name, img, caption }: CatalogPartner) {
+function PartnerLogoBlock({ name, img, caption }: CatalogPartner) {
   return (
-    <article
+    <div
       className={cn(
-        "flex min-h-[5rem] min-w-[11.5rem] max-w-[14rem] shrink-0 flex-col items-center justify-center gap-1 rounded-2xl px-5 py-3.5",
-        "border border-iba-navy/[0.08] bg-white/95 shadow-md shadow-iba-navy/[0.06]",
-        "ring-1 ring-white/80 backdrop-blur-sm transition-[border-color,box-shadow,transform] duration-300",
-        "hover:-translate-y-1 hover:border-iba-sky/45 hover:shadow-lg hover:shadow-iba-sky/10 hover:ring-iba-sky/25",
+        "group/logo flex shrink-0 flex-col items-center justify-center gap-2 px-4 py-2 sm:px-6 sm:py-3 md:px-8",
+        "min-w-[12rem] sm:min-w-[14rem] md:min-w-[17rem]",
       )}
     >
       {img ? (
         <>
-          {/* eslint-disable-next-line @next/next/no-img-element -- external brand assets */}
+          {/* eslint-disable-next-line @next/next/no-img-element -- static brand assets from /public */}
           <img
             src={img}
             alt={name}
-            className="max-h-9 w-auto max-w-[7.5rem] object-contain object-center"
+            className="max-h-24 w-auto max-w-[16rem] object-contain object-center opacity-90 drop-shadow-[0_2px_12px_rgba(0,0,0,0.2)] transition-[transform,opacity] duration-300 ease-out group-hover/logo:scale-105 group-hover/logo:opacity-100 sm:max-h-28 sm:max-w-[18rem] md:max-h-32 md:max-w-[20rem] lg:max-h-36 lg:max-w-[22rem]"
           />
           {caption ? (
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-iba-navy/50">
+            <p className="text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
               {caption}
             </p>
           ) : null}
         </>
       ) : (
         <>
-          <p className="text-center text-[13px] font-extrabold uppercase leading-tight tracking-[0.12em] text-iba-navy">
+          <p className="text-center text-sm font-extrabold uppercase leading-tight tracking-[0.12em] text-white">
             {name}
           </p>
           {caption ? (
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-iba-navy/50">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
               {caption}
             </p>
           ) : null}
         </>
       )}
-    </article>
+    </div>
   );
 }
 
 function PartnerSeparator() {
   return (
     <span
-      className="flex h-8 w-8 shrink-0 items-center justify-center self-center"
+      className="mx-1 h-12 w-px shrink-0 self-center bg-white/20 sm:mx-2 sm:h-16 md:h-20"
       aria-hidden
-    >
-      <span className="h-1 w-1 rounded-full bg-iba-navy/25 shadow-[0_0_0_3px_rgba(255,255,255,0.35)] ring-1 ring-iba-sky/40" />
-    </span>
+    />
   );
 }
 
 function PartnerMarqueeGroup({ partner }: { partner: CatalogPartner }) {
   return (
-    <div className="flex shrink-0 items-center gap-3 sm:gap-4">
-      <PartnerCard {...partner} />
+    <div className="flex shrink-0 items-center">
+      <PartnerLogoBlock {...partner} />
       <PartnerSeparator />
     </div>
   );
@@ -108,7 +115,7 @@ export function CatalogPartnerMarquee() {
             Notre réseau
           </span>
           <div className="flex items-start gap-3">
-            <span className="mt-2 h-[2px] w-8 shrink-0 bg-iba-navy" aria-hidden />
+            <span className="mt-2 h-[2px] w-8 shrink-0 bg-iba-orange" aria-hidden />
             <p className="text-xs font-bold uppercase tracking-widest text-white/70">
               03 — Partenaires &amp; fournisseurs
             </p>
@@ -118,7 +125,7 @@ export function CatalogPartnerMarquee() {
             className="text-4xl font-extrabold uppercase leading-[1.08] tracking-tight text-white md:text-5xl lg:text-6xl"
           >
             L&apos;excellence des{" "}
-            <span className="text-iba-navy">matériaux</span>
+            <span className="text-iba-sky">matériaux</span>
           </h2>
           <p className="max-w-xl text-lg font-medium leading-relaxed text-white/80">
             Une sélection rigoureuse approuvée par les leaders mondiaux&nbsp;:
@@ -129,13 +136,11 @@ export function CatalogPartnerMarquee() {
       <div
         className={cn(
           "relative w-full min-w-0 overflow-hidden",
-          "border-y border-white/20 bg-white/[0.12] py-9 backdrop-blur-md md:py-11",
-          "[mask-image:linear-gradient(90deg,transparent_0%,#000_6%,#000_94%,transparent_100%)]",
-          "[-webkit-mask-image:linear-gradient(90deg,transparent_0%,#000_6%,#000_94%,transparent_100%)]",
+          "border-y border-white/25 bg-white/[0.12] py-12 backdrop-blur-md md:py-16",
         )}
       >
         <Marquee
-          className="w-full min-w-0 [--duration:42s] [--gap:0.5rem] sm:[--gap:0.75rem] md:[--gap:1rem]"
+          className="relative z-[1] w-full min-w-0 [--duration:52s] [--gap:0.75rem] sm:[--gap:1.25rem] md:[--gap:1.75rem]"
           pauseOnHover
         >
           {partnersTrack.map((partner, i) => (

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type Variant = "sky" | "white";
+type Variant = "navy" | "white";
 
 type AboutSectionHeaderProps = {
   variant: Variant;
@@ -22,14 +22,14 @@ export function AboutSectionHeader({
   lead,
   className,
 }: AboutSectionHeaderProps) {
-  const isSky = variant === "sky";
+  const isnavy = variant === "navy";
 
   return (
     <div className={cn("relative mb-10 md:mb-14 lg:mb-16", className)}>
       <div
         className={cn(
           "absolute -left-4 -top-10 -z-10 select-none text-[8rem] font-black leading-none sm:-top-12 sm:text-[10rem] md:text-[12rem]",
-          isSky ? "text-white/[0.06]" : "text-iba-navy/[0.05]",
+          isnavy ? "text-white/[0.06]" : "text-iba-sky/[0.05]",
         )}
         aria-hidden
       >
@@ -39,9 +39,9 @@ export function AboutSectionHeader({
         <span
           className={cn(
             "inline-flex w-fit items-center rounded-full border px-5 py-2 text-[11px] font-bold uppercase tracking-[0.2em] backdrop-blur-sm",
-            isSky
+            isnavy
               ? "border-white/25 bg-white/10 text-white"
-              : "border-iba-navy/15 bg-iba-navy/[0.04] text-iba-navy",
+              : "border-iba-sky/15 bg-iba-sky/[0.04] text-iba-sky",
           )}
         >
           {badge}
@@ -50,14 +50,14 @@ export function AboutSectionHeader({
           <span
             className={cn(
               "mt-2 h-[2px] w-8 shrink-0",
-              isSky ? "bg-iba-navy" : "bg-iba-sky",
+              isnavy ? "bg-iba-orange" : "bg-iba-orange",
             )}
             aria-hidden
           />
           <p
             className={cn(
               "text-xs font-bold uppercase tracking-widest",
-              isSky ? "text-white/70" : "text-iba-navy/55",
+              isnavy ? "text-white/70" : "text-iba-sky/55",
             )}
           >
             {kicker}
@@ -66,7 +66,7 @@ export function AboutSectionHeader({
         <h2
           className={cn(
             "text-balance text-3xl font-extrabold uppercase leading-[1.08] tracking-tight md:text-4xl lg:text-5xl",
-            isSky ? "text-white" : "text-iba-navy",
+            isnavy ? "text-white" : "text-iba-sky",
           )}
         >
           {title}
@@ -75,7 +75,7 @@ export function AboutSectionHeader({
           <p
             className={cn(
               "max-w-2xl text-base font-medium leading-relaxed md:text-lg",
-              isSky ? "text-white/80" : "text-iba-navy/75",
+              isnavy ? "text-white/80" : "text-iba-muted",
             )}
           >
             {lead}

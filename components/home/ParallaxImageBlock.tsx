@@ -44,7 +44,7 @@ export function ParallaxImageBlock({
 
       {/* Readability: darken image (esp. under copy in lower-left third) */}
       <div
-        className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-tr from-iba-sky/100 via-iba-sky/20 to-iba-sky/15"
+        className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-tr from-iba-navy/100 via-iba-navy/20 to-iba-navy/15"
         aria-hidden
       />
       <div
@@ -52,7 +52,7 @@ export function ParallaxImageBlock({
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-0 z-[3] bg-gradient-to-tr from-iba-sky/25 to-transparent mix-blend-soft-light opacity-80"
+        className="pointer-events-none absolute inset-0 z-[3] bg-gradient-to-tr from-iba-navy/25 to-transparent mix-blend-soft-light opacity-80"
         aria-hidden
       />
 
