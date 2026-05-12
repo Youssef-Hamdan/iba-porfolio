@@ -25,7 +25,7 @@ export function AboutVisionVideoSection() {
 
       <div
         ref={setSlotElement}
-        className="relative z-10 mx-auto aspect-video w-[70%] max-w-full min-w-0 overflow-hidden rounded-xl bg-black border border-iba-sky/15 shadow-[0_24px_60px_-24px_rgba(40,37,97,0.25)]"
+        className="relative z-10 mx-auto aspect-video  max-w-full min-w-0 overflow-hidden bg-white border border-iba-sky/15 shadow-[0_24px_60px_-24px_rgba(40,37,97,0.25)]"
       />
     </section>
   );

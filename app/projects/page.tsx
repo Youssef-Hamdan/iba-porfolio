@@ -140,7 +140,7 @@ export default function ProjectsPage() {
             Soumettez-nous vos plans. Nos ingénieurs évalueront la faisabilité et les besoins en acier de votre projet.
           </p>
           <Link
-            href="/contact"
+            href="/quotation"
             className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-iba-orange px-8 py-4 text-sm font-bold uppercase tracking-widest text-white shadow-lg shadow-iba-orange/25 transition-all hover:bg-white hover:text-iba-orange"
           >
             <span className="relative z-10 flex items-center">
@@ -303,13 +303,6 @@ function ProjectBlock({ project, isEven }: { project: Project; isEven: boolean }
           </div>
         </div>
 
-        <Link
-          href={`/projects/${project.id}`}
-          className="group inline-flex items-center text-xs font-bold uppercase tracking-widest text-iba-sky transition-colors hover:text-iba-navy"
-        >
-          Voir le rapport complet
-          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-2" />
-        </Link>
       </div>
 
       <AnimatePresence>

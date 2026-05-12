@@ -54,7 +54,7 @@ export function AboutPage() {
             >
               {pageTitle}
             </h1>
-            <p className="mt-8 max-w-2xl text-lg font-medium leading-relaxed text-iba-sky/70 md:text-xl border-l-2 border-iba-orange pl-6">
+            <p className="mt-8 max-w-2xl text-lg font-medium leading-relaxed text-iba-muted md:text-xl border-l-2 border-iba-orange pl-6">
               {pageIntro}
             </p>
           </motion.div>
