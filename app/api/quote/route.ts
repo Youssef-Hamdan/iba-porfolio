@@ -25,6 +25,7 @@ export type QuoteFieldKey =
   | "company"
   | "phone"
   | "message"
+  | "request"
   | "items";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,6 +38,7 @@ function validateQuoteInput(o: Record<string, unknown>): {
     company: string;
     phone: string;
     message: string;
+    request: string;
     items: QuoteLine[];
   };
 } {
@@ -83,11 +85,23 @@ function validateQuoteInput(o: Record<string, unknown>): {
     errors.message = "Le format du message est invalide.";
   }
 
-  const itemsRaw = Array.isArray(o.items) ? o.items : null;
-  if (!itemsRaw) {
+  let request = "";
+  if (typeof o.request !== "string") {
+    errors.request = "Le format de la description de la demande est invalide.";
+  } else {
+    const r = o.request.trim();
+    if (!r) {
+      errors.request = "Décrivez les matériaux ou produits souhaités.";
+    } else if (r.length > 8000) {
+      errors.request = "La description ne doit pas dépasser 8000 caractères.";
+    } else {
+      request = r;
+    }
+  }
+
+  const itemsRaw = Array.isArray(o.items) ? o.items : o.items === undefined ? [] : null;
+  if (itemsRaw === null) {
     errors.items = "La liste des produits doit être un tableau.";
-  } else if (itemsRaw.length === 0) {
-    errors.items = "Ajoutez au moins un produit au manifeste (entre 1 et 50 lignes).";
   } else if (itemsRaw.length > 50) {
     errors.items = "Le manifeste ne peut pas dépasser 50 produits.";
   }
@@ -102,7 +116,7 @@ function validateQuoteInput(o: Record<string, unknown>): {
       }
       const it = raw as Record<string, unknown>;
       const id = typeof it.id === "string" ? it.id.trim().slice(0, 80) : "";
-      const pname = typeof it.name === "string" ? it.name.trim().slice(0, 300) : "";
+      const pname = typeof it.name === "string" ? it.name.trim().slice(0, 8000) : "";
       const categoryLabel =
         typeof it.categoryLabel === "string" ? it.categoryLabel.trim().slice(0, 120) : "";
       const qty =
@@ -139,6 +153,7 @@ function validateQuoteInput(o: Record<string, unknown>): {
       company,
       phone,
       message,
+      request,
       items,
     },
   };
@@ -159,6 +174,7 @@ function buildQuoteEmailHtml(payload: {
   email: string;
   phone: string;
   message: string;
+  request: string;
   items: QuoteLine[];
 }): string {
   const rows = payload.items
@@ -168,6 +184,17 @@ function buildQuoteEmailHtml(payload: {
     )
     .join("");
 
+  const linesTable =
+    payload.items.length > 0
+      ? `<h2 style="font-size:1rem;margin-top:1.5rem">Lignes détaillées (si fournies)</h2>
+<table style="border-collapse:collapse;width:100%;max-width:640px"><thead><tr style="background:#005c98;color:#fff"><th style="padding:8px;border:1px solid #ccc">#</th><th style="padding:8px;border:1px solid #ccc">Produit</th><th style="padding:8px;border:1px solid #ccc">Catégorie</th><th style="padding:8px;border:1px solid #ccc">Qté</th></tr></thead><tbody>${rows}</tbody></table>`
+      : "";
+
+  const messageBlock = payload.message.trim()
+    ? `<p style="margin-top:1.5rem"><strong>Informations complémentaires</strong> :</p>
+<pre style="white-space:pre-wrap;background:#f4f4f6;padding:12px;border-radius:8px;font-size:14px">${escapeHtml(payload.message)}</pre>`
+    : "";
+
   return `<!DOCTYPE html>
 <html><body style="font-family:system-ui,sans-serif;color:#282561;line-height:1.5">
 <h1 style="font-size:1.25rem">Nouvelle demande de devis — IBA</h1>
@@ -175,14 +202,14 @@ function buildQuoteEmailHtml(payload: {
 <p><strong>Société</strong> : ${escapeHtml(payload.company || "—")}</p>
 <p><strong>Email</strong> : <a href="mailto:${escapeHtml(payload.email)}">${escapeHtml(payload.email)}</a></p>
 <p><strong>Téléphone</strong> : ${escapeHtml(payload.phone || "—")}</p>
-<p><strong>Message</strong> :</p>
-<pre style="white-space:pre-wrap;background:#f4f4f6;padding:12px;border-radius:8px;font-size:14px">${escapeHtml(payload.message || "—")}</pre>
-<h2 style="font-size:1rem;margin-top:1.5rem">Lignes demandées</h2>
-<table style="border-collapse:collapse;width:100%;max-width:640px"><thead><tr style="background:#005c98;color:#fff"><th style="padding:8px;border:1px solid #ccc">#</th><th style="padding:8px;border:1px solid #ccc">Produit</th><th style="padding:8px;border:1px solid #ccc">Catégorie</th><th style="padding:8px;border:1px solid #ccc">Qté</th></tr></thead><tbody>${rows}</tbody></table>
+<h2 style="font-size:1rem;margin-top:1.5rem">Demande (matériaux / produits)</h2>
+<pre style="white-space:pre-wrap;background:#f4f4f6;padding:12px;border-radius:8px;font-size:14px">${escapeHtml(payload.request || "—")}</pre>
+${messageBlock}
+${linesTable}
 </body></html>`;
 }
 
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
@@ -207,7 +234,7 @@ export async function POST(request: Request) {
 
   let body: unknown;
   try {
-    body = await request.json();
+    body = await req.json();
   } catch {
     return NextResponse.json({ error: "Requête JSON invalide." }, { status: 400 });
   }
@@ -228,7 +255,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const { name, email, company, phone, message, items } = validation.parsed;
+  const { name, email, company, phone, message, request, items } = validation.parsed;
 
   const from =
     process.env.RESEND_FROM_EMAIL?.trim() || "IBA Devis <onboarding@resend.dev>";
@@ -239,7 +266,7 @@ export async function POST(request: Request) {
     to: [to],
     replyTo: email,
     subject: `Devis IBA — ${name}`,
-    html: buildQuoteEmailHtml({ name, company, email, phone, message, items }),
+    html: buildQuoteEmailHtml({ name, company, email, phone, message, request, items }),
   });
 
   if (error) {

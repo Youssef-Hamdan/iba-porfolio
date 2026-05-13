@@ -1,12 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import {
-  Search,
-  Plus,
-  Trash2,
   Send,
   Building2,
   User,
@@ -19,17 +16,7 @@ import { SectionWave } from "@/components/SectionWave";
 import { cn } from "@/lib/utils";
 import type { QuoteFieldKey } from "@/app/api/quote/route";
 
-// Importer vos données de produits existantes
-import { allProducts, productCategories } from "@/lib/products";
-
 type FieldErrors = Partial<Record<QuoteFieldKey, string>>;
-
-type SelectedItem = {
-  id: string;
-  name: string;
-  categoryLabel: string;
-  quantity: number;
-};
 
 const fade = {
   initial: { opacity: 0, y: 30 },
@@ -45,10 +32,7 @@ export default function QuotePage() {
   const [deliveryHint, setDeliveryHint] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
-  // Form State
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
+  const [requestText, setRequestText] = useState("");
 
   const clearFieldError = (key: QuoteFieldKey) => {
     setFieldErrors((prev) => {
@@ -65,48 +49,6 @@ export default function QuotePage() {
         "border-red-400 focus:border-red-500 focus:ring-red-500/40 aria-[invalid=true]:border-red-400",
     );
 
-  // Filtrer les produits pour la barre de recherche
-  const searchResults = useMemo(() => {
-    if (!searchQuery.trim()) return [];
-    const query = searchQuery.toLowerCase();
-    return allProducts.filter(p => 
-      p.name.toLowerCase().includes(query) || 
-      p.categoryId.toLowerCase().includes(query)
-    ).slice(0, 8); // Limiter à 8 résultats pour l'UI
-  }, [searchQuery]);
-
-  // Ajouter un produit au devis
-  const addItem = (product: typeof allProducts[0]) => {
-    if (!selectedItems.find(item => item.id === product.id)) {
-      const categoryLabel = productCategories.find(c => c.id === product.categoryId)?.label || "Autre";
-      setSelectedItems([...selectedItems, { 
-        id: product.id, 
-        name: product.name, 
-        categoryLabel, 
-        quantity: 1 
-      }]);
-    }
-    setSearchQuery("");
-    setIsSearchFocused(false);
-    clearFieldError("items");
-  };
-
-  // Modifier la quantité
-  const updateQuantity = (id: string, delta: number) => {
-    setSelectedItems(items => items.map(item => {
-      if (item.id === id) {
-        const newQuantity = Math.max(1, item.quantity + delta);
-        return { ...item, quantity: newQuantity };
-      }
-      return item;
-    }));
-  };
-
-  // Retirer un produit
-  const removeItem = (id: string) => {
-    setSelectedItems(items => items.filter(item => item.id !== id));
-  };
-
   // Soumission du formulaire → API Resend (voir app/api/quote/route.ts)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -121,8 +63,8 @@ export default function QuotePage() {
       company: String(formData.get("company") ?? "").trim(),
       email: String(formData.get("email") ?? "").trim(),
       phone: String(formData.get("phone") ?? "").trim(),
-      message: String(formData.get("message") ?? "").trim(),
-      items: selectedItems,
+      request: String(formData.get("request") ?? "").trim(),
+      items: [] as const,
     };
 
     try {
@@ -198,7 +140,7 @@ export default function QuotePage() {
               <span className="text-iba-sky">devis</span>
             </h1>
             <p className="mt-8 max-w-2xl border-l-2 border-iba-sky pl-6 text-lg font-medium leading-relaxed text-white/85 md:text-xl">
-              Configurez vos besoins en matériaux pour votre prochain chantier. Notre équipe technique vous fournira une cotation précise dans les plus brefs délais.
+              Décrivez vos besoins en matériaux dans le formulaire. Notre équipe technique vous fournira une cotation précise dans les plus brefs délais.
             </p>
           </motion.div>
         </div>
@@ -236,7 +178,7 @@ export default function QuotePage() {
                   {deliveryHint}
                 </p>
               ) : null}
-              <button onClick={() => { setIsSuccess(false); setSelectedItems([]); setSubmitError(null); setDeliveryHint(null); setFieldErrors({}); }} className="mt-8 font-mono text-sm font-bold uppercase tracking-widest text-iba-navy hover:text-iba-sky transition-colors">
+              <button onClick={() => { setIsSuccess(false); setRequestText(""); setSubmitError(null); setDeliveryHint(null); setFieldErrors({}); }} className="mt-8 font-mono text-sm font-bold uppercase tracking-widest text-iba-navy hover:text-iba-sky transition-colors">
                 Nouveau Devis →
               </button>
             </motion.div>
@@ -374,148 +316,34 @@ export default function QuotePage() {
 
                 <div className="mb-8 flex items-end gap-4 border-b border-iba-sky/10 pb-4">
                   <span className="font-mono text-4xl font-black text-iba-sky/10">02</span>
-                  <h2 className="text-2xl font-black uppercase tracking-tighter text-iba-sky">Spécifications Matériaux</h2>
-                </div>
-
-                {/* SEARCH BAR (Product Selector) */}
-                <div className="relative mb-8 z-50">
-                  <label htmlFor="quote-product-search" className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60">Rechercher et ajouter un produit</label>
-                  {fieldErrors.items ? (
-                    <p id="quote-items-error" className="mb-3 text-sm font-medium text-red-600" role="alert">
-                      {fieldErrors.items}
-                    </p>
-                  ) : null}
-                  <div className="relative">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-iba-navy" />
-                    <input 
-                      id="quote-product-search"
-                      type="text" 
-                      value={searchQuery}
-                      onChange={(e) => {
-                        setSearchQuery(e.target.value);
-                        clearFieldError("items");
-                      }}
-                      onFocus={() => setIsSearchFocused(true)}
-                      aria-invalid={fieldErrors.items ? true : undefined}
-                      aria-describedby={fieldErrors.items ? "quote-items-error" : undefined}
-                      className={cn(
-                        "w-full border-2 border-iba-sky bg-background pl-12 pr-4 py-4 font-bold text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none transition-all",
-                        fieldBorderClass(!!fieldErrors.items),
-                      )}
-                      placeholder="Ex: Tôle IBR, Ciment, Sikalite..." 
-                    />
-                  </div>
-
-                  {/* Dropdown Results */}
-                  <AnimatePresence>
-                    {isSearchFocused && searchQuery.trim().length > 0 && (
-                      <motion.div 
-                        initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 5 }}
-                        className="absolute left-0 right-0 top-full mt-2 overflow-hidden border border-iba-sky/20 bg-white shadow-2xl"
-                      >
-                        {searchResults.length > 0 ? (
-                          <ul className="max-h-64 overflow-y-auto">
-                            {searchResults.map(product => (
-                              <li key={product.id}>
-                                <button
-                                  type="button"
-                                  onClick={() => addItem(product)}
-                                  className="flex w-full items-center justify-between border-b border-iba-sky/5 px-4 py-3 text-left hover:bg-iba-sky/5"
-                                >
-                                  <div>
-                                    <p className="font-bold text-iba-sky">{product.name}</p>
-                                    <p className="font-mono text-[10px] uppercase text-iba-sky/50">{productCategories.find(c => c.id === product.categoryId)?.label}</p>
-                                  </div>
-                                  <Plus className="h-4 w-4 text-iba-navy" />
-                                </button>
-                              </li>
-                            ))}
-                          </ul>
-                        ) : (
-                          <div className="p-4 text-center text-sm font-medium text-iba-sky/50">Aucun produit trouvé.</div>
-                        )}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {/* SELECTED ITEMS CART */}
-                <div className="bg-iba-sky/[0.02] border border-iba-sky/10 p-1 min-h-[150px]">
-                  {selectedItems.length === 0 ? (
-                    <div className="flex h-[150px] items-center justify-center flex-col text-center">
-                      <p className="font-mono text-xs font-bold uppercase tracking-widest text-iba-sky/40">Le manifeste est vide</p>
-                      <p className="text-sm text-iba-sky/40 mt-1">Utilisez la barre de recherche pour ajouter des matériaux</p>
-                    </div>
-                  ) : (
-                    <ul className="divide-y divide-iba-sky/10">
-                      {selectedItems.map((item, index) => (
-                        <motion.li 
-                          layout
-                          initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }}
-                          key={item.id} 
-                          className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 bg-white hover:bg-iba-sky/[0.01] transition-colors"
-                        >
-                          <div className="flex items-center gap-4">
-                            <span className="font-mono text-[10px] font-bold text-iba-sky/30">
-                              {(index + 1).toString().padStart(2, '0')}
-                            </span>
-                            <div>
-                              <p className="font-bold text-iba-sky">{item.name}</p>
-                              <p className="font-mono text-[10px] uppercase text-iba-navy">{item.categoryLabel}</p>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-4 self-end sm:self-auto">
-                            <div className="flex items-center border border-iba-sky/20 bg-background">
-                              <button type="button" onClick={() => updateQuantity(item.id, -1)} className="px-3 py-1 text-iba-sky hover:text-iba-navy hover:bg-iba-sky/5 transition-colors">-</button>
-                              <span className="w-12 text-center font-mono text-sm font-bold text-iba-sky">{item.quantity}</span>
-                              <button type="button" onClick={() => updateQuantity(item.id, 1)} className="px-3 py-1 text-iba-sky hover:text-iba-navy hover:bg-iba-sky/5 transition-colors">+</button>
-                            </div>
-                            <span className="font-mono text-[10px] uppercase text-iba-sky/50 mr-2">Unités</span>
-                            <button type="button" onClick={() => removeItem(item.id)} className="p-2 text-red-500/50 hover:bg-red-50 hover:text-red-600 transition-colors rounded-sm">
-                              <Trash2 className="h-4 w-4" />
-                            </button>
-                          </div>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </div>
-
-              {/* PHASE 03: Logistique */}
-              <div className="relative border border-iba-sky/15 bg-white p-8 md:p-12 shadow-[0_10px_40px_rgba(40,37,97,0.03)]">
-                {/* Structural Corners */}
-                <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-iba-sky" />
-                <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-iba-sky" />
-                <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-iba-sky" />
-                <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-iba-sky" />
-
-                <div className="mb-8 flex items-end gap-4 border-b border-iba-sky/10 pb-4">
-                  <span className="font-mono text-4xl font-black text-iba-sky/10">03</span>
-                  <h2 className="text-2xl font-black uppercase tracking-tighter text-iba-sky">Détails Logistiques</h2>
+                  <h2 className="text-2xl font-black uppercase tracking-tighter text-iba-sky">Votre demande</h2>
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="quote-message" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60">Informations supplémentaires (Lieu de livraison, délais, contraintes)</label>
-                  <textarea
-                    id="quote-message"
-                    name="message"
-                    rows={5}
-                    aria-invalid={fieldErrors.message ? true : undefined}
-                    aria-describedby={fieldErrors.message ? "quote-message-error" : undefined}
-                    onChange={() => clearFieldError("message")}
-                    className={cn(
-                      "w-full border border-iba-sky/20 bg-background p-4 font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all resize-none",
-                      fieldBorderClass(!!fieldErrors.message),
-                    )}
-                    placeholder="Veuillez préciser le lieu exact de livraison à Kinshasa et toute contrainte d&apos;accès pour les camions lourds..."
-                  />
-                  {fieldErrors.message ? (
-                    <p id="quote-message-error" className="text-sm font-medium text-red-600" role="alert">
-                      {fieldErrors.message}
+                  <label htmlFor="quote-request" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60">Matériaux et produits souhaités *</label>
+                  {fieldErrors.request ? (
+                    <p id="quote-request-error" className="text-sm font-medium text-red-600" role="alert">
+                      {fieldErrors.request}
                     </p>
                   ) : null}
+                  <textarea
+                    id="quote-request"
+                    name="request"
+                    required
+                    rows={8}
+                    value={requestText}
+                    onChange={(e) => {
+                      setRequestText(e.target.value);
+                      clearFieldError("request");
+                    }}
+                    aria-invalid={fieldErrors.request ? true : undefined}
+                    aria-describedby={fieldErrors.request ? "quote-request-error" : undefined}
+                    className={cn(
+                      "w-full border border-iba-sky/20 bg-background p-4 font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all resize-y min-h-[180px]",
+                      fieldBorderClass(!!fieldErrors.request),
+                    )}
+                    placeholder="Décrivez librement ce dont vous avez besoin : types de matériaux, quantités approximatives, références, dimensions, etc."
+                  />
                 </div>
               </div>
 
@@ -531,11 +359,11 @@ export default function QuotePage() {
               <div className="flex justify-end lg:justify-start">
                 <button
                   type="submit"
-                  disabled={isSubmitting || selectedItems.length === 0}
+                  disabled={isSubmitting || !requestText.trim()}
                   className={cn(
                     "group relative inline-flex items-center justify-center overflow-hidden border-2 bg-iba-orange px-10 py-5 font-mono text-sm font-bold uppercase tracking-widest text-white transition-all",
-                    isSubmitting || selectedItems.length === 0 
-                      ? "opacity-50 cursor-not-allowed border-iba-orange" 
+                    isSubmitting || !requestText.trim()
+                      ? "opacity-50 cursor-not-allowed border-iba-orange"
                       : "border-iba-orange hover:bg-iba-orange/90 hover:border-iba-orange/90 shadow-[0_0_20px_rgba(255,157,0,0.2)] hover:shadow-[0_0_30px_rgba(255,157,0,0.4)]"
                   )}
                 >
@@ -543,9 +371,9 @@ export default function QuotePage() {
                     {isSubmitting ? "Transmission..." : "Soumettre le Manifeste"}
                     {!isSubmitting && <Send className="ml-3 h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />}
                   </span>
-                  {!isSubmitting && selectedItems.length > 0 && (
+                  {!isSubmitting && requestText.trim() ? (
                     <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
-                  )}
+                  ) : null}
                 </button>
               </div>
 
@@ -558,7 +386,7 @@ export default function QuotePage() {
                     Parcours
                   </p>
                   <p className="mt-2 text-sm font-medium leading-relaxed text-iba-sky/65">
-                    Trois phases : identité, matériaux, puis contraintes logistiques.
+                    Deux étapes : vos coordonnées, puis la description de votre besoin en matériaux.
                   </p>
                 </div>
                 <ol className="space-y-6 border-t border-iba-sky/10 pt-8">
@@ -572,15 +400,8 @@ export default function QuotePage() {
                   <li className="flex gap-4">
                     <span className="font-mono text-2xl font-black text-iba-navy/80">02</span>
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-iba-sky">Matériaux</p>
-                      <p className="mt-1 text-xs text-iba-sky/55">Recherche et manifeste</p>
-                    </div>
-                  </li>
-                  <li className="flex gap-4">
-                    <span className="font-mono text-2xl font-black text-iba-navy/80">03</span>
-                    <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-iba-sky">Logistique</p>
-                      <p className="mt-1 text-xs text-iba-sky/55">Livraison, délais, accès</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-iba-sky">Demande</p>
+                      <p className="mt-1 text-xs text-iba-sky/55">Produits et quantités en texte libre</p>
                     </div>
                   </li>
                 </ol>
