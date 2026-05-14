@@ -59,7 +59,7 @@ const fade = {
 
 export default function ProjectsPage() {
   return (
-    <main className="flex min-h-screen flex-col bg-background selection:bg-iba-navy selection:text-white">
+    <main className="flex min-h-[100dvh] md:min-h-screen flex-col bg-background selection:bg-iba-navy selection:text-white">
       
       {/* 1. Hero — 60% navy · 30% white copy · 10% sky accents */}
       <section className="relative overflow-hidden bg-iba-navy pt-[calc(6rem+2rem)] pb-24 text-white md:pt-[calc(8rem+2rem)] md:pb-32">

@@ -104,7 +104,7 @@ export default function QuotePage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col bg-background selection:bg-iba-navy selection:text-white">
+    <main className="flex min-h-[100dvh] md:min-h-screen flex-col bg-background selection:bg-iba-navy selection:text-white">
       
       {/* 1. Hero — même logique que Projects : ciel, grille marine, accroche en bandeau tiers (max-w-4xl + paragraphe bordé) */}
       <section className="relative overflow-hidden bg-iba-navy pt-[calc(6rem+2rem)] pb-24 text-white md:pt-[calc(8rem+2rem)] md:pb-32">
@@ -214,7 +214,7 @@ export default function QuotePage() {
                         aria-describedby={fieldErrors.name ? "quote-name-error" : undefined}
                         onChange={() => clearFieldError("name")}
                         className={cn(
-                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
+                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
                           fieldBorderClass(!!fieldErrors.name),
                         )}
                         placeholder="Jean Dupont"
@@ -239,7 +239,7 @@ export default function QuotePage() {
                         aria-describedby={fieldErrors.company ? "quote-company-error" : undefined}
                         onChange={() => clearFieldError("company")}
                         className={cn(
-                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
+                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
                           fieldBorderClass(!!fieldErrors.company),
                         )}
                         placeholder="Construction S.A."
@@ -265,7 +265,7 @@ export default function QuotePage() {
                         aria-describedby={fieldErrors.email ? "quote-email-error" : undefined}
                         onChange={() => clearFieldError("email")}
                         className={cn(
-                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
+                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
                           fieldBorderClass(!!fieldErrors.email),
                         )}
                         placeholder="contact@entreprise.com"
@@ -291,7 +291,7 @@ export default function QuotePage() {
                         aria-describedby={fieldErrors.phone ? "quote-phone-error" : undefined}
                         onChange={() => clearFieldError("phone")}
                         className={cn(
-                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
+                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
                           fieldBorderClass(!!fieldErrors.phone),
                         )}
                         placeholder="+243 ..."
@@ -339,7 +339,7 @@ export default function QuotePage() {
                     aria-invalid={fieldErrors.request ? true : undefined}
                     aria-describedby={fieldErrors.request ? "quote-request-error" : undefined}
                     className={cn(
-                      "w-full border border-iba-sky/20 bg-background p-4 font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all resize-y min-h-[180px]",
+                      "w-full border border-iba-sky/20 bg-background p-4 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all resize-y min-h-[180px]",
                       fieldBorderClass(!!fieldErrors.request),
                     )}
                     placeholder="Décrivez librement ce dont vous avez besoin : types de matériaux, quantités approximatives, références, dimensions, etc."

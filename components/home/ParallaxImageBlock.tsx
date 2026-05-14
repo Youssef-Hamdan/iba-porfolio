@@ -37,7 +37,7 @@ export function ParallaxImageBlock({
       : null;
 
   return (
-    <div ref={ref} className="group relative h-[min(72vh,520px)] w-full min-h-[400px] overflow-hidden md:h-[min(70vh,560px)]">
+    <div ref={ref} className="group relative h-[min(72dvh,520px)] md:h-[min(70vh,560px)] w-full min-h-[400px] overflow-hidden">
       <motion.div className="absolute inset-0 -top-[20%] z-0 h-[140%] w-full" style={{ y: imageY }}>
         <Image src={src} alt={title} fill className="object-cover" sizes="100vw" priority={index === 1} />
       </motion.div>

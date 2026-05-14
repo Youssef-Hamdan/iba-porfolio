@@ -24,7 +24,7 @@ export function AboutPage() {
   const marqueeItems = [...charter.principles, ...charter.principles, ...charter.principles];
 
   return (
-    <main className="flex min-h-screen flex-col bg-background selection:bg-iba-navy selection:text-white">
+    <main className="flex min-h-[100dvh] md:min-h-screen flex-col bg-background selection:bg-iba-navy selection:text-white">
       
       {/* 1. INTRO ARCHITECTURALE (Blueprint Grid) */}
       <section

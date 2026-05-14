@@ -85,7 +85,7 @@ export default function ProductsPage() {
   );
 
   return (
-    <main className="flex min-h-screen flex-col bg-background selection:bg-iba-navy selection:text-white">
+    <main className="flex min-h-[100dvh] md:min-h-screen flex-col bg-background selection:bg-iba-navy selection:text-white">
       
       {/* 1. Hero — 60% navy · 30% white copy · 10% sky accents */}
       <section className="relative overflow-hidden bg-iba-navy pt-[calc(6rem+2rem)] pb-16 text-white md:pt-[calc(8rem+2rem)] md:pb-24">
@@ -150,12 +150,12 @@ export default function ProductsPage() {
               <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-iba-sky/45">
                 Catégories
               </p>
-              <div className="flex flex-col gap-2 border-b border-iba-sky/10 pb-6 lg:border-b-0 lg:border-r lg:border-iba-sky/10 lg:pb-0 lg:pr-6 xl:pr-8">
+              <div className="grid grid-cols-2 gap-2 border-b border-iba-sky/10 pb-6 sm:grid-cols-3 lg:flex lg:flex-col lg:border-b-0 lg:border-r lg:border-iba-sky/10 lg:pb-0 lg:pr-6 xl:pr-8">
                 <button
                   type="button"
                   onClick={() => setActiveCategory("all")}
                   className={cn(
-                    "w-full rounded-lg border px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wide transition-all",
+                    "flex w-full items-center justify-center lg:justify-start rounded-lg border px-2 py-3 text-center lg:text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-wide transition-all",
                     activeCategory === "all"
                       ? "border-iba-sky bg-iba-sky text-white shadow-md shadow-iba-sky/15"
                       : "border-iba-sky/12 bg-white text-iba-sky hover:border-iba-navy/45 hover:text-iba-navy",
@@ -169,7 +169,7 @@ export default function ProductsPage() {
                     key={cat.id}
                     onClick={() => setActiveCategory(cat.id)}
                     className={cn(
-                      "w-full rounded-lg border px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wide transition-all",
+                      "flex w-full items-center justify-center lg:justify-start rounded-lg border px-2 py-3 text-center lg:text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-wide transition-all",
                       activeCategory === cat.id
                         ? "border-iba-navy bg-iba-navy text-white shadow-md shadow-iba-navy/20"
                         : "border-iba-sky/12 bg-white text-iba-sky hover:border-iba-navy/45 hover:text-iba-navy",

@@ -8,6 +8,7 @@
 html {
   /* Avoid horizontal "wobble" when the vertical scrollbar appears/disappears */
   scrollbar-gutter: stable;
+  overflow-x: hidden;
 }
 
 :root {
@@ -48,6 +49,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  overflow-x: hidden;
 }
 
 @keyframes iba-marquee {

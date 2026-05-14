@@ -58,8 +58,8 @@ export function SiteFooter() {
               sizes="(max-width: 1280px) 100vw, 80rem"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-iba-navy/88 via-iba-navy/72 to-transparent" />
-            <div className="absolute inset-0 flex flex-col justify-center p-8 md:p-16 lg:p-24">
-              <h2 className="mb-6 max-w-2xl text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl">
+            <div className="absolute inset-0 flex flex-col justify-center p-6 sm:p-8 md:p-16 lg:p-24">
+              <h2 className="mb-6 max-w-2xl text-2xl sm:text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl">
                 Alliances stratégiques pour une{" "}
                 <span className="text-iba-sky">croissance durable</span>.
               </h2>
@@ -68,8 +68,8 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="w-full px-6">
-        <div className="rounded-t-3xl bg-iba-navy pb-16 pt-36 text-white md:px-12 md:pb-20 md:pt-40">
+      <div className="w-full md:px-6">
+        <div className="rounded-t-3xl bg-iba-navy px-6 sm:px-8 pb-16 pt-36 text-white md:px-12 md:pb-20 md:pt-40">
           <div className="mx-auto max-w-7xl">
             <div className="grid grid-cols-1 gap-12 pb-10 lg:grid-cols-2 lg:gap-16 lg:pb-14">
               <div className="space-y-10">
@@ -79,7 +79,7 @@ export function SiteFooter() {
                   aria-label="International Business Alliance — accueil"
                 >
                   <span className="block rounded-full bg-white p-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.35)] ring-2 ring-iba-sky/35 transition group-hover:ring-iba-orange/60 sm:p-2">
-                    <span className="relative block size-36 sm:size-40 md:size-48 lg:size-56 xl:size-64">
+                    <span className="relative block size-24 sm:size-32 md:size-48 lg:size-56 xl:size-64">
                       <Image
                         src={FOOTER_LOGO_SRC}
                         alt="International Business Alliance"

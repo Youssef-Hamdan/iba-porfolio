@@ -65,7 +65,7 @@ export function SiteHeader() {
     >
       <div
         className={`relative mx-auto flex w-full max-w-[90rem] items-center transition-[padding] duration-300 ${
-          scrolled ? "py-0.5 sm:py-0" : "py-0.5 sm:py-0"
+          scrolled ? "py-1 sm:py-1" : "py-1 sm:py-1"
         } px-5 pr-3 sm:px-8 sm:pr-4 md:px-16 lg:px-20`}
       >
         {/* Logo — gauche */}
@@ -77,7 +77,7 @@ export function SiteHeader() {
           >
             <BrandLogo
               priority
-              className="h-9 w-auto max-w-[min(52vw,220px)] object-contain object-left sm:h-10 sm:max-w-[260px] md:h-11 lg:h-12"
+              className="h-20 w-auto max-w-[min(100vw,500px)] object-contain object-left sm:h-20 sm:max-w-[500px] md:h-24 lg:h-28"
             />
           </Link>
         </div>

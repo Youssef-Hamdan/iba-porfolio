@@ -101,7 +101,7 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col bg-background selection:bg-iba-navy selection:text-white">
+    <main className="flex min-h-[100dvh] md:min-h-screen flex-col bg-background selection:bg-iba-navy selection:text-white">
       <section className="relative overflow-hidden bg-iba-navy pt-[calc(6rem+2rem)] pb-24 text-white md:pt-[calc(8rem+2rem)] md:pb-32">
         <div
           className="pointer-events-none absolute -right-24 top-1/4 h-[480px] w-[480px] rounded-full bg-white/[0.06] blur-[100px]"
@@ -227,7 +227,7 @@ export default function ContactPage() {
                             aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
                             onChange={() => clearFieldError("name")}
                             className={cn(
-                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
+                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
                               fieldBorderClass(!!fieldErrors.name),
                             )}
                             placeholder="Jean Dupont"
@@ -258,7 +258,7 @@ export default function ContactPage() {
                             aria-describedby={fieldErrors.company ? "contact-company-error" : undefined}
                             onChange={() => clearFieldError("company")}
                             className={cn(
-                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
+                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
                               fieldBorderClass(!!fieldErrors.company),
                             )}
                             placeholder="Société ou institution (optionnel)"
@@ -290,7 +290,7 @@ export default function ContactPage() {
                             aria-describedby={fieldErrors.email ? "contact-email-error" : undefined}
                             onChange={() => clearFieldError("email")}
                             className={cn(
-                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
+                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
                               fieldBorderClass(!!fieldErrors.email),
                             )}
                             placeholder="vous@exemple.com"
@@ -322,7 +322,7 @@ export default function ContactPage() {
                             aria-describedby={fieldErrors.phone ? "contact-phone-error" : undefined}
                             onChange={() => clearFieldError("phone")}
                             className={cn(
-                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
+                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
                               fieldBorderClass(!!fieldErrors.phone),
                             )}
                             placeholder="+243 …"
@@ -368,7 +368,7 @@ export default function ContactPage() {
                           aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
                           onChange={() => clearFieldError("message")}
                           className={cn(
-                            "w-full resize-y border border-iba-sky/20 bg-background py-3 pl-12 pr-4 font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
+                            "w-full resize-y border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
                             fieldBorderClass(!!fieldErrors.message),
                           )}
                           placeholder="Décrivez votre demande, le contexte et la meilleure façon de vous joindre…"

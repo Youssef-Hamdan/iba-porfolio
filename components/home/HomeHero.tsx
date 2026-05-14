@@ -44,7 +44,7 @@ export function HomeHero() {
   return (
     <section
       ref={heroRef}
-      className="relative flex min-h-[100vh] items-center justify-start overflow-hidden bg-iba-sky text-white"
+      className="relative flex min-h-[100dvh] md:min-h-[100vh] items-center justify-start overflow-hidden bg-iba-sky text-white"
     >
       {/* 1. ANIMATED PARALLAX BACKGROUND */}
       <motion.div
