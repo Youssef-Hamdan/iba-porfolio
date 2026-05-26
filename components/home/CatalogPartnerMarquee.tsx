@@ -51,8 +51,8 @@ function PartnerLogoBlock({ name, img, caption }: CatalogPartner) {
   return (
     <div
       className={cn(
-        "group/logo flex shrink-0 flex-col items-center justify-center gap-2 px-4 py-2 sm:px-6 sm:py-3 md:px-8",
-        "min-w-[12rem] sm:min-w-[14rem] md:min-w-[17rem]",
+        "group/logo flex shrink-0 flex-col items-center justify-center gap-2 px-3 py-2 sm:px-6 sm:py-3 md:px-8",
+        "min-w-[8rem] sm:min-w-[14rem] md:min-w-[17rem]",
       )}
     >
       {img ? (
@@ -61,7 +61,7 @@ function PartnerLogoBlock({ name, img, caption }: CatalogPartner) {
           <img
             src={img}
             alt={name}
-            className="max-h-24 w-auto max-w-[16rem] object-contain object-center opacity-90 drop-shadow-[0_2px_12px_rgba(0,0,0,0.2)] transition-[transform,opacity] duration-300 ease-out group-hover/logo:scale-105 group-hover/logo:opacity-100 sm:max-h-28 sm:max-w-[18rem] md:max-h-32 md:max-w-[20rem] lg:max-h-36 lg:max-w-[22rem]"
+            className="max-h-16 w-auto max-w-[10rem] object-contain object-center opacity-90 drop-shadow-[0_2px_12px_rgba(0,0,0,0.2)] transition-[transform,opacity] duration-300 ease-out group-hover/logo:scale-105 group-hover/logo:opacity-100 sm:max-h-24 sm:max-w-[14rem] md:max-h-32 md:max-w-[20rem] lg:max-h-36 lg:max-w-[22rem]"
           />
           {caption ? (
             <p className="text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">

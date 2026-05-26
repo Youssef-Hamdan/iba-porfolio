@@ -3,6 +3,7 @@ import { HomePartnersSection } from "@/components/home/HomePartnersSection";
 import { HomeHero } from "@/components/home/HomeHero";
 import { HomeImpactSection } from "@/components/home/HomeImpactSection";
 import { HomePillarsSection } from "@/components/home/HomePillarsSection";
+import { HomeSitesSection } from "@/components/home/HomeSitesSection";
 
 export default function HomePage() {
   return (
@@ -10,6 +11,7 @@ export default function HomePage() {
       <HomeHero />
       <HomeImpactSection />
       {/* <HomePillarsSection /> */}
+      <HomeSitesSection />
       <HomePartnersSection />
       {/* <HomeCatalogSection /> */}
     </main>

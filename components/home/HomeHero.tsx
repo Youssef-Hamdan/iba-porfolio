@@ -51,12 +51,13 @@ export function HomeHero() {
         className="absolute inset-0 z-0 h-[115%] w-full will-change-transform"
         style={{ y: backgroundY }}
       >
-        <Image
-          src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=2070&auto=format&fit=crop"
-          alt="International Business Alliance"
-          fill
-          priority
-        />
+          <Image
+            src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=2070&auto=format&fit=crop"
+            alt="International Business Alliance"
+            fill
+            priority
+            className="object-cover"
+          />
 
       </motion.div>
 
