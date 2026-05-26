@@ -10,7 +10,12 @@ import {
   PaintRoller, 
   Layers, 
   Anvil, 
-  Pickaxe 
+  Pickaxe,
+  Truck,
+  Box,
+  Wrench,
+  PanelTop,
+  LayoutGrid
 } from "lucide-react";
 import { SectionWave } from "@/components/SectionWave";
 import { cn } from "@/lib/utils";
@@ -18,35 +23,71 @@ import { cn } from "@/lib/utils";
 // Suppression de la propriété "span" pour que toutes les cartes aient la même taille
 const collections = [
   { 
-    title: "Ciment", 
+    title: "Acier & Fer", 
+    desc: "Tôles, profilés et tubes acier pour structures robustes.",
+    icon: Anvil,
+    image: "https://images.unsplash.com/photo-1530230588828-9173d1f568b2?q=80&w=800&auto=format&fit=crop"
+  },
+  { 
+    title: "Ciments", 
     desc: "Liens hydrauliques et ciments en sac — uniquement.",
     icon: Cuboid,
     image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop"
   },
   { 
-    title: "Mortier", 
-    desc: "Mortiers-colle, coulis, latex et mortiers techniques Sika.",
-    icon: Pickaxe,
+    title: "Béton Prêt à l'Emploi", 
+    desc: "Béton prêt à l'emploi livré directement sur vos chantiers.",
+    icon: Truck,
     image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=800&auto=format&fit=crop"
   },
   { 
-    title: "Plâtre", 
-    desc: "Plaques de plâtre, plâtre en poudre et fillasse.",
-    icon: Layers,
-    image: "https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=800&auto=format&fit=crop"
-  },
-  { 
-    title: "Acier", 
-    desc: "Tôles, profilés IBR et tubes acier pour structures robustes.",
-    icon: Anvil,
-    image: "https://images.unsplash.com/photo-1530230588828-9173d1f568b2?q=80&w=800&auto=format&fit=crop"
+    title: "Brique", 
+    desc: "Briques de construction pleines et creuses de haute qualité.",
+    icon: Box,
+    image: "https://images.unsplash.com/photo-1584282431782-b7e193f2f815?q=80&w=800&auto=format&fit=crop"
   },
   {
-    title: "Peintures",
+    title: "Peinture",
     desc: "Peintures et mastiques pour finitions durables.",
     icon: PaintRoller,
     image: "https://images.unsplash.com/photo-1562259949-e8e7689d7828?q=80&w=800&auto=format&fit=crop"
   },
+  {
+    title: "Bois",
+    desc: "Bois de charpente, coffrage et menuiserie.",
+    icon: Pickaxe,
+    image: "https://images.unsplash.com/photo-1611142512140-5b584d41e737?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    title: "Outillage Quincaillerie",
+    desc: "Outils professionnels et quincaillerie générale.",
+    icon: Wrench,
+    image: "https://images.unsplash.com/photo-1581147036324-c157af0865c3?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    title: "Plafonds",
+    desc: "Solutions complètes pour plafonds suspendus et isolation.",
+    icon: Layers,
+    image: "https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    title: "Panneaux Sandwich",
+    desc: "Panneaux isolants pour toitures et bardages industriels.",
+    icon: PanelTop,
+    image: "https://images.unsplash.com/photo-1601588667635-c3f25c276cc1?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    title: "Pavé",
+    desc: "Pavés autobloquants pour aménagements extérieurs.",
+    icon: LayoutGrid,
+    image: "https://images.unsplash.com/photo-1596706915124-747fce5de79b?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    title: "Service Transport",
+    desc: "Livraison rapide et sécurisée de tous vos matériaux.",
+    icon: Truck,
+    image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=800&auto=format&fit=crop"
+  }
 ];
 
 export function HomeCatalogSection() {
@@ -125,21 +166,15 @@ export function HomeCatalogSection() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-6 md:gap-4"
+          className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 md:gap-4"
         >
           {collections.map((item, index) => {
             const Icon = item.icon;
-            const isLast = index === collections.length - 1;
             return (
               <motion.div 
                 key={item.title} 
                 variants={itemVariants}
-                className={cn(
-                  "group relative min-h-[220px] overflow-hidden rounded-2xl bg-white ring-1 ring-iba-sky/10 shadow-lg shadow-iba-sky/5",
-                  index < 3 && "md:col-span-2",
-                  index >= 3 && "md:col-span-3",
-                  isLast && "sm:col-span-2",
-                )}
+                className="group relative min-h-[220px] overflow-hidden rounded-2xl bg-white ring-1 ring-iba-sky/10 shadow-lg shadow-iba-sky/5"
               >
                 {/* Image de fond */}
                 <Image 

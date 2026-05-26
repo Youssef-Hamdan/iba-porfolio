@@ -10,15 +10,17 @@ export type ImageStorageFolder =
  * One commercial family per id (some categories group related finishes on purpose).
  */
 export type ProductCategoryId =
-  | "ciment"
-  | "mortier"
-  | "platre"
-  | "acier"
-  | "panneaux-bois"
+  | "acier-fer"
+  | "ciments"
+  | "beton"
+  | "brique"
   | "peinture"
-  | "primaire-metaux"
-  | "outillage"
-  | "consommables";
+  | "bois"
+  | "outillage-quincaillerie"
+  | "plafonds"
+  | "panneaux-sandwich"
+  | "pave"
+  | "service-transport";
 
 export interface ProductCategory {
   id: ProductCategoryId;
@@ -38,68 +40,81 @@ export interface ProductItem {
 
 export const productCategories: ProductCategory[] = [
   {
-    id: "ciment",
-    label: "Ciment",
-    description: "Liens hydrauliques et ciments en sac — uniquement.",
-    coverStorageFolder: "cement-mortar-plaster",
-    coverFile: "Super Sikalite.png",
-  },
-  {
-    id: "mortier",
-    label: "Mortier",
-    description: "Mortiers-colle, coulis, latex et mortiers techniques Sika — pas de ciment pur ni de plâtre.",
-    coverStorageFolder: "sika-products",
-    coverFile: "SikaGrout 212 AO 30KG.png",
-  },
-  {
-    id: "platre",
-    label: "Plâtre",
-    description: "Plaques de plâtre, plâtre en poudre et fillasse — uniquement.",
-    coverStorageFolder: "cement-mortar-plaster",
-    coverFile: "GYPROC2.png",
-  },
-  {
-    id: "acier",
-    label: "Acier",
-    description: "Tôles, profilés IBR et tubes acier — pas de bois.",
+    id: "acier-fer",
+    label: "Acier & Fer",
+    description: "Tôles, profilés et tubes acier pour structures robustes.",
     coverStorageFolder: "sheet-metal-pipes-wood",
     coverFile: "tole IBR STORY1.png",
   },
   {
-    id: "panneaux-bois",
-    label: "Panneaux bois",
-    description: "Contreplaqué et panneaux dérivés du bois — pas de métal.",
-    coverStorageFolder: "sheet-metal-pipes-wood",
-    coverFile: "PLYWOOD 2.png",
+    id: "ciments",
+    label: "Ciments",
+    description: "Liens hydrauliques, ciments en sac et mortiers.",
+    coverStorageFolder: "cement-mortar-plaster",
+    coverFile: "Super Sikalite.png",
+  },
+  {
+    id: "beton",
+    label: "Béton Prêt à l'Emploi",
+    description: "Béton prêt à l'emploi livré directement sur vos chantiers.",
+    coverStorageFolder: "cement-mortar-plaster",
+    coverFile: "Super Sikalite.png",
+  },
+  {
+    id: "brique",
+    label: "Brique",
+    description: "Briques de construction pleines et creuses de haute qualité.",
+    coverStorageFolder: "cement-mortar-plaster",
+    coverFile: "Super Sikalite.png",
   },
   {
     id: "peinture",
-    label: "Peintures & finitions",
-    description:
-      "Peintures, mastiques et sceaux d’étanchéité, traitements antirouille — une même famille produits.",
+    label: "Peinture",
+    description: "Peintures, mastiques, sceaux d’étanchéité et traitements antirouille.",
     coverStorageFolder: "paints-coatings-sealants",
     coverFile: "africa color c.png",
   },
   {
-    id: "primaire-metaux",
-    label: "Primaire métaux",
-    description: "Primaires et apprêts pour préparation des métaux (ex. Sikaprimer).",
-    coverStorageFolder: "sika-products",
-    coverFile: "Sikaprimer 3N.PNG",
+    id: "bois",
+    label: "Bois",
+    description: "Bois de charpente, coffrage, menuiserie et panneaux dérivés.",
+    coverStorageFolder: "sheet-metal-pipes-wood",
+    coverFile: "PLYWOOD 2.png",
   },
   {
-    id: "outillage",
-    label: "Outillage",
-    description: "Outils de coupe et d’atelier — pas de consommables jetables.",
+    id: "outillage-quincaillerie",
+    label: "Outillage Quincaillerie",
+    description: "Outils de coupe, d'atelier et quincaillerie générale.",
     coverStorageFolder: "tools-consumables",
     coverFile: "Cisaille 2.png",
   },
   {
-    id: "consommables",
-    label: "Consommables",
-    description: "Ficelle, papier abrasif, tamis, plateau de ponçage, ampoules, etc. — pas d’outils.",
+    id: "plafonds",
+    label: "Plafonds",
+    description: "Solutions complètes pour plafonds suspendus, plâtre et isolation.",
+    coverStorageFolder: "cement-mortar-plaster",
+    coverFile: "GYPROC2.png",
+  },
+  {
+    id: "panneaux-sandwich",
+    label: "Panneaux Sandwich",
+    description: "Panneaux isolants pour toitures et bardages industriels.",
+    coverStorageFolder: "sheet-metal-pipes-wood",
+    coverFile: "tole IBR STORY1.png",
+  },
+  {
+    id: "pave",
+    label: "Pavé",
+    description: "Pavés autobloquants pour aménagements extérieurs.",
+    coverStorageFolder: "cement-mortar-plaster",
+    coverFile: "Super Sikalite.png",
+  },
+  {
+    id: "service-transport",
+    label: "Service Transport",
+    description: "Livraison rapide et sécurisée de tous vos matériaux.",
     coverStorageFolder: "tools-consumables",
-    coverFile: "papier verre 3.png",
+    coverFile: "Cisaille 2.png",
   },
 ];
 
@@ -188,17 +203,17 @@ const peintureCategoryFiles = [
 ] as const;
 
 export const allProducts: ProductItem[] = [
-  ...buildItems("ciment", "cement-mortar-plaster", cimentFiles),
-  ...buildItems("ciment", "paints-coatings-sealants", cimentCiluFiles),
-  ...buildItems("mortier", "cement-mortar-plaster", mortierCementFolderFiles),
-  ...buildItems("mortier", "sika-products", mortierSikaFiles),
-  ...buildItems("platre", "cement-mortar-plaster", platreFiles),
-  ...buildItems("acier", "sheet-metal-pipes-wood", acierFiles),
-  ...buildItems("panneaux-bois", "sheet-metal-pipes-wood", panneauxBoisFiles),
+  ...buildItems("ciments", "cement-mortar-plaster", cimentFiles),
+  ...buildItems("ciments", "paints-coatings-sealants", cimentCiluFiles),
+  ...buildItems("ciments", "cement-mortar-plaster", mortierCementFolderFiles),
+  ...buildItems("ciments", "sika-products", mortierSikaFiles),
+  ...buildItems("plafonds", "cement-mortar-plaster", platreFiles),
+  ...buildItems("acier-fer", "sheet-metal-pipes-wood", acierFiles),
+  ...buildItems("bois", "sheet-metal-pipes-wood", panneauxBoisFiles),
   ...buildItems("peinture", "paints-coatings-sealants", peintureCategoryFiles),
-  ...buildItems("primaire-metaux", "sika-products", primaireMetauxFiles),
-  ...buildItems("outillage", "tools-consumables", outillageFiles),
-  ...buildItems("consommables", "tools-consumables", consommablesFiles),
+  ...buildItems("peinture", "sika-products", primaireMetauxFiles),
+  ...buildItems("outillage-quincaillerie", "tools-consumables", outillageFiles),
+  ...buildItems("outillage-quincaillerie", "tools-consumables", consommablesFiles),
 ];
 
 export function productImageUrl(storageFolder: ImageStorageFolder, file: string): string {

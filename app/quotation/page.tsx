@@ -320,7 +320,7 @@ export default function QuotePage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="quote-request" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60">Matériaux et produits souhaités *</label>
+                  {/* <label htmlFor="quote-request" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60">Matériaux et produits souhaités *</label> */}
                   {fieldErrors.request ? (
                     <p id="quote-request-error" className="text-sm font-medium text-red-600" role="alert">
                       {fieldErrors.request}
