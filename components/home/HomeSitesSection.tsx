@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { MapPin, Phone, User, Building2 } from "lucide-react";
+import { ExternalLink, MapPin, Phone, User, Building2 } from "lucide-react";
 import { SectionWave } from "@/components/SectionWave";
 import { SectionHalfCircle } from "../SectionHalfCircle";
 
@@ -11,61 +11,71 @@ const sites = [
     name: "Poids Lourd",
     manager: "Yanick",
     phone: "089 677 6842",
-    address: "Limete 15ème rue sur Poids Lourds, en face de l'Eglise Tabernacle"
+    address: "Limete 15ème rue sur Poids Lourds, en face de l'Eglise Tabernacle",
+    mapQuery: "4°22'2.30\"S 15°21'6.33\"E"
   },
   {
     name: "Limite Polar",
     manager: "Yannick",
     phone: "081 610 2973",
-    address: "Avenue Poids Lourd, arrêt Polar"
+    address: "Avenue Poids Lourd, arrêt Polar",
+    mapQuery: "4°19'40.79\"S 15°20'16.69\"E"
   },
   {
     name: "14ème Limite",
     manager: "Theo",
     phone: "090 162 0370",
-    address: "13ème rue résidentielle Saint Dominique n°13"
+    address: "13ème rue résidentielle Saint Dominique n°13",
+    mapQuery: "4°21'50.67\"S 15°20'25.67\"E"
   },
   {
     name: "Kinkole",
     manager: "Michee",
     phone: "082 098 5396",
-    address: "Commune Nsele, Q. Lagos (Mosquée Makanza, face collège Modeste)"
+    address: "Commune Nsele, Q. Lagos (Mosquée Makanza, face collège Modeste)",
+    mapQuery: "4°19'58.33\"S 15°30'52.98\"E"
   },
   {
     name: "Bandal",
     manager: "Basile",
     phone: "081 037 3592",
-    address: "Av. Kasavubu n°8, Concession catholique (Arrêt école C. Kintambo)"
+    address: "Av. Kasavubu n°8, Concession catholique (Arrêt école C. Kintambo)",
+    mapQuery: "4°20'46.82\"S 15°15'56.17\"E"
   },
   {
     name: "Matadi Kibala",
     manager: "Pele",
     phone: "089 918 8868",
-    address: "Route Matadi, arrêt Libulu (Réf: Université Panafricaine)"
+    address: "Route Matadi, arrêt Libulu (Réf: Université Panafricaine)",
+    mapQuery: "4°26'6.43\"S 15°15'28.34\"E"
   },
   {
     name: "Huilerie",
     manager: "Kevin",
     phone: "082 423 5167",
-    address: "Croisement Av Kitega-Huilerie, C/Lingwala (Réf: Station Cobil)"
+    address: "Croisement Av Kitega-Huilerie, C/Lingwala (Réf: Station Cobil)",
+    mapQuery: "4°19'15.17\"S 15°18'18.60\"E"
   },
   {
     name: "Mont Ngafula",
     manager: "Matt",
     phone: "081 758 2920",
-    address: "By pass, entrée Masanga Mbila (Réf: Station Ledya / Police Mbata)"
+    address: "By pass, entrée Masanga Mbila (Réf: Station Ledya / Police Mbata)",
+    mapQuery: "4°26'5.40\"S 15°16'40.69\"E"
   },
   {
     name: "Commerce",
     manager: "Titan",
     phone: "085 643 0561",
-    address: "Croisement Tombalbay et Prince Kasa-Vubu (entrée Hôpital Maman Yemo)"
+    address: "Croisement Tombalbay et Prince Kasa-Vubu (entrée Hôpital Maman Yemo)",
+    mapQuery: "4°18'27.21\"S 15°18'25.40\"E"
   },
   {
     name: "Lubudi",
     manager: "Samon",
     phone: "081 500 7982",
-    address: "Av. de la Libération n°32, croisement av Zongo Q/ Lubudi"
+    address: "Av. de la Libération n°32, croisement av Zongo Q/ Lubudi",
+    mapQuery: "4°22'2.14\"S 15°17'7.45\"E"
   },
   {
     name: "UPN",
@@ -197,6 +207,17 @@ function SiteCard({ site, index }: { site: typeof sites[0]; index: number }) {
             <div className="flex flex-col">
               <span className="text-[10px] font-bold uppercase tracking-wider text-iba-navy/50">Adresse</span>
               <span className="text-sm font-medium leading-relaxed text-iba-navy/80">{site.address}</span>
+              {site.mapQuery && (
+                <a 
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex w-fit items-center gap-1.5 rounded-full border border-iba-navy/10 bg-iba-navy/5 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-iba-navy transition-all hover:border-iba-sky hover:bg-iba-sky hover:text-white"
+                >
+                  Voir sur la carte
+                  <ExternalLink className="h-2.5 w-2.5" />
+                </a>
+              )}
             </div>
           </li>
         </ul>

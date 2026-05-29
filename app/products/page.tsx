@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useMemo, useState } from "react";
+import { memo, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,6 +21,16 @@ type Product = (typeof allProducts)[number];
 const categoryLabelMap = new Map(
   productCategories.map((c) => [c.id, c.label] as const),
 );
+
+function scrollToProductsTop(el: HTMLElement | null) {
+  if (!el) return;
+
+  const header = document.querySelector("header");
+  const headerOffset = (header?.getBoundingClientRect().height ?? 96) + 8;
+  const top = window.scrollY + el.getBoundingClientRect().top - headerOffset;
+
+  window.scrollTo({ top: Math.max(0, top), left: 0, behavior: "auto" });
+}
 
 const fade = {
   initial: { opacity: 0, y: 30 },
@@ -61,7 +71,7 @@ const ProductCard = memo(function ProductCard({ product }: { product: Product })
         />
       </div>
 
-      <h3 className="line-clamp-2 font-sans text-lg font-black uppercase leading-tight tracking-tight text-iba-sky transition-colors group-hover:text-iba-navy">
+      <h3 className="line-clamp-2 text-center font-sans text-lg font-black uppercase leading-tight tracking-tight text-iba-sky transition-colors group-hover:text-iba-navy">
         {product.name}
       </h3>
 
@@ -75,6 +85,8 @@ const ProductCard = memo(function ProductCard({ product }: { product: Product })
 
 export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState<ProductCategoryId | "all">("all");
+  const productsTopRef = useRef<HTMLDivElement>(null);
+  const skipInitialScrollRef = useRef(true);
 
   const filteredProducts = useMemo(
     () =>
@@ -83,6 +95,28 @@ export default function ProductsPage() {
         : allProducts.filter((p) => p.categoryId === activeCategory),
     [activeCategory],
   );
+
+  useLayoutEffect(() => {
+    if (skipInitialScrollRef.current) {
+      skipInitialScrollRef.current = false;
+      return;
+    }
+
+    scrollToProductsTop(productsTopRef.current);
+
+    const raf = requestAnimationFrame(() => {
+      scrollToProductsTop(productsTopRef.current);
+    });
+
+    const timeout = window.setTimeout(() => {
+      scrollToProductsTop(productsTopRef.current);
+    }, 200);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(timeout);
+    };
+  }, [activeCategory, filteredProducts.length]);
 
   return (
     <main className="flex min-h-[100dvh] md:min-h-screen flex-col bg-background selection:bg-iba-navy selection:text-white">
@@ -130,7 +164,10 @@ export default function ProductsPage() {
       </section>
 
       {/* 2. Catalogue : filtres à gauche (sidebar) + contenu */}
-      <section className="relative min-h-[50vh] bg-background py-10 md:py-16 lg:py-20">
+      <section
+        id="catalog-content"
+        className="scroll-mt-24 relative min-h-[50vh] bg-background py-10 md:py-16 lg:py-20"
+      >
         <div
           className="pointer-events-none absolute inset-0 z-0 opacity-[0.04]"
           style={{
@@ -182,7 +219,7 @@ export default function ProductsPage() {
             </nav>
 
             {/* Contenu : bannière + grille */}
-            <div className="min-w-0 flex-1">
+            <div ref={productsTopRef} className="min-w-0 flex-1 scroll-mt-28">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeCategory}

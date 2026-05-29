@@ -1,10 +1,11 @@
 /** Folder name under `/public/images/` (physical storage). */
 export type ImageStorageFolder =
   | "cement-mortar-plaster"
-  | "sika-products"
   | "paints-coatings-sealants"
   | "sheet-metal-pipes-wood"
-  | "tools-consumables";
+  | "tools-consumables"
+  | "brique"
+  | "pave";
 
 /**
  * One commercial family per id (some categories group related finishes on purpose).
@@ -19,8 +20,7 @@ export type ProductCategoryId =
   | "outillage-quincaillerie"
   | "plafonds"
   | "panneaux-sandwich"
-  | "pave"
-  | "service-transport";
+  | "pave";
 
 export interface ProductCategory {
   id: ProductCategoryId;
@@ -44,7 +44,7 @@ export const productCategories: ProductCategory[] = [
     label: "Acier & Fer",
     description: "Tôles, profilés et tubes acier pour structures robustes.",
     coverStorageFolder: "sheet-metal-pipes-wood",
-    coverFile: "tole IBR STORY1.png",
+    coverFile: "tole IBR.png",
   },
   {
     id: "ciments",
@@ -64,8 +64,8 @@ export const productCategories: ProductCategory[] = [
     id: "brique",
     label: "Brique",
     description: "Briques de construction pleines et creuses de haute qualité.",
-    coverStorageFolder: "cement-mortar-plaster",
-    coverFile: "Super Sikalite.png",
+    coverStorageFolder: "brique",
+    coverFile: "BRIQUES.jpg",
   },
   {
     id: "peinture",
@@ -100,21 +100,14 @@ export const productCategories: ProductCategory[] = [
     label: "Panneaux Sandwich",
     description: "Panneaux isolants pour toitures et bardages industriels.",
     coverStorageFolder: "sheet-metal-pipes-wood",
-    coverFile: "tole IBR STORY1.png",
+    coverFile: "panneau-sandwich.jpeg",
   },
   {
     id: "pave",
     label: "Pavé",
     description: "Pavés autobloquants pour aménagements extérieurs.",
-    coverStorageFolder: "cement-mortar-plaster",
-    coverFile: "Super Sikalite.png",
-  },
-  {
-    id: "service-transport",
-    label: "Service Transport",
-    description: "Livraison rapide et sécurisée de tous vos matériaux.",
-    coverStorageFolder: "tools-consumables",
-    coverFile: "Cisaille 2.png",
+    coverStorageFolder: "pave",
+    coverFile: "PAVE.jpg",
   },
 ];
 
@@ -142,10 +135,10 @@ function buildItems(
   }));
 }
 
-const cimentFiles = ["Super Sikalite.png", "surecem.webp"] as const;
+const cimentFiles = ["CIMENT.jpeg", "Super Sikalite.png"] as const;
 
 /** Stockés dans paints-coatings-sealants, rangés commercialement sous Ciment. */
-const cimentCiluFiles = ["cilu-p-2.png", "cilu-p-2FF.png"] as const;
+const cimentCiluFiles = [] as const;
 
 const mortierCementFolderFiles = [
   "CIMENT COLLE kin colle.png",
@@ -155,63 +148,92 @@ const mortierCementFolderFiles = [
   "CIMENT COLLE mortier colle.png",
 ] as const;
 
-const mortierSikaFiles = [
-  "SikaGrout 212 AO 30KG.png",
-  "SikaLatex Light AO 5LT.png",
-  "SikaTop - 107 Seal AO COMP. A 5KG.png",
-  "SikaTop - 107 Seal AO COMP. B 20KG.png",
-  "SikaTop - 209 AO (B) Bg 24Kg.png",
-  "SikaTop- 209 AO (A) Bg 8Kg.png",
-] as const;
-
 const platreFiles = ["GYPROC2.png", "PLATRE ET FILLASSE 2.png"] as const;
 
+const betonFiles = ["CENTRALE A BETON.png"] as const;
+
 const acierFiles = [
-  "STAINLESS STEEL PIPES.png",
-  "Steel Rectangular Pipde-Récupéré.png",
-  "TÔLE NOIR 3.png",
-  "tole IBR STORY1.png",
+  "CLOUS.png",
+  "CORNIERE.jpg",
+  "Fer-plat.jpg",
+  "TÔLE NOIR.png",
+  "barre fameco.jpeg",
+  "tole IBR.png",
+  "UPN.webp",
 ] as const;
 
-const panneauxBoisFiles = ["PLYWOOD 2.png"] as const;
+const panneauxBoisFiles = ["PLYWOOD 2.png", "triplex 4mm.jpg"] as const;
 
-const peintureLiquideFiles = ["Gris png.png", "africa color c.png"] as const;
+const panneauxSandwichFiles = ["panneau-sandwich.jpeg"] as const;
 
-const mastiquesFiles = ["eagle mastique.png", "eaglet.png", "sceaux eagle.png"] as const;
-
-const antirouilleFiles = [
-  "Antirouille africa color  afrifood.png",
-  "Antirouille-afrifood1.png",
+const outillageFiles = [
+  "Cisaille.png",
+  "HACHE.png",
+  "MARTEAU ARRACHE CLOU.png",
+  "NIVEAU.png",
+  "PELLE.png",
+  "Turelle.png",
 ] as const;
-
-const primaireMetauxFiles = ["Sikaprimer 3N.PNG"] as const;
-
-const outillageFiles = ["Cisaille 2.png"] as const;
 
 const consommablesFiles = [
-  "Ampoule economique 2.png",
-  "Ficelle en nylon2.png",
-  "papier verre 3.png",
-  "Plateau Poncage2.png",
-  "TAMIS DE 2.png",
+  "Ampoule economique.png",
+  "FICELLE NYLON.png",
+  "PAPIER VERRE.png",
+  "Plateau Poncage.png",
+  "ROULEAU PONCAGE.png",
+  "TAMIS DE CONSTRUCTION.png",
+  "ROULEAU ETANCHE.png"
+] as const;
+
+const etancheiteFiles = [
+  "ROULEAU ETANCHE.png",
+] as const;
+
+const peintureLiquideFiles = [
+  "ANTIROUILEL ROUGE EAGLE.png",
+  "EMAIL AFRICA.JPG",
+  "EMAIL EAGLE COULEUR.JPG",
+  "ROULEAUX PEINTURE.png",
+  "Rouleau Peinture.png",
+  "latex eagle.png",
+  "mastique eagle.png",
 ] as const;
 
 const peintureCategoryFiles = [
   ...peintureLiquideFiles,
-  ...mastiquesFiles,
-  ...antirouilleFiles,
+  
+] as const;
+
+const briqueFiles = [
+  "BRIQUE 2 RECTANGULAIRE.png",
+  "BRIQUE 10 PLEINE.png",
+  "BRIQUE 10 RECTANGULAIRE.png",
+  "BRIQUE 12 RONDE.png",
+  "BRIQUE 15 RONDE.png",
+] as const;
+
+const paveFiles = [
+  "PAVE 1.jpg",
+  "PAVE 3.jpg",
+  "PAVE.jpg",
+  "PAVE BARKIA 6 CM.png",
+  "PAVE BOWTIE GRAND 5 CM.png",
+  "PAVE HEXAGONE 6CM.png",
+  "PAVE LOSANGE.png",
 ] as const;
 
 export const allProducts: ProductItem[] = [
   ...buildItems("ciments", "cement-mortar-plaster", cimentFiles),
   ...buildItems("ciments", "paints-coatings-sealants", cimentCiluFiles),
   ...buildItems("ciments", "cement-mortar-plaster", mortierCementFolderFiles),
-  ...buildItems("ciments", "sika-products", mortierSikaFiles),
+  ...buildItems("brique", "brique", briqueFiles),
+  ...buildItems("pave", "pave", paveFiles),
+  ...buildItems("beton", "cement-mortar-plaster", betonFiles),
   ...buildItems("plafonds", "cement-mortar-plaster", platreFiles),
   ...buildItems("acier-fer", "sheet-metal-pipes-wood", acierFiles),
   ...buildItems("bois", "sheet-metal-pipes-wood", panneauxBoisFiles),
+  ...buildItems("panneaux-sandwich", "sheet-metal-pipes-wood", panneauxSandwichFiles),
   ...buildItems("peinture", "paints-coatings-sealants", peintureCategoryFiles),
-  ...buildItems("peinture", "sika-products", primaireMetauxFiles),
   ...buildItems("outillage-quincaillerie", "tools-consumables", outillageFiles),
   ...buildItems("outillage-quincaillerie", "tools-consumables", consommablesFiles),
 ];

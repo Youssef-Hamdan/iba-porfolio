@@ -8,47 +8,94 @@ import { ArrowRight, MapPin, Calendar, Ruler, X, Maximize2 } from "lucide-react"
 import { SectionWave } from "@/components/SectionWave";
 import { cn } from "@/lib/utils";
 
-// --- MOCK DATA (Replace with your actual data source) ---
-const projects = [
-  {
-    id: "01",
-    title: "Tour de l'Innovation",
-    category: "Structure Haute",
-    location: "Gombe, Kinshasa",
-    date: "2024 - 2025",
-    scale: "15,000 m²",
-    description: "Conception et montage de l'ossature métallique pour le nouveau pôle technologique. Utilisation d'acier haute résistance pour supporter des charges dynamiques extrêmes avec une esthétique architecturale exposée.",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
-    imageHover:
-      "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop",
-  },
-  {
-    id: "02",
-    title: "Complexe Industriel N'djili",
-    category: "Hangar & Logistique",
-    location: "N'djili, Kinshasa",
-    date: "2023 - 2024",
-    scale: "45,000 m²",
-    description: "Déploiement d'une structure modulaire en treillis pour un centre logistique de grande envergure. Optimisation des portées sans piliers centraux pour faciliter la manœuvrabilité des engins lourds.",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop",
-    imageHover:
-      "https://images.unsplash.com/photo-1581092160562-40aa08e91437?q=80&w=2070&auto=format&fit=crop",
-  },
-  {
-    id: "03",
-    title: "Pont de la Fraternité",
-    category: "Infrastructure Civile",
-    location: "Kongo Central",
-    date: "2023",
-    scale: "120 mètres",
-    description: "Fourniture et assemblage des poutres en acier IBR pour un franchissement routier stratégique. Traitement anticorrosion multicouche adapté à l'environnement tropical humide.",
-    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2071&auto=format&fit=crop",
-    imageHover:
-      "https://images.unsplash.com/photo-1590644361087-cba854a58fdf?q=80&w=2071&auto=format&fit=crop",
-  },
-];
+// --- DATA SOURCE ---
+export type ProjectRecord = {
+  id: string;
+  title: string;
+  category: string;
+  location: string;
+  image: string;
+  description: string;
+  objectives: string[];
+  highlights: {
+    phase: string;
+    program: string;
+    designLanguage: string;
+  };
+  gallery: {
+    src: string;
+    alt: string;
+  }[];
+};
 
-type Project = (typeof projects)[number];
+const heroImg = "/images/projects/kinshasa-mall.jpeg";
+const gallery1 = "/images/31-PP (1).webp";
+const gallery2 = "/images/15_DJI_0460_02.webp";
+const gallery3 = "/images/19-pp-02.webp"; // fixed relative path
+const gallery4 = "/images/3C8A7066.webp";  // fixed relative path
+
+export const projectData: Record<string, Omit<ProjectRecord, "id">> = {
+  "kinshasa-mall": {
+    title: "Kinshasa Mall",
+    category: "Commerce & Architecture",
+    location: "Av. 24 Novembre, C/ Gombe – Kinshasa",
+    image: "/images/projects/kinshasa-mall.jpeg",
+    description:
+      "Centre commercial R+4 de référence à Kinshasa conçu pour optimiser les flux visiteurs et intégrer des normes de sécurité élevées. Le Kinshasa Mall a été imaginé comme une destination contemporaine mêlant prestige commercial, fluidité urbaine et expérience architecturale forte. Les espaces intérieurs ont été conçus pour prolonger la signature architecturale avec une atmosphère raffinée, lisible et accueillante, contribuant à une expérience visiteur premium.",
+    objectives: [
+      "Gestion des flux importants de visiteurs et intégration des normes de sécurité incendie.",
+      "Conception optimisée des circulations, compartimentage et mise en place de systèmes de sécurité et de désenfumage performants.",
+      "Créer une identité architecturale immédiatement reconnaissable dans le paysage urbain de Kinshasa",
+      "Concevoir un lieu premium associant commerce, restauration et expérience lifestyle",
+      "Offrir des circulations intérieures claires, élégantes et confortables pour les visiteurs",
+      "Développer une façade et des volumes capables de traduire modernité, prestige et attractivité",
+      "Créer une atmosphère intérieure élégante et cohérente avec l’image premium du mall",
+      "Mettre en valeur les enseignes et les vitrines dans un cadre haut de gamme",
+      "Introduire une expérience fluide entre shopping, détente et restauration",
+    ],
+    highlights: {
+      phase: "Études, Développement & Réalisation",
+      program: "Centre commercial R+4, Retail, Dining & Lifestyle",
+      designLanguage: "Contemporain, premium et urbain",
+    },
+    gallery: [
+      { src: "/images/projects/kinshasa-mall.jpeg", alt: "Vue d'ensemble du projet Kinshasa Mall" },
+      { src: gallery1, alt: "Prototype architectural du Kinshasa Mall" },
+      { src: gallery2, alt: "Vue aérienne conceptuelle du Kinshasa Mall" },
+      { src: gallery3, alt: "Étude de façade du Kinshasa Mall" },
+      { src: gallery4, alt: "Perspective intérieure du Kinshasa Mall" },
+    ],
+  },
+
+  "river-group-kinshasa": {
+    title: "River Group",
+    category: "Infrastructure",
+    location: "Kinshasa",
+    image: "/images/projects/river-group.jpeg",
+    description:
+      "Projet résidentiel de haut standing à Kinshasa avec structure verticale, finitions complètes et piscine en toiture.",
+    objectives: [
+      "Assurer la stabilité structurelle d’un bâtiment en hauteur tout en garantissant un cadre de vie confortable et premium pour les résidents.",
+      "Mise en œuvre de fondations profondes, exécution rigoureuse de la structure verticale, intégration d’une piscine en toiture et réalisation complète des finitions intérieures.",
+    ],
+    highlights: {
+      phase: "Fondations profondes & Élévation 15 étages",
+      program: "Projet résidentiel",
+      designLanguage: "Haut standing, premium",
+    },
+    gallery: [
+      { src: "/images/projects/river-group.jpeg", alt: "Projet résidentiel River Group" },
+      { src: gallery1, alt: "Prototype architectural du Kinshasa Mall" },
+      { src: gallery2, alt: "Vue aérienne conceptuelle du Kinshasa Mall" },
+      { src: gallery4, alt: "Perspective intérieure du Kinshasa Mall" },
+    ],
+  },
+};
+
+const projects: ProjectRecord[] = Object.entries(projectData).map(([key, data], index) => ({
+  id: (index + 1).toString().padStart(2, "0"),
+  ...data,
+}));
 
 const fade = {
   initial: { opacity: 0, y: 30 },
@@ -155,17 +202,19 @@ export default function ProjectsPage() {
 }
 
 // --- PROJECT BLOCK COMPONENT ---
-function ProjectBlock({ project, isEven }: { project: Project; isEven: boolean }) {
+function ProjectBlock({ project, isEven }: { project: ProjectRecord; isEven: boolean }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-15%" });
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxView, setLightboxView] = useState<"primary" | "secondary">("primary");
+  
+  // Use index for active image
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [imageHoverActive, setImageHoverActive] = useState(false);
 
   const openLightbox = useCallback(() => {
-    setLightboxView(imageHoverActive ? "secondary" : "primary");
+    setActiveImageIndex(imageHoverActive && project.gallery.length > 1 ? 1 : 0);
     setLightboxOpen(true);
-  }, [imageHoverActive]);
+  }, [imageHoverActive, project.gallery.length]);
 
   const closeLightbox = useCallback(() => {
     setLightboxOpen(false);
@@ -185,9 +234,8 @@ function ProjectBlock({ project, isEven }: { project: Project; isEven: boolean }
     };
   }, [lightboxOpen, closeLightbox]);
 
-  const activeSrc = lightboxView === "primary" ? project.image : project.imageHover;
-  const activeLabel =
-    lightboxView === "primary" ? "Vue principale" : "Vue complémentaire";
+  const activeSrc = project.gallery[activeImageIndex]?.src || project.image;
+  const activeLabel = `Vue ${activeImageIndex + 1} / ${project.gallery.length}`;
 
   return (
     <motion.article
@@ -219,7 +267,7 @@ function ProjectBlock({ project, isEven }: { project: Project; isEven: boolean }
             className="object-cover transition-[opacity,transform] duration-500 ease-out group-hover/img:scale-105 group-hover/img:opacity-0"
           />
           <Image
-            src={project.imageHover}
+            src={project.gallery[1]?.src || project.image}
             alt=""
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
@@ -273,6 +321,21 @@ function ProjectBlock({ project, isEven }: { project: Project; isEven: boolean }
           {project.description}
         </p>
 
+          {/* Objectifs - Liste sous la description */}
+          {project.objectives && project.objectives.length > 0 && (
+            <div className="mb-8">
+              <h4 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-iba-sky/60">Objectifs & Vision</h4>
+              <ul className="flex flex-col gap-2">
+                {project.objectives.map((obj, i) => (
+                  <li key={i} className="flex items-start gap-2.5">
+                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-iba-orange" aria-hidden />
+                    <span className="text-sm font-medium text-iba-muted">{obj}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
         <div className="mb-8 grid grid-cols-1 gap-4 border-y border-iba-sky/10 py-6 sm:grid-cols-2">
           <div className="flex items-center gap-4">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-iba-orange text-background">
@@ -288,8 +351,8 @@ function ProjectBlock({ project, isEven }: { project: Project; isEven: boolean }
               <Calendar className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-[9px] font-bold uppercase tracking-widest text-iba-sky/55">Livraison</p>
-              <p className="font-bold text-iba-sky">{project.date}</p>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-iba-sky/55">Phase</p>
+              <p className="font-bold text-iba-sky">{project.highlights.phase}</p>
             </div>
           </div>
           <div className="flex items-center gap-4 sm:col-span-2">
@@ -297,8 +360,8 @@ function ProjectBlock({ project, isEven }: { project: Project; isEven: boolean }
               <Ruler className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-[9px] font-bold uppercase tracking-widest text-iba-sky/55">Envergure / Tonnage</p>
-              <p className="font-bold text-iba-sky">{project.scale}</p>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-iba-sky/55">Programme</p>
+              <p className="font-bold text-iba-sky">{project.highlights.program}</p>
             </div>
           </div>
         </div>
@@ -346,7 +409,7 @@ function ProjectBlock({ project, isEven }: { project: Project; isEven: boolean }
               <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-iba-sky ring-1 ring-white/15 md:aspect-[21/9] md:min-h-[min(70vh,520px)]">
                 <AnimatePresence initial={false} mode="wait">
                   <motion.div
-                    key={lightboxView}
+                    key={activeImageIndex}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -355,7 +418,7 @@ function ProjectBlock({ project, isEven }: { project: Project; isEven: boolean }
                   >
                     <Image
                       src={activeSrc}
-                      alt=""
+                      alt={project.gallery.find(g => g.src === activeSrc)?.alt || ""}
                       fill
                       className="object-contain md:object-cover"
                       sizes="100vw"
@@ -368,30 +431,21 @@ function ProjectBlock({ project, isEven }: { project: Project; isEven: boolean }
               <p className="mt-2 text-center text-[11px] font-medium text-white/60">{activeLabel}</p>
 
               <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setLightboxView("primary")}
-                  className={cn(
-                    "rounded-full border px-5 py-2 text-xs font-bold uppercase tracking-wider transition-colors",
-                    lightboxView === "primary"
-                      ? "border-white bg-white text-iba-sky"
-                      : "border-white/25 bg-white/10 text-white hover:border-white/40",
-                  )}
-                >
-                  Vue principale
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setLightboxView("secondary")}
-                  className={cn(
-                    "rounded-full border px-5 py-2 text-xs font-bold uppercase tracking-wider transition-colors",
-                    lightboxView === "secondary"
-                      ? "border-white bg-white text-iba-sky"
-                      : "border-white/25 bg-white/10 text-white hover:border-white/40",
-                  )}
-                >
-                  Vue complémentaire
-                </button>
+                {project.gallery.map((img, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setActiveImageIndex(i)}
+                    className={cn(
+                      "rounded-full border px-5 py-2 text-xs font-bold uppercase tracking-wider transition-colors",
+                      i === activeImageIndex
+                        ? "border-white bg-white text-iba-sky"
+                        : "border-white/25 bg-white/10 text-white hover:border-white/40",
+                    )}
+                  >
+                    Vue {i + 1}
+                  </button>
+                ))}
               </div>
             </motion.div>
           </motion.div>
