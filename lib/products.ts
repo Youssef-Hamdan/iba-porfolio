@@ -213,9 +213,6 @@ const briqueFiles = [
 ] as const;
 
 const paveFiles = [
-  "PAVE 1.jpg",
-  "PAVE 3.jpg",
-  "PAVE.jpg",
   "PAVE BARKIA 6 CM.png",
   "PAVE BOWTIE GRAND 5 CM.png",
   "PAVE HEXAGONE 6CM.png",
