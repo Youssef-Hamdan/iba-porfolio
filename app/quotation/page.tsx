@@ -130,7 +130,7 @@ export default function QuotePage() {
             <div className="mb-6 flex items-center gap-4">
               <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md">
                 <span className="h-1.5 w-1.5 rounded-full bg-iba-sky shadow-[0_0_8px_rgba(40,37,97,0.5)]" />
-                Formulaire d&apos;acquisition
+                DEVIS
               </span>
               <div className="h-px flex-1 bg-gradient-to-r from-iba-sky/35 to-transparent" aria-hidden />
             </div>
