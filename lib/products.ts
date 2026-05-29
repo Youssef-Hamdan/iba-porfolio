@@ -65,35 +65,35 @@ export const productCategories: ProductCategory[] = [
     label: "Brique",
     description: "Briques de construction pleines et creuses de haute qualité.",
     coverStorageFolder: "brique",
-    coverFile: "BRIQUES.jpg",
+    coverFile: "BRIQUE 10 PLEINE.png",
   },
   {
     id: "peinture",
     label: "Peinture",
     description: "Peintures, mastiques, sceaux d’étanchéité et traitements antirouille.",
     coverStorageFolder: "paints-coatings-sealants",
-    coverFile: "africa color c.png",
+    coverFile: "latex eagle.png",
   },
   {
     id: "bois",
     label: "Bois",
     description: "Bois de charpente, coffrage, menuiserie et panneaux dérivés.",
     coverStorageFolder: "sheet-metal-pipes-wood",
-    coverFile: "PLYWOOD 2.png",
+    coverFile: "PLYWOOD.png",
   },
   {
     id: "outillage-quincaillerie",
     label: "Outillage Quincaillerie",
     description: "Outils de coupe, d'atelier et quincaillerie générale.",
     coverStorageFolder: "tools-consumables",
-    coverFile: "Cisaille 2.png",
+    coverFile: "Cisaille.png",
   },
   {
     id: "plafonds",
     label: "Plafonds",
     description: "Solutions complètes pour plafonds suspendus, plâtre et isolation.",
     coverStorageFolder: "cement-mortar-plaster",
-    coverFile: "GYPROC2.png",
+    coverFile: "GYPROC.png",
   },
   {
     id: "panneaux-sandwich",
@@ -107,7 +107,7 @@ export const productCategories: ProductCategory[] = [
     label: "Pavé",
     description: "Pavés autobloquants pour aménagements extérieurs.",
     coverStorageFolder: "pave",
-    coverFile: "PAVE.jpg",
+    coverFile: "PAVE BARKIA 6 CM.png",
   },
 ];
 
@@ -141,14 +141,14 @@ const cimentFiles = ["CIMENT.jpeg", "Super Sikalite.png"] as const;
 const cimentCiluFiles = [] as const;
 
 const mortierCementFolderFiles = [
-  "CIMENT COLLE kin colle.png",
-  "CIMENT COLLE mortier colle C2.png",
-  "CIMENT COLLE mortier colle gris C2.png",
-  "CIMENT COLLE mortier colle gris.png",
-  "CIMENT COLLE mortier colle.png",
+  "CIMENT COLLE C2 EAGLE 20 KG -GRIS.png",
+  "CIMENT COLLE C2 EAGLE 20 KG-BLANC.png",
+  "CIMENT COLLE EAGLE PRO 20KG-GREY C1.png",
+  "CIMENT COLLE EAGLE PRO 20KG-WHITE C1.png",
+  "CIMENT KIN COLLE BLANC 20 KG C1.png",
 ] as const;
 
-const platreFiles = ["GYPROC2.png", "PLATRE ET FILLASSE 2.png"] as const;
+const platreFiles = ["GYPROC.png", "PLATRE ET FILLASSE.png"] as const;
 
 const betonFiles = ["CENTRALE A BETON.png"] as const;
 
@@ -162,7 +162,7 @@ const acierFiles = [
   "UPN.webp",
 ] as const;
 
-const panneauxBoisFiles = ["PLYWOOD 2.png", "triplex 4mm.jpg"] as const;
+const panneauxBoisFiles = ["PLYWOOD.png", "triplex 4mm.jpg"] as const;
 
 const panneauxSandwichFiles = ["panneau-sandwich.jpeg"] as const;
 
@@ -172,7 +172,7 @@ const outillageFiles = [
   "MARTEAU ARRACHE CLOU.png",
   "NIVEAU.png",
   "PELLE.png",
-  "Turelle.png",
+  "Truelle.png",
 ] as const;
 
 const consommablesFiles = [
@@ -181,28 +181,20 @@ const consommablesFiles = [
   "PAPIER VERRE.png",
   "Plateau Poncage.png",
   "ROULEAU PONCAGE.png",
-  "TAMIS DE CONSTRUCTION.png",
-  "ROULEAU ETANCHE.png"
-] as const;
-
-const etancheiteFiles = [
   "ROULEAU ETANCHE.png",
+  "ROULEAUX PEINTURE.png",
+  "TAMIS DE CONSTRUCTION.png",
 ] as const;
 
 const peintureLiquideFiles = [
-  "ANTIROUILEL ROUGE EAGLE.png",
+  "ANTIROUILLE ROUGE EAGLE.png",
   "EMAIL AFRICA.JPG",
   "EMAIL EAGLE COULEUR.JPG",
-  "ROULEAUX PEINTURE.png",
-  "Rouleau Peinture.png",
   "latex eagle.png",
   "mastique eagle.png",
 ] as const;
 
-const peintureCategoryFiles = [
-  ...peintureLiquideFiles,
-  
-] as const;
+const peintureCategoryFiles = [...peintureLiquideFiles] as const;
 
 const briqueFiles = [
   "BRIQUE 2 RECTANGULAIRE.png",

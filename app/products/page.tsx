@@ -1,10 +1,11 @@
 "use client";
 
-import { memo, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, PackageSearch, Boxes } from "lucide-react";
+import { ArrowRight, PackageSearch, Boxes, X, Maximize2 } from "lucide-react";
 import { SectionWave } from "@/components/SectionWave";
 import { cn } from "@/lib/utils";
 
@@ -40,46 +41,165 @@ const fade = {
 
 const ProductCard = memo(function ProductCard({ product }: { product: Product }) {
   const categoryLabel = categoryLabelMap.get(product.categoryId) ?? "";
+  const imageSrc = productImageUrl(product.storageFolder, product.file);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const openLightbox = useCallback(() => {
+    setLightboxOpen(true);
+  }, []);
+
+  const closeLightbox = useCallback(() => {
+    setLightboxOpen(false);
+  }, []);
+
+  useEffect(() => {
+    if (!lightboxOpen) return;
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+    };
+
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [lightboxOpen, closeLightbox]);
 
   return (
-    <article className="group relative flex flex-col justify-between border border-iba-sky/10 bg-white p-6 shadow-sm shadow-iba-sky/[0.04] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-iba-navy/40 hover:shadow-[0_8px_28px_rgba(0,170,226,0.1)]">
-      <div
-        className="absolute left-0 top-0 h-3 w-3 border-l-2 border-t-2 border-iba-sky/25 transition-colors group-hover:border-iba-navy"
-        aria-hidden
-      />
-      <div
-        className="absolute right-0 top-0 h-3 w-3 border-r-2 border-t-2 border-iba-sky/25 transition-colors group-hover:border-iba-navy"
-        aria-hidden
-      />
-
-      <div className="mb-6 flex items-start justify-between">
-        <span className="rounded-full border border-iba-sky/10 bg-iba-navy/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest text-iba-sky">
-          {categoryLabel}
-        </span>
-        <span className="text-[10px] text-iba-sky/20 transition-colors group-hover:text-iba-navy/50" aria-hidden>
-          ⬢
-        </span>
-      </div>
-
-      <div className="relative mb-6 flex aspect-square w-full items-center justify-center overflow-hidden rounded-lg border border-iba-sky/5 bg-iba-navy/[0.06] p-4 transition-colors group-hover:bg-iba-navy/10">
-        <Image
-          src={productImageUrl(product.storageFolder, product.file)}
-          alt={product.name}
-          fill
-          className="object-contain p-2 drop-shadow-md transition-transform duration-200 ease-out group-hover:scale-105"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+    <>
+      <article className="group relative flex flex-col justify-between border border-iba-sky/10 bg-white p-6 shadow-sm shadow-iba-sky/[0.04] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-iba-navy/40 hover:shadow-[0_8px_28px_rgba(0,170,226,0.1)]">
+        <div
+          className="absolute left-0 top-0 h-3 w-3 border-l-2 border-t-2 border-iba-sky/25 transition-colors group-hover:border-iba-navy"
+          aria-hidden
         />
-      </div>
+        <div
+          className="absolute right-0 top-0 h-3 w-3 border-r-2 border-t-2 border-iba-sky/25 transition-colors group-hover:border-iba-navy"
+          aria-hidden
+        />
 
-      <h3 className="line-clamp-2 text-center font-sans text-lg font-black uppercase leading-tight tracking-tight text-iba-sky transition-colors group-hover:text-iba-navy">
-        {product.name}
-      </h3>
+        <div className="mb-6 flex items-start justify-between">
+          <span className="rounded-full border border-iba-sky/10 bg-iba-navy/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest text-iba-sky">
+            {categoryLabel}
+          </span>
+          <span className="text-[10px] text-iba-sky/20 transition-colors group-hover:text-iba-navy/50" aria-hidden>
+            ⬢
+          </span>
+        </div>
 
-      <div
-        className="absolute bottom-0 left-0 h-1 w-0 bg-iba-sky transition-[width] duration-300 ease-out group-hover:w-full"
-        aria-hidden
-      />
-    </article>
+        <div className="group/img relative mb-6 aspect-square w-full overflow-hidden rounded-lg border border-iba-sky/5 bg-iba-navy/[0.06] transition-colors group-hover:bg-iba-navy/10">
+          <Image
+            src={imageSrc}
+            alt=""
+            fill
+            className="z-0 object-contain p-2 drop-shadow-md transition-transform duration-300 ease-out group-hover/img:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+          />
+
+          <div
+            className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-iba-sky/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover/img:opacity-100"
+            aria-hidden
+          />
+
+          <div
+            className="pointer-events-none absolute bottom-3 left-1/2 z-[2] -translate-x-1/2 opacity-0 transition-opacity duration-300 group-hover/img:opacity-100"
+            aria-hidden
+          >
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-iba-sky/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg backdrop-blur-sm">
+              <Maximize2 className="h-3.5 w-3.5" />
+              Cliquer pour agrandir
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={openLightbox}
+            className="absolute inset-0 z-[3] block h-full w-full cursor-zoom-in rounded-[inherit] border-0 bg-transparent p-0 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-iba-navy focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            aria-label={`Agrandir l'image : ${product.name}`}
+          >
+            <span className="sr-only">Ouvrir la vue agrandie</span>
+          </button>
+        </div>
+
+        <h3 className="line-clamp-2 text-center font-sans text-lg font-black uppercase leading-tight tracking-tight text-iba-sky transition-colors group-hover:text-iba-navy">
+          {product.name}
+        </h3>
+
+        <div
+          className="absolute bottom-0 left-0 h-1 w-0 bg-iba-sky transition-[width] duration-300 ease-out group-hover:w-full"
+          aria-hidden
+        />
+      </article>
+
+      {mounted
+        ? createPortal(
+            <AnimatePresence>
+              {lightboxOpen ? (
+                <motion.div
+                  key={`product-lightbox-${product.id}`}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby={`product-lightbox-title-${product.id}`}
+                  className="fixed inset-0 z-[200] flex items-center justify-center bg-black/88 p-4 backdrop-blur-md"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  onClick={closeLightbox}
+                >
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.94, y: 12 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.94, y: 12 }}
+                    transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+                    className="relative w-full max-w-4xl"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <button
+                      type="button"
+                      onClick={closeLightbox}
+                      className="absolute -top-1 right-0 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition-colors hover:bg-white hover:text-iba-sky md:-right-2 md:-top-14"
+                      aria-label="Fermer l'aperçu"
+                    >
+                      <X className="h-5 w-5" strokeWidth={2} />
+                    </button>
+
+                    <p
+                      id={`product-lightbox-title-${product.id}`}
+                      className="mb-1 text-center text-xs font-bold uppercase tracking-[0.2em] text-white/70 md:text-left"
+                    >
+                      {categoryLabel}
+                    </p>
+                    <p className="mb-3 text-center text-lg font-black uppercase tracking-tight text-white md:text-left md:text-xl">
+                      {product.name}
+                    </p>
+
+                    <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-iba-sky ring-1 ring-white/15 md:aspect-[4/3] md:min-h-[min(70vh,520px)]">
+                      <Image
+                        src={imageSrc}
+                        alt={product.name}
+                        fill
+                        className="object-contain p-6 md:p-10"
+                        sizes="100vw"
+                        priority
+                      />
+                    </div>
+                  </motion.div>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>,
+            document.body,
+          )
+        : null}
+    </>
   );
 });
 
