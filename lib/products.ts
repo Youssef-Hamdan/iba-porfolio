@@ -72,7 +72,7 @@ export const productCategories: ProductCategory[] = [
     label: "Peinture",
     description: "Peintures, mastiques, sceaux d’étanchéité et traitements antirouille.",
     coverStorageFolder: "paints-coatings-sealants",
-    coverFile: "latex eagle.png",
+    coverFile: "LATEX INT EAGLE.webp",
   },
   {
     id: "bois",
@@ -187,9 +187,18 @@ const consommablesFiles = [
 ] as const;
 
 const peintureLiquideFiles = [
-  "ANTIROUILLE ROUGE EAGLE.png",
+  "ANTIROUILLE GRIS 1KG.webp",
+  "ANTIROUILLE ROUGE EAGLE 1KG.webp",
   "EMAIL AFRICA.JPG",
   "EMAIL EAGLE COULEUR.JPG",
+  "EMAIL EAGLE.webp",
+  "LATEC AFRICA.webp",
+  "LATEX INT EAGLE.webp",
+  "LATEX INT KINPAINT.webp",
+  "MASTIC AFRICA.webp",
+  "MASTIC INT EAGLE.webp",
+  "MASTIC INT KINPAINT.webp",
+  "ROULEAU ETANCHE.png",
   "latex eagle.png",
   "mastique eagle.png",
 ] as const;
