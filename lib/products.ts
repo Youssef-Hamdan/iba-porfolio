@@ -135,7 +135,12 @@ function buildItems(
   }));
 }
 
-const cimentFiles = ["CIMENT.jpeg", "Super Sikalite.png"] as const;
+const cimentFiles = [
+  "CIMENT.jpeg",
+  "Super Sikalite.png",
+  "CIMENT CILU 32.5.webp",
+  "CIMENT CILU 42.5.webp",
+] as const;
 
 /** Stockés dans paints-coatings-sealants, rangés commercialement sous Ciment. */
 const cimentCiluFiles = [] as const;

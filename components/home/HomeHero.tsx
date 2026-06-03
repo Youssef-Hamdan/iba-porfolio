@@ -90,8 +90,8 @@ export function HomeHero() {
             variants={itemVariants}
             className="mb-10 max-w-2xl text-lg leading-relaxed text-gray-200 md:text-xl"
           >
-            Nous connectons les gouvernements, les industries et les capitaux pour bâtir une économie mondiale
-            résiliente, transparente et durable.
+            Nous accompagnons le développement des villes, des entreprises et des communautés grâce à des
+            solutions de construction durables, contribuant à un avenir plus solide et prospère.
           </motion.p>
 
           {/* Action Buttons */}
