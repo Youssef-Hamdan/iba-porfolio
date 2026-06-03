@@ -51,14 +51,14 @@ export const productCategories: ProductCategory[] = [
     label: "Ciments",
     description: "Liens hydrauliques, ciments en sac et mortiers.",
     coverStorageFolder: "cement-mortar-plaster",
-    coverFile: "Super Sikalite.png",
+    coverFile: "Super Sikalite.webp",
   },
   {
     id: "beton",
     label: "Béton Prêt à l'Emploi",
     description: "Béton prêt à l'emploi livré directement sur vos chantiers.",
     coverStorageFolder: "cement-mortar-plaster",
-    coverFile: "Super Sikalite.png",
+    coverFile: "Super Sikalite.webp",
   },
   {
     id: "brique",
@@ -137,9 +137,13 @@ function buildItems(
 
 const cimentFiles = [
   "CIMENT.jpeg",
-  "Super Sikalite.png",
+  "Super Sikalite.webp",
   "CIMENT CILU 32.5.webp",
   "CIMENT CILU 42.5.webp",
+  "CIMKO 32.5.webp",
+  "CIMKO 42.5.webp",
+  "PPC 32.5.webp",
+  "PPC 42.5.webp",
 ] as const;
 
 /** Stockés dans paints-coatings-sealants, rangés commercialement sous Ciment. */
@@ -151,6 +155,21 @@ const mortierCementFolderFiles = [
   "CIMENT COLLE EAGLE PRO 20KG-GREY C1.png",
   "CIMENT COLLE EAGLE PRO 20KG-WHITE C1.png",
   "CIMENT KIN COLLE BLANC 20 KG C1.png",
+  "FILLASSE EAGLE.webp",
+] as const;
+
+const sikaCimentFiles = [
+  "SIKA ANCHORFIX 3030(AB)CRT 12X385ML.webp",
+  "SIKA IGOL P 25KG.webp",
+  "SikaGrout 212 AO 30KG.webp",
+  "SikaLatex Light AO 5LT.webp",
+  "SikaTop - 107 Seal AO COMP. B 20KG.webp",
+  "Sikadur-31+ 1.2kg.webp",
+  "Sikaflex 11FC.webp",
+  "Sikaflex Pro 3.webp",
+  "Sikafloor- 3 Quartz Top AO Cinza 25 Kg.webp",
+  "Sikagard 570 pele elástica+fibra.webp",
+  "Sikaprimer 3N.webp",
 ] as const;
 
 const platreFiles = ["GYPROC.png", "PLATRE ET FILLASSE.png"] as const;
@@ -286,6 +305,7 @@ export const allProducts: ProductItem[] = [
   ...buildItems("ciments", "cement-mortar-plaster", cimentFiles),
   ...buildItems("ciments", "paints-coatings-sealants", cimentCiluFiles),
   ...buildItems("ciments", "cement-mortar-plaster", mortierCementFolderFiles),
+  ...buildItems("ciments", "cement-mortar-plaster", sikaCimentFiles),
   ...buildItems("brique", "brique", briqueFiles),
   ...buildItems("pave", "pave", paveFiles),
   ...buildItems("beton", "cement-mortar-plaster", betonFiles),
