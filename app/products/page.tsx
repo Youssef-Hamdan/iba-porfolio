@@ -87,7 +87,7 @@ const ProductCard = memo(function ProductCard({ product }: { product: Product })
         />
 
         <div className="mb-6 flex items-start justify-between">
-          <span className="rounded-full border border-iba-sky/10 bg-iba-navy/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest text-iba-sky">
+          <span className="rounded-full border border-iba-sky/10 bg-iba-navy/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest text-iba-navy transition-colors group-hover:text-iba-sky">
             {categoryLabel}
           </span>
           <span className="text-[10px] text-iba-sky/20 transition-colors group-hover:text-iba-navy/50" aria-hidden>
@@ -129,7 +129,7 @@ const ProductCard = memo(function ProductCard({ product }: { product: Product })
           </button>
         </div>
 
-        <h3 className="line-clamp-2 text-center font-sans text-lg font-black uppercase leading-tight tracking-tight text-iba-sky transition-colors group-hover:text-iba-navy">
+        <h3 className="line-clamp-2 text-center font-sans text-lg font-black uppercase leading-tight tracking-tight text-iba-navy transition-colors group-hover:text-iba-sky">
           {product.name}
         </h3>
 
@@ -315,7 +315,7 @@ export default function ProductsPage() {
                     "flex w-full items-center justify-center lg:justify-start rounded-lg border px-2 py-3 text-center lg:text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-wide transition-all",
                     activeCategory === "all"
                       ? "border-iba-sky bg-iba-sky text-white shadow-md shadow-iba-sky/15"
-                      : "border-iba-sky/12 bg-white text-iba-sky hover:border-iba-navy/45 hover:text-iba-navy",
+                      : "border-iba-sky/12 bg-white text-iba-navy hover:border-iba-navy/45 hover:text-iba-sky",
                   )}
                 >
                   Tous les produits
@@ -329,7 +329,7 @@ export default function ProductsPage() {
                       "flex w-full items-center justify-center lg:justify-start rounded-lg border px-2 py-3 text-center lg:text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-wide transition-all",
                       activeCategory === cat.id
                         ? "border-iba-navy bg-iba-navy text-white shadow-md shadow-iba-navy/20"
-                        : "border-iba-sky/12 bg-white text-iba-sky hover:border-iba-navy/45 hover:text-iba-navy",
+                        : "border-iba-sky/12 bg-white text-iba-navy hover:border-iba-navy/45 hover:text-iba-sky",
                     )}
                   >
                     {cat.label}
@@ -351,7 +351,7 @@ export default function ProductsPage() {
                 >
                   <Boxes className="h-6 w-6 shrink-0 text-iba-sky" aria-hidden />
                   <div>
-                    <h2 className="font-bold uppercase tracking-tight text-iba-sky">
+                    <h2 className="font-bold uppercase tracking-tight text-iba-navy">
                       {activeCategory === "all"
                         ? "Inventaire complet"
                         : productCategories.find((c) => c.id === activeCategory)?.label}
