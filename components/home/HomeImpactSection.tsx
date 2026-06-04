@@ -15,13 +15,13 @@ const parallaxBlocks = [
     desc: "Parce que chaque chantier mérite le meilleur, IBA vous accompagne avec des solutions adaptées, des matériaux certifiés et un engagement constant envers la qualité.",
   },
   {
-    src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop",
+    src: "/images/magnific_highly-detailed-recreatio_wPERCAw7EI.webp",
     title: "Commerce & valorisation des filières",
     titleNode: <>Commerce & <span className="text-iba-sky">valorisation des filières</span></>,
     desc: "En collaborant avec des fournisseurs et acteurs de référence, nous contribuons au développement d’un secteur de la construction plus performant et durable.",
   },
   {
-    src: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=80&w=2072&auto=format&fit=crop",
+    src: "/images/magnific_highly-detailed-recreatio_l7vNaThgv9.webp",
     title: "Innovation & standards internationaux",
     titleNode: <>Innovation & <span className="text-iba-sky">standards internationaux</span></>,
     desc: "Nous améliorons continuellement nos procédés et notre offre pour proposer des solutions performantes, durables et adaptées aux besoins du marché.",

@@ -52,7 +52,7 @@ export function HomeHero() {
         style={{ y: backgroundY }}
       >
           <Image
-            src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=2070&auto=format&fit=crop"
+            src="/images/hero.webp"
             alt="International Business Alliance"
             fill
             priority
