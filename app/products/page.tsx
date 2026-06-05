@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, PackageSearch, Boxes, X, Maximize2 } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, PackageSearch, Boxes, X, Maximize2 } from "lucide-react";
 import { SectionWave } from "@/components/SectionWave";
 import { cn } from "@/lib/utils";
 
@@ -39,29 +39,33 @@ const fade = {
   transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
 };
 
-const ProductCard = memo(function ProductCard({ product }: { product: Product }) {
+function ProductViewer({
+  product,
+  index,
+  total,
+  onClose,
+  onPrev,
+  onNext,
+  hasPrev,
+  hasNext,
+}: {
+  product: Product;
+  index: number;
+  total: number;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+  hasPrev: boolean;
+  hasNext: boolean;
+}) {
   const categoryLabel = categoryLabelMap.get(product.categoryId) ?? "";
   const imageSrc = productImageUrl(product.storageFolder, product.file);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const openLightbox = useCallback(() => {
-    setLightboxOpen(true);
-  }, []);
-
-  const closeLightbox = useCallback(() => {
-    setLightboxOpen(false);
-  }, []);
-
-  useEffect(() => {
-    if (!lightboxOpen) return;
-
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeLightbox();
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft" && hasPrev) onPrev();
+      if (e.key === "ArrowRight" && hasNext) onNext();
     };
 
     document.addEventListener("keydown", onKey);
@@ -72,7 +76,118 @@ const ProductCard = memo(function ProductCard({ product }: { product: Product })
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
     };
-  }, [lightboxOpen, closeLightbox]);
+  }, [onClose, onPrev, onNext, hasPrev, hasNext]);
+
+  return (
+    <motion.div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="product-viewer-title"
+      className="fixed inset-0 z-[200] flex items-center justify-center bg-iba-navy/25 p-4 backdrop-blur-sm"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, y: 8 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: 8 }}
+        transition={{ duration: 0.3, ease: [0.25, 1, 0.5, 1] }}
+        className="relative w-full max-w-lg rounded-2xl border border-iba-sky/10 bg-white p-6 shadow-2xl shadow-iba-navy/10 sm:max-w-2xl sm:p-8"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-iba-sky/15 bg-white text-iba-navy transition-colors hover:border-iba-navy/30 hover:bg-iba-navy/5 hover:text-iba-sky"
+          aria-label="Fermer l'aperçu"
+        >
+          <X className="h-4 w-4" strokeWidth={2} />
+        </button>
+
+        <p className="pr-10 text-[10px] font-bold uppercase tracking-[0.2em] text-iba-sky/70">
+          {categoryLabel}
+        </p>
+        <p
+          id="product-viewer-title"
+          className="mt-1 pr-10 text-lg font-black uppercase leading-tight tracking-tight text-iba-navy sm:text-xl"
+        >
+          {product.name}
+        </p>
+
+        <div className="mt-6 flex items-center gap-3 sm:gap-4">
+          <button
+            type="button"
+            onClick={onPrev}
+            disabled={!hasPrev}
+            className={cn(
+              "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-colors",
+              hasPrev
+                ? "border-iba-sky/20 bg-white text-iba-navy hover:border-iba-sky hover:bg-iba-sky/5 hover:text-iba-sky"
+                : "cursor-not-allowed border-iba-sky/10 bg-iba-navy/5 text-iba-sky/25",
+            )}
+            aria-label="Produit précédent"
+          >
+            <ChevronLeft className="h-5 w-5" strokeWidth={2.5} />
+          </button>
+
+          <div className="relative min-h-[280px] flex-1 overflow-hidden rounded-xl border border-iba-sky/10 bg-white sm:min-h-[360px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, x: hasPrev ? 12 : -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: hasNext ? -12 : 12 }}
+                transition={{ duration: 0.2 }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={imageSrc}
+                  alt={product.name}
+                  fill
+                  className="object-contain p-5 sm:p-8"
+                  sizes="(max-width: 640px) 90vw, 640px"
+                  priority
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <button
+            type="button"
+            onClick={onNext}
+            disabled={!hasNext}
+            className={cn(
+              "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-colors",
+              hasNext
+                ? "border-iba-sky/20 bg-white text-iba-navy hover:border-iba-sky hover:bg-iba-sky/5 hover:text-iba-sky"
+                : "cursor-not-allowed border-iba-sky/10 bg-iba-navy/5 text-iba-sky/25",
+            )}
+            aria-label="Produit suivant"
+          >
+            <ChevronRight className="h-5 w-5" strokeWidth={2.5} />
+          </button>
+        </div>
+
+        <p className="mt-4 text-center text-[11px] font-bold uppercase tracking-widest text-iba-sky/60">
+          {index + 1} / {total}
+        </p>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+const ProductCard = memo(function ProductCard({
+  product,
+  onView,
+}: {
+  product: Product;
+  onView: () => void;
+}) {
+  const categoryLabel = categoryLabelMap.get(product.categoryId) ?? "";
+  const imageSrc = productImageUrl(product.storageFolder, product.file);
 
   return (
     <>
@@ -121,7 +236,7 @@ const ProductCard = memo(function ProductCard({ product }: { product: Product })
 
           <button
             type="button"
-            onClick={openLightbox}
+            onClick={onView}
             className="absolute inset-0 z-[3] block h-full w-full cursor-zoom-in rounded-[inherit] border-0 bg-transparent p-0 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-iba-navy focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             aria-label={`Agrandir l'image : ${product.name}`}
           >
@@ -138,75 +253,20 @@ const ProductCard = memo(function ProductCard({ product }: { product: Product })
           aria-hidden
         />
       </article>
-
-      {mounted
-        ? createPortal(
-            <AnimatePresence>
-              {lightboxOpen ? (
-                <motion.div
-                  key={`product-lightbox-${product.id}`}
-                  role="dialog"
-                  aria-modal="true"
-                  aria-labelledby={`product-lightbox-title-${product.id}`}
-                  className="fixed inset-0 z-[200] flex items-center justify-center bg-black/88 p-4 backdrop-blur-md"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.25 }}
-                  onClick={closeLightbox}
-                >
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.94, y: 12 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.94, y: 12 }}
-                    transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
-                    className="relative w-full max-w-4xl"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <button
-                      type="button"
-                      onClick={closeLightbox}
-                      className="absolute -top-1 right-0 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition-colors hover:bg-white hover:text-iba-sky md:-right-2 md:-top-14"
-                      aria-label="Fermer l'aperçu"
-                    >
-                      <X className="h-5 w-5" strokeWidth={2} />
-                    </button>
-
-                    <p
-                      id={`product-lightbox-title-${product.id}`}
-                      className="mb-1 text-center text-xs font-bold uppercase tracking-[0.2em] text-white/70 md:text-left"
-                    >
-                      {categoryLabel}
-                    </p>
-                    <p className="mb-3 text-center text-lg font-black uppercase tracking-tight text-white md:text-left md:text-xl">
-                      {product.name}
-                    </p>
-
-                    <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-iba-sky ring-1 ring-white/15 md:aspect-[4/3] md:min-h-[min(70vh,520px)]">
-                      <Image
-                        src={imageSrc}
-                        alt={product.name}
-                        fill
-                        className="object-contain p-6 md:p-10"
-                        sizes="100vw"
-                        priority
-                      />
-                    </div>
-                  </motion.div>
-                </motion.div>
-              ) : null}
-            </AnimatePresence>,
-            document.body,
-          )
-        : null}
     </>
   );
 });
 
 export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState<ProductCategoryId | "all">("all");
+  const [viewerIndex, setViewerIndex] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
   const productsTopRef = useRef<HTMLDivElement>(null);
   const skipInitialScrollRef = useRef(true);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const filteredProducts = useMemo(
     () =>
@@ -215,6 +275,32 @@ export default function ProductsPage() {
         : allProducts.filter((p) => p.categoryId === activeCategory),
     [activeCategory],
   );
+
+  const viewerProduct = viewerIndex !== null ? filteredProducts[viewerIndex] : null;
+
+  const openViewer = useCallback((index: number) => {
+    setViewerIndex(index);
+  }, []);
+
+  const closeViewer = useCallback(() => {
+    setViewerIndex(null);
+  }, []);
+
+  const goToPrev = useCallback(() => {
+    setViewerIndex((current) => (current !== null && current > 0 ? current - 1 : current));
+  }, []);
+
+  const goToNext = useCallback(() => {
+    setViewerIndex((current) =>
+      current !== null && current < filteredProducts.length - 1 ? current + 1 : current,
+    );
+  }, [filteredProducts.length]);
+
+  useEffect(() => {
+    if (viewerIndex !== null && viewerIndex >= filteredProducts.length) {
+      setViewerIndex(filteredProducts.length > 0 ? filteredProducts.length - 1 : null);
+    }
+  }, [filteredProducts.length, viewerIndex]);
 
   useLayoutEffect(() => {
     if (skipInitialScrollRef.current) {
@@ -366,8 +452,12 @@ export default function ProductsPage() {
               </AnimatePresence>
 
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-                {filteredProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                {filteredProducts.map((product, index) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onView={() => openViewer(index)}
+                  />
                 ))}
               </div>
 
@@ -406,6 +496,27 @@ export default function ProductsPage() {
         </div>
         <SectionWave edge="top" fillClassName="fill-background" heightClassName="h-8 md:h-12" />
       </section>
+
+      {mounted
+        ? createPortal(
+            <AnimatePresence>
+              {viewerProduct && viewerIndex !== null ? (
+                <ProductViewer
+                  key="product-viewer"
+                  product={viewerProduct}
+                  index={viewerIndex}
+                  total={filteredProducts.length}
+                  onClose={closeViewer}
+                  onPrev={goToPrev}
+                  onNext={goToNext}
+                  hasPrev={viewerIndex > 0}
+                  hasNext={viewerIndex < filteredProducts.length - 1}
+                />
+              ) : null}
+            </AnimatePresence>,
+            document.body,
+          )
+        : null}
     </main>
   );
 }
