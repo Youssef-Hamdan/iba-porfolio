@@ -28,67 +28,39 @@ export type ProjectRecord = {
   }[];
 };
 
-const heroImg = "/images/projects/kinshasa-mall.jpeg";
-const gallery1 = "/images/31-PP (1).webp";
-const gallery2 = "/images/15_DJI_0460_02.webp";
-const gallery3 = "/images/19-pp-02.webp"; // fixed relative path
-const gallery4 = "/images/3C8A7066.webp";  // fixed relative path
+function projectImage(file: string): string {
+  return `/images/projects/${encodeURIComponent(file)}`;
+}
+
+const flotteFluvialeGallery = [
+  { file: "image.png", alt: "Vue d'ensemble du bateau LOMELA amarré" },
+  { file: "image copy.png", alt: "Flotte de barges de transport fluvial" },
+  { file: "image copy 2.png", alt: "Barge industrielle en maintenance" },
+  { file: "image copy 3.png", alt: "Navire fluvial multi-niveaux" },
+] as const;
 
 export const projectData: Record<string, Omit<ProjectRecord, "id">> = {
-  "kinshasa-mall": {
-    title: "Kinshasa Mall",
-    category: "Commerce & Architecture",
-    location: "Av. 24 Novembre, C/ Gombe – Kinshasa",
-    image: "/images/projects/kinshasa-mall.jpeg",
+  "flotte-fluviale": {
+    title: "Flotte fluviale",
+    category: "Infrastructure & Transport",
+    location: "République Démocratique du Congo",
+    image: projectImage(flotteFluvialeGallery[0].file),
     description:
-      "Centre commercial R+4 de référence à Kinshasa conçu pour optimiser les flux visiteurs et intégrer des normes de sécurité élevées. Le Kinshasa Mall a été imaginé comme une destination contemporaine mêlant prestige commercial, fluidité urbaine et expérience architecturale forte. Les espaces intérieurs ont été conçus pour prolonger la signature architecturale avec une atmosphère raffinée, lisible et accueillante, contribuant à une expérience visiteur premium.",
+      "Projet de conception, d’approvisionnement et de mise en service d’une flotte de barges et navires fluviaux dédiés au transport et à la logistique sur les voies navigables. Texte provisoire — contenu à compléter.",
     objectives: [
-      "Gestion des flux importants de visiteurs et intégration des normes de sécurité incendie.",
-      "Conception optimisée des circulations, compartimentage et mise en place de systèmes de sécurité et de désenfumage performants.",
-      "Créer une identité architecturale immédiatement reconnaissable dans le paysage urbain de Kinshasa",
-      "Concevoir un lieu premium associant commerce, restauration et expérience lifestyle",
-      "Offrir des circulations intérieures claires, élégantes et confortables pour les visiteurs",
-      "Développer une façade et des volumes capables de traduire modernité, prestige et attractivité",
-      "Créer une atmosphère intérieure élégante et cohérente avec l’image premium du mall",
-      "Mettre en valeur les enseignes et les vitrines dans un cadre haut de gamme",
-      "Introduire une expérience fluide entre shopping, détente et restauration",
+      "Renforcer les capacités de transport fluvial pour les opérations industrielles et logistiques.",
+      "Assurer la conformité technique et la fiabilité des équipements en conditions réelles d’exploitation.",
+      "Accompagner la mise en service et la maintenance des unités livrées sur le terrain.",
     ],
     highlights: {
-      phase: "Études, Développement & Réalisation",
-      program: "Centre commercial R+4, Retail, Dining & Lifestyle",
-      designLanguage: "Contemporain, premium et urbain",
+      phase: "Études & Réalisation",
+      program: "Barges et navires fluviaux",
+      designLanguage: "Industriel, robuste et opérationnel",
     },
-    gallery: [
-      { src: "/images/projects/kinshasa-mall.jpeg", alt: "Vue d'ensemble du projet Kinshasa Mall" },
-      { src: gallery1, alt: "Prototype architectural du Kinshasa Mall" },
-      { src: gallery2, alt: "Vue aérienne conceptuelle du Kinshasa Mall" },
-      { src: gallery3, alt: "Étude de façade du Kinshasa Mall" },
-      { src: gallery4, alt: "Perspective intérieure du Kinshasa Mall" },
-    ],
-  },
-
-  "river-group-kinshasa": {
-    title: "River Group",
-    category: "Infrastructure",
-    location: "Kinshasa",
-    image: "/images/projects/river-group.jpeg",
-    description:
-      "Projet résidentiel de haut standing à Kinshasa avec structure verticale, finitions complètes et piscine en toiture.",
-    objectives: [
-      "Assurer la stabilité structurelle d’un bâtiment en hauteur tout en garantissant un cadre de vie confortable et premium pour les résidents.",
-      "Mise en œuvre de fondations profondes, exécution rigoureuse de la structure verticale, intégration d’une piscine en toiture et réalisation complète des finitions intérieures.",
-    ],
-    highlights: {
-      phase: "Fondations profondes & Élévation 15 étages",
-      program: "Projet résidentiel",
-      designLanguage: "Haut standing, premium",
-    },
-    gallery: [
-      { src: "/images/projects/river-group.jpeg", alt: "Projet résidentiel River Group" },
-      { src: gallery1, alt: "Prototype architectural du Kinshasa Mall" },
-      { src: gallery2, alt: "Vue aérienne conceptuelle du Kinshasa Mall" },
-      { src: gallery4, alt: "Perspective intérieure du Kinshasa Mall" },
-    ],
+    gallery: flotteFluvialeGallery.map(({ file, alt }) => ({
+      src: projectImage(file),
+      alt,
+    })),
   },
 };
 

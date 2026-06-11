@@ -167,10 +167,10 @@ export default function ContactPage() {
                 className="flex flex-col items-center justify-center border-y-8 border-double border-iba-navy/20 bg-iba-navy/5 p-12 text-center shadow-lg lg:col-span-3"
               >
                 <CheckCircle2 className="mb-6 h-20 w-20 text-iba-navy" />
-                <h2 className="mb-4 text-3xl font-black uppercase tracking-tighter text-iba-sky md:text-4xl">
+                <h2 className="mb-4 text-3xl font-black uppercase tracking-tighter text-iba-navy md:text-4xl">
                   Message envoyé
                 </h2>
-                <p className="max-w-lg text-lg font-medium text-iba-sky/70">
+                <p className="max-w-lg text-lg font-medium text-iba-navy/75">
                   Merci pour votre message. Nous vous recontactons très prochainement.
                 </p>
                 {deliveryHint ? (
@@ -201,8 +201,8 @@ export default function ContactPage() {
                     <div className="absolute bottom-0 right-0 h-3 w-3 border-b-2 border-r-2 border-iba-sky" />
 
                     <div className="mb-8 flex items-end gap-4 border-b border-iba-sky/10 pb-4">
-                      <span className="font-mono text-4xl font-black text-iba-sky/10">01</span>
-                      <h2 className="text-2xl font-black uppercase tracking-tighter text-iba-sky">
+                      <span className="font-mono text-4xl font-black text-iba-navy/12">01</span>
+                      <h2 className="text-2xl font-black uppercase tracking-tighter text-iba-navy">
                         Coordonnées
                       </h2>
                     </div>
@@ -211,12 +211,12 @@ export default function ContactPage() {
                       <div className="space-y-2 md:col-span-2">
                         <label
                           htmlFor="contact-name"
-                          className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60"
+                          className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/70"
                         >
                           Nom complet *
                         </label>
                         <div className="relative">
-                          <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-iba-sky/40" />
+                          <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-iba-navy/45" />
                           <input
                             id="contact-name"
                             name="name"
@@ -227,7 +227,7 @@ export default function ContactPage() {
                             aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
                             onChange={() => clearFieldError("name")}
                             className={cn(
-                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
+                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-navy placeholder:text-iba-navy/35 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
                               fieldBorderClass(!!fieldErrors.name),
                             )}
                             placeholder="Jean Dupont"
@@ -243,12 +243,12 @@ export default function ContactPage() {
                       <div className="space-y-2 md:col-span-2">
                         <label
                           htmlFor="contact-company"
-                          className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60"
+                          className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/70"
                         >
                           Entreprise / organisation
                         </label>
                         <div className="relative">
-                          <Building2 className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-iba-sky/40" />
+                          <Building2 className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-iba-navy/45" />
                           <input
                             id="contact-company"
                             name="company"
@@ -258,7 +258,7 @@ export default function ContactPage() {
                             aria-describedby={fieldErrors.company ? "contact-company-error" : undefined}
                             onChange={() => clearFieldError("company")}
                             className={cn(
-                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
+                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-navy placeholder:text-iba-navy/35 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
                               fieldBorderClass(!!fieldErrors.company),
                             )}
                             placeholder="Société ou institution (optionnel)"
@@ -274,12 +274,12 @@ export default function ContactPage() {
                       <div className="space-y-2">
                         <label
                           htmlFor="contact-email"
-                          className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60"
+                          className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/70"
                         >
                           Adresse e-mail *
                         </label>
                         <div className="relative">
-                          <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-iba-sky/40" />
+                          <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-iba-navy/45" />
                           <input
                             id="contact-email"
                             name="email"
@@ -290,7 +290,7 @@ export default function ContactPage() {
                             aria-describedby={fieldErrors.email ? "contact-email-error" : undefined}
                             onChange={() => clearFieldError("email")}
                             className={cn(
-                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
+                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-navy placeholder:text-iba-navy/35 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
                               fieldBorderClass(!!fieldErrors.email),
                             )}
                             placeholder="vous@exemple.com"
@@ -306,12 +306,12 @@ export default function ContactPage() {
                       <div className="space-y-2">
                         <label
                           htmlFor="contact-phone"
-                          className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60"
+                          className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/70"
                         >
                           Téléphone *
                         </label>
                         <div className="relative">
-                          <Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-iba-sky/40" />
+                          <Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-iba-navy/45" />
                           <input
                             id="contact-phone"
                             name="phone"
@@ -322,7 +322,7 @@ export default function ContactPage() {
                             aria-describedby={fieldErrors.phone ? "contact-phone-error" : undefined}
                             onChange={() => clearFieldError("phone")}
                             className={cn(
-                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
+                              "w-full border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-navy placeholder:text-iba-navy/35 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
                               fieldBorderClass(!!fieldErrors.phone),
                             )}
                             placeholder="+243 …"
@@ -344,19 +344,19 @@ export default function ContactPage() {
                     <div className="absolute bottom-0 right-0 h-3 w-3 border-b-2 border-r-2 border-iba-sky" />
 
                     <div className="mb-8 flex items-end gap-4 border-b border-iba-sky/10 pb-4">
-                      <span className="font-mono text-4xl font-black text-iba-sky/10">02</span>
-                      <h2 className="text-2xl font-black uppercase tracking-tighter text-iba-sky">Votre message</h2>
+                      <span className="font-mono text-4xl font-black text-iba-navy/12">02</span>
+                      <h2 className="text-2xl font-black uppercase tracking-tighter text-iba-navy">Votre message</h2>
                     </div>
 
                     <div className="space-y-2">
                       <label
                         htmlFor="contact-message"
-                        className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60"
+                        className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/70"
                       >
                         Message * (min. 10 caractères)
                       </label>
                       <div className="relative">
-                        <MessageSquare className="absolute left-4 top-4 h-4 w-4 text-iba-sky/40" />
+                        <MessageSquare className="absolute left-4 top-4 h-4 w-4 text-iba-navy/45" />
                         <textarea
                           id="contact-message"
                           name="message"
@@ -368,7 +368,7 @@ export default function ContactPage() {
                           aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
                           onChange={() => clearFieldError("message")}
                           className={cn(
-                            "w-full resize-y border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
+                            "w-full resize-y border border-iba-sky/20 bg-background py-3 pl-12 pr-4 text-base font-medium text-iba-navy placeholder:text-iba-navy/35 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy",
                             fieldBorderClass(!!fieldErrors.message),
                           )}
                           placeholder="Décrivez votre demande, le contexte et la meilleure façon de vous joindre…"
@@ -393,7 +393,7 @@ export default function ContactPage() {
                     <div className="mt-8 flex flex-wrap items-center justify-end gap-4">
                       <Link
                         href="/quotation"
-                        className="text-xs font-bold uppercase tracking-wider text-iba-sky/70 underline-offset-4 hover:text-iba-navy hover:underline"
+                        className="text-xs font-bold uppercase tracking-wider text-iba-navy/75 underline-offset-4 hover:text-iba-sky hover:underline"
                       >
                         Besoin d&apos;un devis matériaux ?
                       </Link>
@@ -421,10 +421,10 @@ export default function ContactPage() {
                 <aside className="hidden lg:block">
                   <div className="sticky top-28 space-y-8 border-l border-iba-sky/10 pl-8">
                     <div>
-                      <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-iba-sky/45">
+                      <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-iba-navy/55">
                         Direct
                       </p>
-                      <p className="mt-2 text-sm font-medium leading-relaxed text-iba-sky/65">
+                      <p className="mt-2 text-sm font-medium leading-relaxed text-iba-navy/75">
                         Pour une demande de prix sur des produits précis, utilisez plutôt le formulaire devis.
                       </p>
                       <Link
@@ -436,11 +436,11 @@ export default function ContactPage() {
                       </Link>
                     </div>
                     <div className="border-t border-iba-sky/10 pt-8">
-                      <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-iba-sky/45">
+                      <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-iba-navy/55">
                         Délai
                       </p>
-                      <p className="mt-2 text-sm text-iba-sky/60">
-                        Réponse visée sous <strong className="text-iba-sky">24h ouvrées</strong> après réception.
+                      <p className="mt-2 text-sm text-iba-navy/70">
+                        Réponse visée sous <strong className="text-iba-navy">24h ouvrées</strong> après réception.
                       </p>
                     </div>
                   </div>

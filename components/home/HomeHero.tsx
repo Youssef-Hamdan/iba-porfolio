@@ -61,7 +61,7 @@ export function HomeHero() {
 
       </motion.div>
 
-      <div className="absolute inset-0 bg-gradient-to-tr from-iba-sky/70 to-transparent mix-blend-multiply" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-iba-sky/30 to-transparent mix-blend-multiply" />
       {/* 2. MAIN CONTENT WITH STAGGERED FADE-IN */}
       <motion.div
         style={{ opacity: contentOpacity }}

@@ -167,10 +167,10 @@ export default function QuotePage() {
               className="flex flex-col items-center justify-center border-y-8 border-double border-iba-navy/20 bg-iba-navy/5 p-12 text-center shadow-lg lg:col-span-3"
             >
               <CheckCircle2 className="mb-6 h-20 w-20 text-iba-navy" />
-              <h2 className="mb-4 text-3xl font-black uppercase tracking-tighter text-iba-sky md:text-4xl">
+              <h2 className="mb-4 text-3xl font-black uppercase tracking-tighter text-iba-navy md:text-4xl">
                 Demande Transmise
               </h2>
-              <p className="max-w-lg text-lg font-medium text-iba-sky/70">
+              <p className="max-w-lg text-lg font-medium text-iba-navy/75">
                 Votre manifeste a été envoyé à notre bureau d&apos;études. Un ingénieur commercial prendra contact avec vous sous 24h ouvrées.
               </p>
               {deliveryHint ? (
@@ -195,15 +195,15 @@ export default function QuotePage() {
                 <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-iba-sky" />
 
                 <div className="mb-8 flex items-end gap-4 border-b border-iba-sky/10 pb-4">
-                  <span className="font-mono text-4xl font-black text-iba-sky/10">01</span>
-                  <h2 className="text-2xl font-black uppercase tracking-tighter text-iba-sky">Identification du Client</h2>
+                  <span className="font-mono text-4xl font-black text-iba-navy/12">01</span>
+                  <h2 className="text-2xl font-black uppercase tracking-tighter text-iba-navy">Identification du Client</h2>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label htmlFor="quote-name" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60">Nom complet *</label>
+                    <label htmlFor="quote-name" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/70">Nom complet *</label>
                     <div className="relative">
-                      <User className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-iba-sky/40" />
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-iba-navy/45" />
                       <input
                         id="quote-name"
                         name="name"
@@ -214,7 +214,7 @@ export default function QuotePage() {
                         aria-describedby={fieldErrors.name ? "quote-name-error" : undefined}
                         onChange={() => clearFieldError("name")}
                         className={cn(
-                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
+                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 text-base font-medium text-iba-navy placeholder:text-iba-navy/35 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
                           fieldBorderClass(!!fieldErrors.name),
                         )}
                         placeholder="Jean Dupont"
@@ -227,9 +227,9 @@ export default function QuotePage() {
                     ) : null}
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="quote-company" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60">Entreprise / Projet</label>
+                    <label htmlFor="quote-company" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/70">Entreprise / Projet</label>
                     <div className="relative">
-                      <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-iba-sky/40" />
+                      <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-iba-navy/45" />
                       <input
                         id="quote-company"
                         name="company"
@@ -239,7 +239,7 @@ export default function QuotePage() {
                         aria-describedby={fieldErrors.company ? "quote-company-error" : undefined}
                         onChange={() => clearFieldError("company")}
                         className={cn(
-                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
+                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 text-base font-medium text-iba-navy placeholder:text-iba-navy/35 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
                           fieldBorderClass(!!fieldErrors.company),
                         )}
                         placeholder="Construction S.A."
@@ -252,9 +252,9 @@ export default function QuotePage() {
                     ) : null}
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="quote-email" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60">Adresse Email *</label>
+                    <label htmlFor="quote-email" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/70">Adresse Email *</label>
                     <div className="relative">
-                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-iba-sky/40" />
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-iba-navy/45" />
                       <input
                         id="quote-email"
                         required
@@ -265,7 +265,7 @@ export default function QuotePage() {
                         aria-describedby={fieldErrors.email ? "quote-email-error" : undefined}
                         onChange={() => clearFieldError("email")}
                         className={cn(
-                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
+                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 text-base font-medium text-iba-navy placeholder:text-iba-navy/35 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
                           fieldBorderClass(!!fieldErrors.email),
                         )}
                         placeholder="contact@entreprise.com"
@@ -278,9 +278,9 @@ export default function QuotePage() {
                     ) : null}
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="quote-phone" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60">Téléphone *</label>
+                    <label htmlFor="quote-phone" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/70">Téléphone *</label>
                     <div className="relative">
-                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-iba-sky/40" />
+                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-iba-navy/45" />
                       <input
                         id="quote-phone"
                         required
@@ -291,7 +291,7 @@ export default function QuotePage() {
                         aria-describedby={fieldErrors.phone ? "quote-phone-error" : undefined}
                         onChange={() => clearFieldError("phone")}
                         className={cn(
-                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
+                          "w-full border border-iba-sky/20 bg-background pl-12 pr-4 py-3 text-base font-medium text-iba-navy placeholder:text-iba-navy/35 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all",
                           fieldBorderClass(!!fieldErrors.phone),
                         )}
                         placeholder="+243 ..."
@@ -315,12 +315,12 @@ export default function QuotePage() {
                 <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-iba-sky" />
 
                 <div className="mb-8 flex items-end gap-4 border-b border-iba-sky/10 pb-4">
-                  <span className="font-mono text-4xl font-black text-iba-sky/10">02</span>
-                  <h2 className="text-2xl font-black uppercase tracking-tighter text-iba-sky">Votre demande</h2>
+                  <span className="font-mono text-4xl font-black text-iba-navy/12">02</span>
+                  <h2 className="text-2xl font-black uppercase tracking-tighter text-iba-navy">Votre demande</h2>
                 </div>
 
                 <div className="space-y-2">
-                  {/* <label htmlFor="quote-request" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-sky/60">Matériaux et produits souhaités *</label> */}
+                  {/* <label htmlFor="quote-request" className="font-mono text-[10px] font-bold uppercase tracking-widest text-iba-navy/70">Matériaux et produits souhaités *</label> */}
                   {fieldErrors.request ? (
                     <p id="quote-request-error" className="text-sm font-medium text-red-600" role="alert">
                       {fieldErrors.request}
@@ -339,7 +339,7 @@ export default function QuotePage() {
                     aria-invalid={fieldErrors.request ? true : undefined}
                     aria-describedby={fieldErrors.request ? "quote-request-error" : undefined}
                     className={cn(
-                      "w-full border border-iba-sky/20 bg-background p-4 text-base font-medium text-iba-sky placeholder:text-iba-sky/30 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all resize-y min-h-[180px]",
+                      "w-full border border-iba-sky/20 bg-background p-4 text-base font-medium text-iba-navy placeholder:text-iba-navy/35 focus:border-iba-navy focus:outline-none focus:ring-1 focus:ring-iba-navy transition-all resize-y min-h-[180px]",
                       fieldBorderClass(!!fieldErrors.request),
                     )}
                     placeholder="Décrivez librement ce dont vous avez besoin : types de matériaux, quantités approximatives, références, dimensions, etc."
@@ -382,10 +382,10 @@ export default function QuotePage() {
             <aside className="hidden lg:col-span-1 lg:block">
               <div className="sticky top-28 space-y-10 border-l border-iba-sky/10 pl-8">
                 <div>
-                  <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-iba-sky/45">
+                  <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-iba-navy/55">
                     Parcours
                   </p>
-                  <p className="mt-2 text-sm font-medium leading-relaxed text-iba-sky/65">
+                  <p className="mt-2 text-sm font-medium leading-relaxed text-iba-navy/75">
                     Deux étapes : vos coordonnées, puis la description de votre besoin en matériaux.
                   </p>
                 </div>
@@ -393,19 +393,19 @@ export default function QuotePage() {
                   <li className="flex gap-4">
                     <span className="font-mono text-2xl font-black text-iba-navy/80">01</span>
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-iba-sky">Identification</p>
-                      <p className="mt-1 text-xs text-iba-sky/55">Coordonnées et société</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-iba-navy">Identification</p>
+                      <p className="mt-1 text-xs text-iba-navy/65">Coordonnées et société</p>
                     </div>
                   </li>
                   <li className="flex gap-4">
                     <span className="font-mono text-2xl font-black text-iba-navy/80">02</span>
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-iba-sky">Demande</p>
-                      <p className="mt-1 text-xs text-iba-sky/55">Produits et quantités en texte libre</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-iba-navy">Demande</p>
+                      <p className="mt-1 text-xs text-iba-navy/65">Produits et quantités en texte libre</p>
                     </div>
                   </li>
                 </ol>
-                <p className="border-t border-iba-sky/10 pt-8 font-mono text-[10px] uppercase leading-relaxed text-iba-sky/40">
+                <p className="border-t border-iba-sky/10 pt-8 font-mono text-[10px] uppercase leading-relaxed text-iba-navy/60">
                   Réponse ciblée sous 24h ouvrées après réception du manifeste complet.
                 </p>
               </div>

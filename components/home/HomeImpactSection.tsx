@@ -3,7 +3,7 @@
 import { useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
-import { ArrowRight, BarChart3, Globe2, Target, Briefcase } from "lucide-react";
+import { ArrowRight, Handshake, Store, Target, Users } from "lucide-react";
 import { ParallaxImageBlock } from "@/components/home/ParallaxImageBlock";
 import { SectionWave } from "@/components/SectionWave";
 
@@ -15,13 +15,13 @@ const parallaxBlocks = [
     desc: "Parce que chaque chantier mérite le meilleur, IBA vous accompagne avec des solutions adaptées, des matériaux certifiés et un engagement constant envers la qualité.",
   },
   {
-    src: "/images/magnific_highly-detailed-recreatio_wPERCAw7EI.webp",
+    src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop",
     title: "Commerce & valorisation des filières",
     titleNode: <>Commerce & <span className="text-iba-sky">valorisation des filières</span></>,
     desc: "En collaborant avec des fournisseurs et acteurs de référence, nous contribuons au développement d’un secteur de la construction plus performant et durable.",
   },
   {
-    src: "/images/magnific_highly-detailed-recreatio_l7vNaThgv9.webp",
+    src: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=80&w=2072&auto=format&fit=crop",
     title: "Innovation & standards internationaux",
     titleNode: <>Innovation & <span className="text-iba-sky">standards internationaux</span></>,
     desc: "Nous améliorons continuellement nos procédés et notre offre pour proposer des solutions performantes, durables et adaptées aux besoins du marché.",
@@ -78,16 +78,6 @@ export function HomeImpactSection() {
                 </h2>
               </div>
             </div>
-
-            <div className="flex shrink-0 md:col-span-1 md:justify-end md:pb-1">
-              <Link
-                href="/governance"
-                className="group inline-flex items-center text-xs font-bold uppercase tracking-widest text-iba-sky transition-colors hover:text-white"
-              >
-                Nos rapports
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
           </div>
 
           <motion.div
@@ -97,10 +87,10 @@ export function HomeImpactSection() {
             animate={isStatsInView ? "visible" : "hidden"}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
           >
-            <StatCard icon={<BarChart3 />} numericValue={500} suffix=" M" label="Millions $ investis" />
-            <StatCard icon={<Globe2 />} numericValue={12} suffix="+" label="Pays partenaires" />
-            <StatCard icon={<Target />} numericValue={50} suffix="+" label="Projets livrés" />
-            <StatCard icon={<Briefcase />} numericValue={2000} suffix="+" label="Emplois créés" />
+            <StatCard icon={<Handshake />} numericValue={5} suffix="" label="Partenaires" />
+            <StatCard icon={<Store />} numericValue={70} suffix="+" label="Magasins" />
+            <StatCard icon={<Target />} numericValue={25} suffix="+" label="Projets" />
+            <StatCard icon={<Users />} numericValue={40} suffix="+" label="Employés" />
           </motion.div>
         </div>
 
