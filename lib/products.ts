@@ -12,7 +12,9 @@ export type ImageStorageFolder =
  */
 export type ProductCategoryId =
   | "acier-fer"
-  | "ciments"
+  | "ciment"
+  | "ciment-colle"
+  | "produits-sika"
   | "beton"
   | "brique"
   | "peinture"
@@ -21,6 +23,16 @@ export type ProductCategoryId =
   | "plafonds"
   | "panneaux-sandwich"
   | "pave";
+
+export type AcierFerSubcategoryId = "fer-a-beton" | "clous" | "acier";
+export type PeintureSubcategoryId = "peinture-a-eau" | "peinture-a-huile" | "antirouille";
+export type ProductSubcategoryId = AcierFerSubcategoryId | PeintureSubcategoryId;
+
+export interface ProductSubcategory {
+  id: ProductSubcategoryId;
+  categoryId: "acier-fer" | "peinture";
+  label: string;
+}
 
 export interface ProductCategory {
   id: ProductCategoryId;
@@ -33,23 +45,47 @@ export interface ProductCategory {
 export interface ProductItem {
   id: string;
   categoryId: ProductCategoryId;
+  subcategoryId?: ProductSubcategoryId;
   storageFolder: ImageStorageFolder;
   file: string;
   name: string;
 }
 
+export const productSubcategories: ProductSubcategory[] = [
+  { id: "fer-a-beton", categoryId: "acier-fer", label: "Fer à Béton" },
+  { id: "clous", categoryId: "acier-fer", label: "Clous" },
+  { id: "acier", categoryId: "acier-fer", label: "Acier" },
+  { id: "peinture-a-eau", categoryId: "peinture", label: "Peinture à Eau" },
+  { id: "peinture-a-huile", categoryId: "peinture", label: "Peinture à Huile" },
+  { id: "antirouille", categoryId: "peinture", label: "Antirouille" },
+];
+
 export const productCategories: ProductCategory[] = [
   {
     id: "acier-fer",
     label: "Acier & Fer",
-    description: "Tôles, profilés et tubes acier pour structures robustes.",
+    description: "Fer à béton, clous, tôles, profilés et tubes acier pour structures robustes.",
     coverStorageFolder: "sheet-metal-pipes-wood",
     coverFile: "tole IBR.png",
   },
   {
-    id: "ciments",
-    label: "Ciments",
-    description: "Liens hydrauliques, ciments en sac et mortiers.",
+    id: "ciment",
+    label: "Ciment",
+    description: "Liens hydrauliques et ciments en sac pour gros œuvre.",
+    coverStorageFolder: "cement-mortar-plaster",
+    coverFile: "CIMENT.jpeg",
+  },
+  {
+    id: "ciment-colle",
+    label: "Ciment Colle",
+    description: "Ciments-colles et mortiers-colles pour carrelage et finitions.",
+    coverStorageFolder: "cement-mortar-plaster",
+    coverFile: "CIMENT COLLE C2 EAGLE 20 KG -GRIS.png",
+  },
+  {
+    id: "produits-sika",
+    label: "Produits Sika",
+    description: "Produits Sika : ancrages, joints, enduits et solutions techniques.",
     coverStorageFolder: "cement-mortar-plaster",
     coverFile: "Super Sikalite.webp",
   },
@@ -70,7 +106,7 @@ export const productCategories: ProductCategory[] = [
   {
     id: "peinture",
     label: "Peinture",
-    description: "Peintures, mastiques, sceaux d’étanchéité et traitements antirouille.",
+    description: "Peintures à l'eau, à l'huile et traitements antirouille.",
     coverStorageFolder: "paints-coatings-sealants",
     coverFile: "LATEX INT EAGLE.webp",
   },
@@ -124,11 +160,13 @@ function slugFromFile(categoryId: string, storageFolder: string, file: string): 
 function buildItems(
   categoryId: ProductCategoryId,
   storageFolder: ImageStorageFolder,
-  files: readonly string[]
+  files: readonly string[],
+  subcategoryId?: ProductSubcategoryId,
 ): ProductItem[] {
   return files.map((file) => ({
     id: slugFromFile(categoryId, storageFolder, file),
     categoryId,
+    subcategoryId,
     storageFolder,
     file,
     name: humanizeFilename(file),
@@ -137,7 +175,6 @@ function buildItems(
 
 const cimentFiles = [
   "CIMENT.jpeg",
-  "Super Sikalite.webp",
   "CIMENT CILU 32.5.webp",
   "CIMENT CILU 42.5.webp",
   "CIMKO 32.5.webp",
@@ -146,10 +183,7 @@ const cimentFiles = [
   "PPC 42.5.webp",
 ] as const;
 
-/** Stockés dans paints-coatings-sealants, rangés commercialement sous Ciment. */
-const cimentCiluFiles = [] as const;
-
-const mortierCementFolderFiles = [
+const cimentColleFiles = [
   "CIMENT COLLE C2 EAGLE 20 KG -GRIS.png",
   "CIMENT COLLE C2 EAGLE 20 KG-BLANC.png",
   "CIMENT COLLE EAGLE PRO 20KG-GREY C1.png",
@@ -158,7 +192,8 @@ const mortierCementFolderFiles = [
   "FILLASSE EAGLE.webp",
 ] as const;
 
-const sikaCimentFiles = [
+const sikaFiles = [
+  "Super Sikalite.webp",
   "SIKA ANCHORFIX 3030(AB)CRT 12X385ML.webp",
   "SIKA IGOL P 25KG.webp",
   "SikaGrout 212 AO 30KG.webp",
@@ -176,12 +211,14 @@ const platreFiles = ["GYPROC.png", "PLATRE ET FILLASSE.png"] as const;
 
 const betonFiles = ["CENTRALE A BETON.png"] as const;
 
+const ferABetonFiles = ["barre fameco.jpeg"] as const;
+
+const clousFiles = ["CLOUS.png"] as const;
+
 const acierFiles = [
-  "CLOUS.png",
   "CORNIERE.jpg",
   "Fer-plat.jpg",
   "TÔLE NOIR.png",
-  "barre fameco.jpeg",
   "tole IBR.png",
   "UPN.webp",
 ] as const;
@@ -210,24 +247,27 @@ const consommablesFiles = [
   "TAMIS DE CONSTRUCTION.png",
 ] as const;
 
-const peintureLiquideFiles = [
-  "ANTIROUILLE GRIS 1KG.webp",
-  "ANTIROUILLE ROUGE EAGLE 1KG.webp",
-  "EMAIL AFRICA.JPG",
-  "EMAIL EAGLE COULEUR.JPG",
-  "EMAIL EAGLE.webp",
+const peintureAEauFiles = [
   "LATEC AFRICA.webp",
   "LATEX INT EAGLE.webp",
   "LATEX INT KINPAINT.webp",
+  "latex eagle.png",
   "MASTIC AFRICA.webp",
   "MASTIC INT EAGLE.webp",
   "MASTIC INT KINPAINT.webp",
-  "ROULEAU ETANCHE.png",
-  "latex eagle.png",
   "mastique eagle.png",
 ] as const;
 
-const peintureCategoryFiles = [...peintureLiquideFiles] as const;
+const peintureAHuileFiles = [
+  "EMAIL AFRICA.JPG",
+  "EMAIL EAGLE COULEUR.JPG",
+  "EMAIL EAGLE.webp",
+] as const;
+
+const antirouilleFiles = [
+  "ANTIROUILLE GRIS 1KG.webp",
+  "ANTIROUILLE ROUGE EAGLE 1KG.webp",
+] as const;
 
 const briqueFiles = [
   "BRIQUE 2 RECTANGULAIRE.png",
@@ -302,18 +342,21 @@ const paveFiles = [
 ] as const;
 
 export const allProducts: ProductItem[] = [
-  ...buildItems("ciments", "cement-mortar-plaster", cimentFiles),
-  ...buildItems("ciments", "paints-coatings-sealants", cimentCiluFiles),
-  ...buildItems("ciments", "cement-mortar-plaster", mortierCementFolderFiles),
-  ...buildItems("ciments", "cement-mortar-plaster", sikaCimentFiles),
+  ...buildItems("ciment", "cement-mortar-plaster", cimentFiles),
+  ...buildItems("ciment-colle", "cement-mortar-plaster", cimentColleFiles),
+  ...buildItems("produits-sika", "cement-mortar-plaster", sikaFiles),
   ...buildItems("brique", "brique", briqueFiles),
   ...buildItems("pave", "pave", paveFiles),
   ...buildItems("beton", "cement-mortar-plaster", betonFiles),
   ...buildItems("plafonds", "cement-mortar-plaster", platreFiles),
-  ...buildItems("acier-fer", "sheet-metal-pipes-wood", acierFiles),
+  ...buildItems("acier-fer", "sheet-metal-pipes-wood", ferABetonFiles, "fer-a-beton"),
+  ...buildItems("acier-fer", "sheet-metal-pipes-wood", clousFiles, "clous"),
+  ...buildItems("acier-fer", "sheet-metal-pipes-wood", acierFiles, "acier"),
   ...buildItems("bois", "sheet-metal-pipes-wood", panneauxBoisFiles),
   ...buildItems("panneaux-sandwich", "sheet-metal-pipes-wood", panneauxSandwichFiles),
-  ...buildItems("peinture", "paints-coatings-sealants", peintureCategoryFiles),
+  ...buildItems("peinture", "paints-coatings-sealants", peintureAEauFiles, "peinture-a-eau"),
+  ...buildItems("peinture", "paints-coatings-sealants", peintureAHuileFiles, "peinture-a-huile"),
+  ...buildItems("peinture", "paints-coatings-sealants", antirouilleFiles, "antirouille"),
   ...buildItems("outillage-quincaillerie", "tools-consumables", outillageFiles),
   ...buildItems("outillage-quincaillerie", "tools-consumables", consommablesFiles),
 ];
@@ -324,6 +367,22 @@ export function productImageUrl(storageFolder: ImageStorageFolder, file: string)
 
 export function categoryLabel(id: ProductCategoryId): string {
   return productCategories.find((c) => c.id === id)?.label ?? id;
+}
+
+export function subcategoryLabel(id: ProductSubcategoryId): string {
+  return productSubcategories.find((s) => s.id === id)?.label ?? id;
+}
+
+export function getSubcategoriesForCategory(
+  categoryId: "acier-fer" | "peinture",
+): ProductSubcategory[] {
+  return productSubcategories.filter((s) => s.categoryId === categoryId);
+}
+
+export function categoryHasSubcategories(
+  categoryId: ProductCategoryId,
+): categoryId is "acier-fer" | "peinture" {
+  return categoryId === "acier-fer" || categoryId === "peinture";
 }
 
 const categoryIdSet = new Set<ProductCategoryId>(productCategories.map((c) => c.id));

@@ -1,11 +1,14 @@
 "use client";
 
-import { useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type ParallaxImageBlockProps = {
-  src: string;
+  src?: string;
+  images?: string[];
   title: string;
   titleNode?: React.ReactNode;
   desc: string;
@@ -14,8 +17,11 @@ type ParallaxImageBlockProps = {
   total?: number;
 };
 
+const AUTO_SWIPE_MS = 3000;
+
 export function ParallaxImageBlock({
   src,
+  images,
   title,
   titleNode,
   desc,
@@ -23,6 +29,11 @@ export function ParallaxImageBlock({
   total = 3,
 }: ParallaxImageBlockProps) {
   const ref = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const slides = images ?? (src ? [src] : []);
+  const hasCarousel = slides.length > 1;
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -31,15 +42,73 @@ export function ParallaxImageBlock({
 
   const imageY = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
 
+  const goTo = useCallback(
+    (nextIndex: number) => {
+      if (slides.length === 0) return;
+      setActiveIndex((nextIndex + slides.length) % slides.length);
+    },
+    [slides.length],
+  );
+
+  const goNext = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
+  const goPrev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
+
+  useEffect(() => {
+    if (!hasCarousel || isPaused) return;
+
+    const timer = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % slides.length);
+    }, AUTO_SWIPE_MS);
+
+    return () => window.clearInterval(timer);
+  }, [hasCarousel, isPaused, slides.length]);
+
+  useEffect(() => {
+    if (!hasCarousel) return;
+
+    slides.forEach((slide) => {
+      const preload = new window.Image();
+      preload.src = slide;
+    });
+  }, [hasCarousel, slides]);
+
   const kicker =
     typeof index === "number"
       ? `${String(index).padStart(2, "0")} — ${String(total).padStart(2, "0")}`
       : null;
 
   return (
-    <div ref={ref} className="group relative h-[min(72dvh,520px)] md:h-[min(70vh,560px)] w-full min-h-[400px] overflow-hidden">
-      <motion.div className="absolute inset-0 -top-[20%] z-0 h-[140%] w-full" style={{ y: imageY }}>
-        <Image src={src} alt={title} fill className="object-cover" sizes="100vw" priority={index === 1} />
+    <div
+      ref={ref}
+      className="group relative h-[min(72dvh,520px)] md:h-[min(70vh,560px)] w-full min-h-[400px] overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocusCapture={() => setIsPaused(true)}
+      onBlurCapture={() => setIsPaused(false)}
+    >
+      <motion.div
+        className="absolute inset-0 -top-[20%] z-0 h-[140%] w-full bg-iba-navy"
+        style={{ y: imageY }}
+      >
+        {slides.map((slide, slideIndex) => (
+          <div
+            key={slide}
+            className={cn(
+              "absolute inset-0 transition-opacity duration-700 ease-out",
+              slideIndex === activeIndex ? "opacity-100" : "opacity-0",
+            )}
+            aria-hidden={slideIndex !== activeIndex}
+          >
+            <Image
+              src={slide}
+              alt={slideIndex === activeIndex ? title : ""}
+              fill
+              className="object-cover"
+              sizes="100vw"
+              priority={hasCarousel || (index === 1 && slideIndex === 0)}
+            />
+          </div>
+        ))}
       </motion.div>
 
       {/* Readability: darken image (esp. under copy in lower-left third) */}
@@ -55,6 +124,43 @@ export function ParallaxImageBlock({
         className="pointer-events-none absolute inset-0 z-[3] bg-gradient-to-tr from-iba-navy/25 to-transparent mix-blend-soft-light opacity-80"
         aria-hidden
       />
+
+      {hasCarousel ? (
+        <>
+          <button
+            type="button"
+            onClick={goPrev}
+            className="absolute left-4 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/25 bg-iba-navy/45 text-white backdrop-blur-sm transition-all hover:border-white/50 hover:bg-iba-navy/70 md:left-8"
+            aria-label="Image précédente"
+          >
+            <ChevronLeft className="h-5 w-5" strokeWidth={2.5} />
+          </button>
+          <button
+            type="button"
+            onClick={goNext}
+            className="absolute right-4 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/25 bg-iba-navy/45 text-white backdrop-blur-sm transition-all hover:border-white/50 hover:bg-iba-navy/70 md:right-8"
+            aria-label="Image suivante"
+          >
+            <ChevronRight className="h-5 w-5" strokeWidth={2.5} />
+          </button>
+
+          <div className="absolute bottom-6 right-5 z-20 flex items-center gap-2 md:bottom-8 md:right-16 lg:right-20">
+            {slides.map((slide, slideIndex) => (
+              <button
+                key={slide}
+                type="button"
+                onClick={() => setActiveIndex(slideIndex)}
+                className={cn(
+                  "h-1.5 rounded-full transition-all duration-300",
+                  slideIndex === activeIndex ? "w-7 bg-iba-sky" : "w-1.5 bg-white/40 hover:bg-white/70",
+                )}
+                aria-label={`Afficher l'image ${slideIndex + 1}`}
+                aria-current={slideIndex === activeIndex}
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
 
       {/*
         Rule of thirds (md+): 3×3 grid — copy in left 2 columns, bottom 2 rows (lower-left focal area).

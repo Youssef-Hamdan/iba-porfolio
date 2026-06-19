@@ -15,6 +15,10 @@ import {
   productCategories,
   productImageUrl,
   ProductCategoryId,
+  ProductSubcategoryId,
+  categoryHasSubcategories,
+  getSubcategoriesForCategory,
+  subcategoryLabel,
 } from "@/lib/products";
 
 type Product = (typeof allProducts)[number];
@@ -182,11 +186,17 @@ function ProductViewer({
 const ProductCard = memo(function ProductCard({
   product,
   onView,
+  showSubcategory = false,
 }: {
   product: Product;
   onView: () => void;
+  showSubcategory?: boolean;
 }) {
   const categoryLabel = categoryLabelMap.get(product.categoryId) ?? "";
+  const badgeLabel =
+    showSubcategory && product.subcategoryId
+      ? subcategoryLabel(product.subcategoryId)
+      : categoryLabel;
   const imageSrc = productImageUrl(product.storageFolder, product.file);
 
   return (
@@ -203,7 +213,7 @@ const ProductCard = memo(function ProductCard({
 
         <div className="mb-6 flex items-start justify-between">
           <span className="rounded-full border border-iba-sky/10 bg-iba-navy/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest text-iba-navy transition-colors group-hover:text-iba-sky">
-            {categoryLabel}
+            {badgeLabel}
           </span>
           <span className="text-[10px] text-iba-sky/20 transition-colors group-hover:text-iba-navy/50" aria-hidden>
             ⬢
@@ -259,6 +269,7 @@ const ProductCard = memo(function ProductCard({
 
 export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState<ProductCategoryId | "all">("all");
+  const [activeSubcategory, setActiveSubcategory] = useState<ProductSubcategoryId | "all">("all");
   const [viewerIndex, setViewerIndex] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
   const productsTopRef = useRef<HTMLDivElement>(null);
@@ -268,13 +279,44 @@ export default function ProductsPage() {
     setMounted(true);
   }, []);
 
-  const filteredProducts = useMemo(
+  const activeSubcategories = useMemo(
     () =>
-      activeCategory === "all"
-        ? allProducts
-        : allProducts.filter((p) => p.categoryId === activeCategory),
+      activeCategory !== "all" && categoryHasSubcategories(activeCategory)
+        ? getSubcategoriesForCategory(activeCategory)
+        : [],
     [activeCategory],
   );
+
+  const filteredProducts = useMemo(() => {
+    let products =
+      activeCategory === "all"
+        ? allProducts
+        : allProducts.filter((p) => p.categoryId === activeCategory);
+
+    if (activeSubcategory !== "all") {
+      products = products.filter((p) => p.subcategoryId === activeSubcategory);
+    }
+
+    return products;
+  }, [activeCategory, activeSubcategory]);
+
+  const groupedProducts = useMemo(() => {
+    if (activeSubcategory !== "all" || activeSubcategories.length === 0) {
+      return null;
+    }
+
+    return activeSubcategories
+      .map((sub) => ({
+        subcategory: sub,
+        products: filteredProducts.filter((p) => p.subcategoryId === sub.id),
+      }))
+      .filter((group) => group.products.length > 0);
+  }, [activeSubcategory, activeSubcategories, filteredProducts]);
+
+  const handleCategoryChange = useCallback((category: ProductCategoryId | "all") => {
+    setActiveCategory(category);
+    setActiveSubcategory("all");
+  }, []);
 
   const viewerProduct = viewerIndex !== null ? filteredProducts[viewerIndex] : null;
 
@@ -322,7 +364,7 @@ export default function ProductsPage() {
       cancelAnimationFrame(raf);
       window.clearTimeout(timeout);
     };
-  }, [activeCategory, filteredProducts.length]);
+  }, [activeCategory, activeSubcategory, filteredProducts.length]);
 
   return (
     <main className="flex min-h-[100dvh] md:min-h-screen flex-col bg-background selection:bg-iba-navy selection:text-white">
@@ -396,7 +438,7 @@ export default function ProductsPage() {
               <div className="grid grid-cols-2 gap-2 border-b border-iba-sky/10 pb-6 sm:grid-cols-3 lg:flex lg:flex-col lg:border-b-0 lg:border-r lg:border-iba-sky/10 lg:pb-0 lg:pr-6 xl:pr-8">
                 <button
                   type="button"
-                  onClick={() => setActiveCategory("all")}
+                  onClick={() => handleCategoryChange("all")}
                   className={cn(
                     "flex w-full items-center justify-center lg:justify-start rounded-lg border px-2 py-3 text-center lg:text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-wide transition-all",
                     activeCategory === "all"
@@ -410,7 +452,7 @@ export default function ProductsPage() {
                   <button
                     type="button"
                     key={cat.id}
-                    onClick={() => setActiveCategory(cat.id)}
+                    onClick={() => handleCategoryChange(cat.id)}
                     className={cn(
                       "flex w-full items-center justify-center lg:justify-start rounded-lg border px-2 py-3 text-center lg:text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-wide transition-all",
                       activeCategory === cat.id
@@ -451,15 +493,76 @@ export default function ProductsPage() {
                 </motion.div>
               </AnimatePresence>
 
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-                {filteredProducts.map((product, index) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onView={() => openViewer(index)}
-                  />
-                ))}
-              </div>
+              {activeSubcategories.length > 0 ? (
+                <div className="mb-6 flex flex-wrap gap-2 lg:mb-8">
+                  <button
+                    type="button"
+                    onClick={() => setActiveSubcategory("all")}
+                    className={cn(
+                      "rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide transition-all",
+                      activeSubcategory === "all"
+                        ? "border-iba-sky bg-iba-sky text-white shadow-sm shadow-iba-sky/15"
+                        : "border-iba-sky/15 bg-white text-iba-navy hover:border-iba-navy/40 hover:text-iba-sky",
+                    )}
+                  >
+                    Toutes
+                  </button>
+                  {activeSubcategories.map((sub) => (
+                    <button
+                      type="button"
+                      key={sub.id}
+                      onClick={() => setActiveSubcategory(sub.id)}
+                      className={cn(
+                        "rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide transition-all",
+                        activeSubcategory === sub.id
+                          ? "border-iba-navy bg-iba-navy text-white shadow-sm shadow-iba-navy/15"
+                          : "border-iba-sky/15 bg-white text-iba-navy hover:border-iba-navy/40 hover:text-iba-sky",
+                      )}
+                    >
+                      {sub.label}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
+
+              {groupedProducts ? (
+                <div className="space-y-10 lg:space-y-12">
+                  {groupedProducts.map((group) => {
+                    const groupStartIndex = filteredProducts.findIndex(
+                      (p) => p.id === group.products[0]?.id,
+                    );
+
+                    return (
+                      <section key={group.subcategory.id}>
+                        <h3 className="mb-5 border-b border-iba-sky/10 pb-3 text-sm font-black uppercase tracking-widest text-iba-navy">
+                          {group.subcategory.label}
+                        </h3>
+                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                          {group.products.map((product, groupIndex) => (
+                            <ProductCard
+                              key={product.id}
+                              product={product}
+                              onView={() => openViewer(groupStartIndex + groupIndex)}
+                              showSubcategory
+                            />
+                          ))}
+                        </div>
+                      </section>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                  {filteredProducts.map((product, index) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onView={() => openViewer(index)}
+                      showSubcategory={activeSubcategories.length > 0}
+                    />
+                  ))}
+                </div>
+              )}
 
               {filteredProducts.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20 text-center lg:py-24">

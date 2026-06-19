@@ -15,13 +15,19 @@ const parallaxBlocks = [
     desc: "Parce que chaque chantier mérite le meilleur, IBA vous accompagne avec des solutions adaptées, des matériaux certifiés et un engagement constant envers la qualité.",
   },
   {
-    src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop",
+    images: [
+      "/images/2D7A8728-ezgif.com-png-to-webp-converter-2.webp",
+      "/images/2D7A8731-ezgif.com-png-to-webp-converter.webp",
+    ],
     title: "Commerce & valorisation des filières",
     titleNode: <>Commerce & <span className="text-iba-sky">valorisation des filières</span></>,
     desc: "En collaborant avec des fournisseurs et acteurs de référence, nous contribuons au développement d’un secteur de la construction plus performant et durable.",
   },
   {
-    src: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=80&w=2072&auto=format&fit=crop",
+    images: [
+      "/images/2D7A8740-ezgif.com-png-to-webp-converter.webp",
+      "/images/2D7A8755-ezgif.com-png-to-webp-converter.webp",
+    ],
     title: "Innovation & standards internationaux",
     titleNode: <>Innovation & <span className="text-iba-sky">standards internationaux</span></>,
     desc: "Nous améliorons continuellement nos procédés et notre offre pour proposer des solutions performantes, durables et adaptées aux besoins du marché.",
@@ -60,20 +66,20 @@ export function HomeImpactSection() {
 
               <div className="flex max-w-[min(100%,42rem)] flex-col gap-5 md:max-w-none">
                 <span className="inline-flex w-fit items-center rounded-full border border-white/25 bg-white/10 px-5 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-sm">
-                  Indicateurs clés
+                  En chiffres
                 </span>
 
                 <div className="flex items-start gap-3">
                   <span className="mt-2 h-[2px] w-8 shrink-0 bg-iba-sky" aria-hidden />
                   <p className="text-xs font-bold uppercase tracking-widest text-white/70">
-                    01 — IMPACT GLOBAL
+                    01 — Notre réseau
                   </p>
                 </div>
 
                 <h2 className="text-balance text-4xl font-extrabold uppercase leading-[1.08] tracking-tight text-white md:text-5xl lg:text-6xl">
-                  Mesurer le{" "}
+                  Présence &{" "}
                   <span className="text-iba-sky">
-                    changement
+                    performance
                   </span>
                 </h2>
               </div>
@@ -107,7 +113,8 @@ export function HomeImpactSection() {
         {parallaxBlocks.map((block, i) => (
           <ParallaxImageBlock
             key={block.title}
-            src={block.src}
+            src={"src" in block ? block.src : undefined}
+            images={"images" in block ? block.images : undefined}
             title={block.title}
             titleNode={block.titleNode}
             desc={block.desc}
