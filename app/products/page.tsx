@@ -269,7 +269,7 @@ const ProductCard = memo(function ProductCard({
 
 export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState<ProductCategoryId | "all">("all");
-  const [activeSubcategory, setActiveSubcategory] = useState<ProductSubcategoryId | "all">("all");
+  const [activeSubcategory, setActiveSubcategory] = useState<ProductSubcategoryId | null>(null);
   const [viewerIndex, setViewerIndex] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
   const productsTopRef = useRef<HTMLDivElement>(null);
@@ -293,30 +293,39 @@ export default function ProductsPage() {
         ? allProducts
         : allProducts.filter((p) => p.categoryId === activeCategory);
 
-    if (activeSubcategory !== "all") {
+    if (activeSubcategory) {
       products = products.filter((p) => p.subcategoryId === activeSubcategory);
     }
 
     return products;
   }, [activeCategory, activeSubcategory]);
 
-  const groupedProducts = useMemo(() => {
-    if (activeSubcategory !== "all" || activeSubcategories.length === 0) {
-      return null;
-    }
-
-    return activeSubcategories
-      .map((sub) => ({
-        subcategory: sub,
-        products: filteredProducts.filter((p) => p.subcategoryId === sub.id),
-      }))
-      .filter((group) => group.products.length > 0);
-  }, [activeSubcategory, activeSubcategories, filteredProducts]);
-
   const handleCategoryChange = useCallback((category: ProductCategoryId | "all") => {
     setActiveCategory(category);
-    setActiveSubcategory("all");
+
+    if (category !== "all" && categoryHasSubcategories(category)) {
+      const subs = getSubcategoriesForCategory(category);
+      setActiveSubcategory(subs[0]?.id ?? null);
+      return;
+    }
+
+    setActiveSubcategory(null);
   }, []);
+
+  useEffect(() => {
+    if (activeSubcategories.length === 0) {
+      if (activeSubcategory !== null) setActiveSubcategory(null);
+      return;
+    }
+
+    const isValid =
+      activeSubcategory !== null &&
+      activeSubcategories.some((sub) => sub.id === activeSubcategory);
+
+    if (!isValid) {
+      setActiveSubcategory(activeSubcategories[0].id);
+    }
+  }, [activeSubcategories, activeSubcategory]);
 
   const viewerProduct = viewerIndex !== null ? filteredProducts[viewerIndex] : null;
 
@@ -495,18 +504,6 @@ export default function ProductsPage() {
 
               {activeSubcategories.length > 0 ? (
                 <div className="mb-6 flex flex-wrap gap-2 lg:mb-8">
-                  <button
-                    type="button"
-                    onClick={() => setActiveSubcategory("all")}
-                    className={cn(
-                      "rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide transition-all",
-                      activeSubcategory === "all"
-                        ? "border-iba-sky bg-iba-sky text-white shadow-sm shadow-iba-sky/15"
-                        : "border-iba-sky/15 bg-white text-iba-navy hover:border-iba-navy/40 hover:text-iba-sky",
-                    )}
-                  >
-                    Toutes
-                  </button>
                   {activeSubcategories.map((sub) => (
                     <button
                       type="button"
@@ -525,44 +522,16 @@ export default function ProductsPage() {
                 </div>
               ) : null}
 
-              {groupedProducts ? (
-                <div className="space-y-10 lg:space-y-12">
-                  {groupedProducts.map((group) => {
-                    const groupStartIndex = filteredProducts.findIndex(
-                      (p) => p.id === group.products[0]?.id,
-                    );
-
-                    return (
-                      <section key={group.subcategory.id}>
-                        <h3 className="mb-5 border-b border-iba-sky/10 pb-3 text-sm font-black uppercase tracking-widest text-iba-navy">
-                          {group.subcategory.label}
-                        </h3>
-                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-                          {group.products.map((product, groupIndex) => (
-                            <ProductCard
-                              key={product.id}
-                              product={product}
-                              onView={() => openViewer(groupStartIndex + groupIndex)}
-                              showSubcategory
-                            />
-                          ))}
-                        </div>
-                      </section>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-                  {filteredProducts.map((product, index) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      onView={() => openViewer(index)}
-                      showSubcategory={activeSubcategories.length > 0}
-                    />
-                  ))}
-                </div>
-              )}
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                {filteredProducts.map((product, index) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onView={() => openViewer(index)}
+                    showSubcategory={activeSubcategories.length > 0}
+                  />
+                ))}
+              </div>
 
               {filteredProducts.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20 text-center lg:py-24">

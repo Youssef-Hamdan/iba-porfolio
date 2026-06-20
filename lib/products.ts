@@ -129,7 +129,7 @@ export const productCategories: ProductCategory[] = [
     label: "Plafonds",
     description: "Solutions complètes pour plafonds suspendus, plâtre et isolation.",
     coverStorageFolder: "cement-mortar-plaster",
-    coverFile: "GYPROC.png",
+    coverFile: "gyproc.webp",
   },
   {
     id: "panneaux-sandwich",
@@ -207,11 +207,11 @@ const sikaFiles = [
   "Sikaprimer 3N.webp",
 ] as const;
 
-const platreFiles = ["GYPROC.png", "PLATRE ET FILLASSE.png"] as const;
+const platreFiles = ["gyproc.webp", "PLATRE ET FILLASSE.png"] as const;
 
 const betonFiles = ["CENTRALE A BETON.png"] as const;
 
-const ferABetonFiles = ["barre fameco.jpeg"] as const;
+const ferABetonFiles = ["Barre Fameco 1.webp", "Barre Fameco 2.webp"] as const;
 
 const clousFiles = ["CLOUS.png"] as const;
 

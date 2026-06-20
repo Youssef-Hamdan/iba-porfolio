@@ -32,11 +32,26 @@ function projectImage(file: string): string {
   return `/images/projects/${encodeURIComponent(file)}`;
 }
 
+function siteImage(file: string): string {
+  return `/images/${encodeURIComponent(file)}`;
+}
+
 const flotteFluvialeGallery = [
   { file: "image.png", alt: "Vue d'ensemble du bateau LOMELA amarré" },
   { file: "image copy.png", alt: "Flotte de barges de transport fluvial" },
   { file: "image copy 2.png", alt: "Barge industrielle en maintenance" },
   { file: "image copy 3.png", alt: "Navire fluvial multi-niveaux" },
+] as const;
+
+const complexeCommercialGallery = [
+  {
+    file: "project2_image1-ezgif.com-png-to-webp-converter.webp",
+    alt: "Vue extérieure du complexe commercial en cours de réalisation",
+  },
+  {
+    file: "project2_image2-ezgif.com-png-to-webp-converter.webp",
+    alt: "Façade et aménagements du projet commercial",
+  },
 ] as const;
 
 export const projectData: Record<string, Omit<ProjectRecord, "id">> = {
@@ -59,6 +74,28 @@ export const projectData: Record<string, Omit<ProjectRecord, "id">> = {
     },
     gallery: flotteFluvialeGallery.map(({ file, alt }) => ({
       src: projectImage(file),
+      alt,
+    })),
+  },
+  "complexe-commercial": {
+    title: "Complexe commercial",
+    category: "Bâtiment & Aménagement",
+    location: "Kinshasa, République Démocratique du Congo",
+    image: siteImage(complexeCommercialGallery[0].file),
+    description:
+      "Projet d’aménagement et de construction d’un complexe commercial intégrant espaces de vente, circulation et finitions modernes. Texte provisoire — contenu à compléter.",
+    objectives: [
+      "Livrer une infrastructure commerciale adaptée aux besoins locaux et aux standards de qualité IBA.",
+      "Coordonner l’approvisionnement en matériaux et la logistique chantier dans les délais convenus.",
+      "Garantir des finitions durables et une mise en service conforme aux attentes du maître d’ouvrage.",
+    ],
+    highlights: {
+      phase: "Construction & Finitions",
+      program: "Complexe commercial multi-espaces",
+      designLanguage: "Moderne, fonctionnel et durable",
+    },
+    gallery: complexeCommercialGallery.map(({ file, alt }) => ({
+      src: siteImage(file),
       alt,
     })),
   },
