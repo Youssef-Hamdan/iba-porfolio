@@ -61,13 +61,13 @@ export const productSubcategories: ProductSubcategory[] = [
 ];
 
 export const productCategories: ProductCategory[] = [
-  {
-    id: "acier-fer",
-    label: "Acier & Fer",
-    description: "Fer à béton, clous, tôles, profilés et tubes acier pour structures robustes.",
-    coverStorageFolder: "sheet-metal-pipes-wood",
-    coverFile: "tole IBR.png",
-  },
+  // {
+  //   id: "acier-fer",
+  //   label: "Acier & Fer",
+  //   description: "Fer à béton, clous, tôles, profilés et tubes acier pour structures robustes.",
+  //   coverStorageFolder: "sheet-metal-pipes-wood",
+  //   coverFile: "tole IBR.png",
+  // },
   {
     id: "ciment",
     label: "Ciment",
@@ -119,7 +119,7 @@ export const productCategories: ProductCategory[] = [
   },
   {
     id: "outillage-quincaillerie",
-    label: "Outillage Quincaillerie",
+    label: "Outillage Quincaillerie JKL",
     description: "Outils de coupe, d'atelier et quincaillerie générale.",
     coverStorageFolder: "tools-consumables",
     coverFile: "Cisaille.png",
@@ -189,7 +189,7 @@ const cimentColleFiles = [
   "CIMENT COLLE EAGLE PRO 20KG-GREY C1.png",
   "CIMENT COLLE EAGLE PRO 20KG-WHITE C1.png",
   "CIMENT KIN COLLE BLANC 20 KG C1.png",
-  "FILLASSE EAGLE.webp",
+  // "FILLASSE EAGLE.webp",
 ] as const;
 
 const sikaFiles = [
@@ -203,11 +203,11 @@ const sikaFiles = [
   "Sikaflex 11FC.webp",
   "Sikaflex Pro 3.webp",
   "Sikafloor- 3 Quartz Top AO Cinza 25 Kg.webp",
-  "Sikagard 570 pele elástica+fibra.webp",
+  // "Sikagard 570 pele elástica+fibra.webp",
   "Sikaprimer 3N.webp",
 ] as const;
 
-const platreFiles = ["gyproc.webp", "PLATRE ET FILLASSE.png"] as const;
+const platreFiles = ["gyproc.webp", "PLATRE ET FILLASSE.webp"] as const;
 
 const betonFiles = ["CENTRALE A BETON.png"] as const;
 

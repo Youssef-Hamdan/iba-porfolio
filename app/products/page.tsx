@@ -201,79 +201,74 @@ const ProductCard = memo(function ProductCard({
   const imageSrc = productImageUrl(product.storageFolder, product.file);
 
   return (
-    <>
-      {/* Mobile 3-column requires significantly reduced padding (p-2) to avoid squishing */}
-      <article className="group relative flex flex-col justify-between border border-iba-sky/10 bg-white p-2 sm:p-4 lg:p-6 shadow-sm shadow-iba-sky/[0.04] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-iba-navy/40 hover:shadow-[0_8px_28px_rgba(0,170,226,0.1)]">
-        
-        {/* Corner Accents - Hidden on mobile to save space */}
-        <div
-          className="hidden sm:block absolute left-0 top-0 h-3 w-3 border-l-2 border-t-2 border-iba-sky/25 transition-colors group-hover:border-iba-navy"
-          aria-hidden
+    <article className="group relative flex flex-col justify-between border border-iba-sky/10 bg-white p-2 sm:p-4 lg:p-6 shadow-sm shadow-iba-sky/[0.04] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-iba-navy/40 hover:shadow-[0_8px_28px_rgba(0,170,226,0.1)]">
+      
+      <div
+        className="hidden sm:block absolute left-0 top-0 h-3 w-3 border-l-2 border-t-2 border-iba-sky/25 transition-colors group-hover:border-iba-navy"
+        aria-hidden
+      />
+      <div
+        className="hidden sm:block absolute right-0 top-0 h-3 w-3 border-r-2 border-t-2 border-iba-sky/25 transition-colors group-hover:border-iba-navy"
+        aria-hidden
+      />
+
+      <div className="mb-2 sm:mb-4 lg:mb-6 flex items-start justify-between">
+        <span className="max-w-full truncate rounded-full border border-iba-sky/10 bg-iba-navy/10 px-1.5 py-0.5 text-[6.5px] font-bold uppercase tracking-widest text-iba-navy transition-colors group-hover:text-iba-sky sm:px-2.5 sm:py-1 sm:text-[9px]">
+          {badgeLabel}
+        </span>
+        <span className="hidden sm:inline-block text-[10px] text-iba-sky/20 transition-colors group-hover:text-iba-navy/50" aria-hidden>
+          ⬢
+        </span>
+      </div>
+
+      <div className="group/img relative mb-2 sm:mb-4 lg:mb-6 aspect-square w-full overflow-hidden rounded-md sm:rounded-lg border border-iba-sky/5 bg-iba-navy/[0.06] transition-colors group-hover:bg-iba-navy/10">
+        <Image
+          src={imageSrc}
+          alt=""
+          fill
+          className="z-0 object-contain p-1 sm:p-2 drop-shadow-md transition-transform duration-300 ease-out group-hover/img:scale-105"
+          sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 20vw"
         />
+
         <div
-          className="hidden sm:block absolute right-0 top-0 h-3 w-3 border-r-2 border-t-2 border-iba-sky/25 transition-colors group-hover:border-iba-navy"
+          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-iba-sky/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover/img:opacity-100"
           aria-hidden
         />
 
-        <div className="mb-2 sm:mb-4 lg:mb-6 flex items-start justify-between">
-          {/* Badge text shrunk heavily and truncated to prevent overflowing 3 columns */}
-          <span className="max-w-full truncate rounded-full border border-iba-sky/10 bg-iba-navy/10 px-1.5 py-0.5 text-[6.5px] font-bold uppercase tracking-widest text-iba-navy transition-colors group-hover:text-iba-sky sm:px-2.5 sm:py-1 sm:text-[9px]">
-            {badgeLabel}
-          </span>
-          {/* Decorative hex icon hidden on mobile */}
-          <span className="hidden sm:inline-block text-[10px] text-iba-sky/20 transition-colors group-hover:text-iba-navy/50" aria-hidden>
-            ⬢
+        <div
+          className="pointer-events-none absolute bottom-3 left-1/2 z-[2] -translate-x-1/2 hidden sm:block opacity-0 transition-opacity duration-300 group-hover/img:opacity-100"
+          aria-hidden
+        >
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-iba-sky/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg backdrop-blur-sm">
+            <Maximize2 className="h-3.5 w-3.5" />
+            Cliquer pour agrandir
           </span>
         </div>
 
-        <div className="group/img relative mb-2 sm:mb-4 lg:mb-6 aspect-square w-full overflow-hidden rounded-md sm:rounded-lg border border-iba-sky/5 bg-iba-navy/[0.06] transition-colors group-hover:bg-iba-navy/10">
-          <Image
-            src={imageSrc}
-            alt=""
-            fill
-            className="z-0 object-contain p-1 sm:p-2 drop-shadow-md transition-transform duration-300 ease-out group-hover/img:scale-105"
-            sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 20vw"
-          />
+        <button
+          type="button"
+          onClick={onView}
+          className="absolute inset-0 z-[3] block h-full w-full cursor-zoom-in rounded-[inherit] border-0 bg-transparent p-0 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-iba-navy focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          aria-label={`Agrandir l'image : ${product.name}`}
+        >
+          <span className="sr-only">Ouvrir la vue agrandie</span>
+        </button>
+      </div>
 
-          <div
-            className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-iba-sky/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover/img:opacity-100"
-            aria-hidden
-          />
+      <h3 className="line-clamp-2 text-center font-sans text-[8.5px] font-black uppercase leading-tight tracking-tight text-iba-navy transition-colors group-hover:text-iba-sky sm:text-sm lg:text-lg">
+        {product.name}
+      </h3>
 
-          {/* Hover instruction hidden on mobile since hover doesn't exist on touch screens */}
-          <div
-            className="pointer-events-none absolute bottom-3 left-1/2 z-[2] -translate-x-1/2 hidden sm:block opacity-0 transition-opacity duration-300 group-hover/img:opacity-100"
-            aria-hidden
-          >
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-iba-sky/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg backdrop-blur-sm">
-              <Maximize2 className="h-3.5 w-3.5" />
-              Cliquer pour agrandir
-            </span>
-          </div>
-
-          <button
-            type="button"
-            onClick={onView}
-            className="absolute inset-0 z-[3] block h-full w-full cursor-zoom-in rounded-[inherit] border-0 bg-transparent p-0 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-iba-navy focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            aria-label={`Agrandir l'image : ${product.name}`}
-          >
-            <span className="sr-only">Ouvrir la vue agrandie</span>
-          </button>
-        </div>
-
-        {/* Title heavily shrunk for mobile to prevent massive text wrapping blocks */}
-        <h3 className="line-clamp-2 text-center font-sans text-[8.5px] font-black uppercase leading-tight tracking-tight text-iba-navy transition-colors group-hover:text-iba-sky sm:text-sm lg:text-lg">
-          {product.name}
-        </h3>
-
-        <div
-          className="absolute bottom-0 left-0 h-0.5 sm:h-1 w-0 bg-iba-sky transition-[width] duration-300 ease-out group-hover:w-full"
-          aria-hidden
-        />
-      </article>
-    </>
+      <div
+        className="absolute bottom-0 left-0 h-0.5 sm:h-1 w-0 bg-iba-sky transition-[width] duration-300 ease-out group-hover:w-full"
+        aria-hidden
+      />
+    </article>
   );
 });
+
+// PAGINATION CONSTANTS
+const ITEMS_PER_PAGE = 15;
 
 export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState<ProductCategoryId | "all">("all");
@@ -282,6 +277,9 @@ export default function ProductsPage() {
   const [mounted, setMounted] = useState(false);
   const productsTopRef = useRef<HTMLDivElement>(null);
   const skipInitialScrollRef = useRef(true);
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     setMounted(true);
@@ -308,8 +306,16 @@ export default function ProductsPage() {
     return products;
   }, [activeCategory, activeSubcategory]);
 
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+  const currentProducts = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [filteredProducts, currentPage]);
+
   const handleCategoryChange = useCallback((category: ProductCategoryId | "all") => {
     setActiveCategory(category);
+    setCurrentPage(1); // Reset page on category change
 
     if (category !== "all" && categoryHasSubcategories(category)) {
       const subs = getSubcategoriesForCategory(category);
@@ -322,7 +328,10 @@ export default function ProductsPage() {
 
   useEffect(() => {
     if (activeSubcategories.length === 0) {
-      if (activeSubcategory !== null) setActiveSubcategory(null);
+      if (activeSubcategory !== null) {
+        setActiveSubcategory(null);
+        setCurrentPage(1); // Reset page
+      }
       return;
     }
 
@@ -332,14 +341,26 @@ export default function ProductsPage() {
 
     if (!isValid) {
       setActiveSubcategory(activeSubcategories[0].id);
+      setCurrentPage(1); // Reset page
+    } else {
+       // Also reset page if subcategory is manually changed
+       setCurrentPage(1);
     }
-  }, [activeSubcategories, activeSubcategory]);
+  }, [activeSubcategories, activeSubcategory]); // Note: In a real app, you might want to break apart the dependency so it doesn't reset on initial load if not needed, but this works safely.
+
+  // Helper for pagination button clicks
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    scrollToProductsTop(productsTopRef.current);
+  };
 
   const viewerProduct = viewerIndex !== null ? filteredProducts[viewerIndex] : null;
 
-  const openViewer = useCallback((index: number) => {
-    setViewerIndex(index);
-  }, []);
+  const openViewer = useCallback((indexInCurrentPage: number) => {
+    // We need to map the index from the current page view back to the global filtered array index
+    const globalIndex = (currentPage - 1) * ITEMS_PER_PAGE + indexInCurrentPage;
+    setViewerIndex(globalIndex);
+  }, [currentPage]);
 
   const closeViewer = useCallback(() => {
     setViewerIndex(null);
@@ -381,12 +402,12 @@ export default function ProductsPage() {
       cancelAnimationFrame(raf);
       window.clearTimeout(timeout);
     };
-  }, [activeCategory, activeSubcategory, filteredProducts.length]);
+  }, [activeCategory, activeSubcategory]);
 
   return (
     <main className="flex min-h-[100dvh] md:min-h-screen flex-col bg-background selection:bg-iba-navy selection:text-white">
       
-      {/* 1. Hero — 60% navy · 30% white copy · 10% sky accents */}
+      {/* 1. Hero */}
       <section className="relative overflow-hidden bg-iba-navy pt-[calc(6rem+2rem)] pb-16 text-white md:pt-[calc(8rem+2rem)] md:pb-24">
         <div className="pointer-events-none absolute -right-24 top-1/4 h-[480px] w-[480px] rounded-full bg-white/[0.06] blur-[100px]" aria-hidden />
 
@@ -428,7 +449,7 @@ export default function ProductsPage() {
         <SectionWave edge="bottom" fillClassName="fill-background" heightClassName="h-10 sm:h-12 md:h-16" />
       </section>
 
-      {/* 2. Catalogue : filtres à gauche (sidebar) + contenu */}
+      {/* 2. Catalogue */}
       <section
         id="catalog-content"
         className="scroll-mt-24 relative min-h-[50vh] bg-background py-8 sm:py-10 md:py-16 lg:py-20"
@@ -483,7 +504,7 @@ export default function ProductsPage() {
               </div>
             </nav>
 
-            {/* Contenu : bannière + grille */}
+            {/* Contenu */}
             <div ref={productsTopRef} className="min-w-0 flex-1 scroll-mt-28">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -516,7 +537,10 @@ export default function ProductsPage() {
                     <button
                       type="button"
                       key={sub.id}
-                      onClick={() => setActiveSubcategory(sub.id)}
+                      onClick={() => {
+                        setActiveSubcategory(sub.id);
+                        setCurrentPage(1); // Reset page when subcategory changes
+                      }}
                       className={cn(
                         "rounded-full border px-2.5 py-1 sm:px-3 sm:py-1.5 text-[8px] sm:text-[10px] font-bold uppercase tracking-wide transition-all",
                         activeSubcategory === sub.id
@@ -530,9 +554,9 @@ export default function ProductsPage() {
                 </div>
               ) : null}
 
-              {/* GRID UPDATE: grid-cols-3 forced on mobile layout */}
+              {/* Grid renders currentProducts instead of filteredProducts */}
               <div className="grid grid-cols-3 gap-1.5 sm:gap-5 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                {filteredProducts.map((product, index) => (
+                {currentProducts.map((product, index) => (
                   <ProductCard
                     key={product.id}
                     product={product}
@@ -541,6 +565,46 @@ export default function ProductsPage() {
                   />
                 ))}
               </div>
+
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="mt-10 flex items-center justify-center gap-2 sm:mt-14">
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-iba-sky/20 bg-white text-iba-navy transition-colors disabled:cursor-not-allowed disabled:opacity-50 hover:bg-iba-sky/10"
+                    aria-label="Page précédente"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </button>
+                  
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <button
+                        key={page}
+                        onClick={() => handlePageChange(page)}
+                        className={cn(
+                          "flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full text-[10px] sm:text-xs font-bold transition-colors",
+                          currentPage === page
+                            ? "bg-iba-navy text-white shadow-md"
+                            : "bg-transparent text-iba-navy hover:bg-iba-sky/10"
+                        )}
+                      >
+                        {page}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-iba-sky/20 bg-white text-iba-navy transition-colors disabled:cursor-not-allowed disabled:opacity-50 hover:bg-iba-sky/10"
+                    aria-label="Page suivante"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
 
               {filteredProducts.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-16 text-center lg:py-24">
@@ -554,7 +618,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* 3. CTA — bandeau navy, accent marine */}
+      {/* 3. CTA */}
       <section className="relative overflow-hidden border-t border-white/20 bg-iba-navy py-16 sm:py-20 text-center text-white">
         <div className="pointer-events-none absolute right-1/4 top-0 z-0 h-[300px] w-[300px] sm:h-[400px] sm:w-[400px] rounded-full bg-white/[0.08] blur-[100px]" aria-hidden />
         <div className="relative z-10 mx-auto max-w-3xl px-5">
@@ -601,3 +665,4 @@ export default function ProductsPage() {
     </main>
   );
 }
+

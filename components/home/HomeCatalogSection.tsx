@@ -59,7 +59,7 @@ const collections = [
     image: "https://images.unsplash.com/photo-1611142512140-5b584d41e737?q=80&w=800&auto=format&fit=crop"
   },
   {
-    title: "Outillage Quincaillerie",
+    title: "Outillage Quincaillerie JKL",
     desc: "Outils professionnels et quincaillerie générale.",
     icon: Wrench,
     image: "https://images.unsplash.com/photo-1581147036324-c157af0865c3?q=80&w=800&auto=format&fit=crop"
