@@ -201,7 +201,8 @@ const ProductCard = memo(function ProductCard({
   const imageSrc = productImageUrl(product.storageFolder, product.file);
 
   return (
-    <article className="group relative flex flex-col justify-between border border-iba-sky/10 bg-white p-2 sm:p-4 lg:p-6 shadow-sm shadow-iba-sky/[0.04] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-iba-navy/40 hover:shadow-[0_8px_28px_rgba(0,170,226,0.1)]">
+    // Mobile 4-column requires heavily reduced padding (p-1.5) to avoid squishing
+    <article className="group relative flex flex-col justify-between border border-iba-sky/10 bg-white p-1.5 sm:p-3 lg:p-6 shadow-sm shadow-iba-sky/[0.04] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-iba-navy/40 hover:shadow-[0_8px_28px_rgba(0,170,226,0.1)]">
       
       <div
         className="hidden sm:block absolute left-0 top-0 h-3 w-3 border-l-2 border-t-2 border-iba-sky/25 transition-colors group-hover:border-iba-navy"
@@ -213,7 +214,8 @@ const ProductCard = memo(function ProductCard({
       />
 
       <div className="mb-2 sm:mb-4 lg:mb-6 flex items-start justify-between">
-        <span className="max-w-full truncate rounded-full border border-iba-sky/10 bg-iba-navy/10 px-1.5 py-0.5 text-[6.5px] font-bold uppercase tracking-widest text-iba-navy transition-colors group-hover:text-iba-sky sm:px-2.5 sm:py-1 sm:text-[9px]">
+        {/* Badge text heavily shrunk to fit 4 columns on narrow mobile screens */}
+        <span className="max-w-full truncate rounded-full border border-iba-sky/10 bg-iba-navy/10 px-1 py-0.5 text-[5.5px] font-bold uppercase tracking-widest text-iba-navy transition-colors group-hover:text-iba-sky sm:px-2 sm:py-1 sm:text-[8px] lg:px-2.5 lg:py-1 lg:text-[9px]">
           {badgeLabel}
         </span>
         <span className="hidden sm:inline-block text-[10px] text-iba-sky/20 transition-colors group-hover:text-iba-navy/50" aria-hidden>
@@ -226,8 +228,8 @@ const ProductCard = memo(function ProductCard({
           src={imageSrc}
           alt=""
           fill
-          className="z-0 object-contain p-1 sm:p-2 drop-shadow-md transition-transform duration-300 ease-out group-hover/img:scale-105"
-          sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 20vw"
+          className="z-0 object-contain p-0.5 sm:p-2 drop-shadow-md transition-transform duration-300 ease-out group-hover/img:scale-105"
+          sizes="(max-width: 640px) 25vw, (max-width: 1024px) 25vw, 20vw"
         />
 
         <div
@@ -236,7 +238,7 @@ const ProductCard = memo(function ProductCard({
         />
 
         <div
-          className="pointer-events-none absolute bottom-3 left-1/2 z-[2] -translate-x-1/2 hidden sm:block opacity-0 transition-opacity duration-300 group-hover/img:opacity-100"
+          className="pointer-events-none absolute bottom-3 left-1/2 z-[2] -translate-x-1/2 hidden lg:block opacity-0 transition-opacity duration-300 group-hover/img:opacity-100"
           aria-hidden
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-iba-sky/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg backdrop-blur-sm">
@@ -255,7 +257,8 @@ const ProductCard = memo(function ProductCard({
         </button>
       </div>
 
-      <h3 className="line-clamp-2 text-center font-sans text-[8.5px] font-black uppercase leading-tight tracking-tight text-iba-navy transition-colors group-hover:text-iba-sky sm:text-sm lg:text-lg">
+      {/* Title heavily shrunk for mobile 4-col */}
+      <h3 className="line-clamp-2 text-center font-sans text-[7.5px] font-black uppercase leading-[1.1] tracking-tight text-iba-navy transition-colors group-hover:text-iba-sky sm:text-[10px] lg:text-sm xl:text-base">
         {product.name}
       </h3>
 
@@ -267,8 +270,8 @@ const ProductCard = memo(function ProductCard({
   );
 });
 
-// PAGINATION CONSTANTS
-const ITEMS_PER_PAGE = 15;
+// Changed from 15 to 16 so the 4-column layout always has a complete grid row
+const ITEMS_PER_PAGE = 16;
 
 export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState<ProductCategoryId | "all">("all");
@@ -346,7 +349,7 @@ export default function ProductsPage() {
        // Also reset page if subcategory is manually changed
        setCurrentPage(1);
     }
-  }, [activeSubcategories, activeSubcategory]); // Note: In a real app, you might want to break apart the dependency so it doesn't reset on initial load if not needed, but this works safely.
+  }, [activeSubcategories, activeSubcategory]); 
 
   // Helper for pagination button clicks
   const handlePageChange = (page: number) => {
@@ -554,8 +557,8 @@ export default function ProductsPage() {
                 </div>
               ) : null}
 
-              {/* Grid renders currentProducts instead of filteredProducts */}
-              <div className="grid grid-cols-3 gap-1.5 sm:gap-5 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              {/* GRID UPDATE: grid-cols-4 forced on mobile layout */}
+              <div className="grid grid-cols-3 gap-1.5 sm:gap-4 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5">
                 {currentProducts.map((product, index) => (
                   <ProductCard
                     key={product.id}
