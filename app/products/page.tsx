@@ -241,7 +241,7 @@ const ProductCard = memo(function ProductCard({
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-iba-sky/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg backdrop-blur-sm">
             <Maximize2 className="h-3.5 w-3.5" />
-            Cliquer pour agrandir
+            s'élargir
           </span>
         </div>
 
