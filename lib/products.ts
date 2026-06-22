@@ -252,10 +252,10 @@ const peintureAEauFiles = [
   "LATEX INT EAGLE.webp",
   "LATEX INT KINPAINT.webp",
   "latex eagle.png",
-  "MASTIC AFRICA.webp",
-  "MASTIC INT EAGLE.webp",
-  "MASTIC INT KINPAINT.webp",
-  "mastique eagle.png",
+  // "MASTIC AFRICA.webp",
+  // "MASTIC INT EAGLE.webp",
+  // "MASTIC INT KINPAINT.webp",
+  // "mastique eagle.png",
 ] as const;
 
 const peintureAHuileFiles = [
