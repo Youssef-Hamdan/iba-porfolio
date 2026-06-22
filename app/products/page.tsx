@@ -1,3 +1,4 @@
+
 "use client";
 
 import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
@@ -99,7 +100,7 @@ function ProductViewer({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 8 }}
         transition={{ duration: 0.3, ease: [0.25, 1, 0.5, 1] }}
-        className="relative w-full max-w-lg rounded-2xl border border-iba-sky/10 bg-white p-6 shadow-2xl shadow-iba-navy/10 sm:max-w-2xl sm:p-8"
+        className="relative w-full max-w-lg rounded-2xl border border-iba-sky/10 bg-white p-5 shadow-2xl shadow-iba-navy/10 sm:max-w-2xl sm:p-8"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -121,23 +122,23 @@ function ProductViewer({
           {product.name}
         </p>
 
-        <div className="mt-6 flex items-center gap-3 sm:gap-4">
+        <div className="mt-6 flex items-center gap-2 sm:gap-4">
           <button
             type="button"
             onClick={onPrev}
             disabled={!hasPrev}
             className={cn(
-              "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-colors",
+              "flex h-9 w-9 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full border transition-colors",
               hasPrev
                 ? "border-iba-sky/20 bg-white text-iba-navy hover:border-iba-sky hover:bg-iba-sky/5 hover:text-iba-sky"
                 : "cursor-not-allowed border-iba-sky/10 bg-iba-navy/5 text-iba-sky/25",
             )}
             aria-label="Produit précédent"
           >
-            <ChevronLeft className="h-5 w-5" strokeWidth={2.5} />
+            <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2.5} />
           </button>
 
-          <div className="relative min-h-[280px] flex-1 overflow-hidden rounded-xl border border-iba-sky/10 bg-white sm:min-h-[360px]">
+          <div className="relative min-h-[220px] flex-1 overflow-hidden rounded-xl border border-iba-sky/10 bg-white sm:min-h-[360px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={product.id}
@@ -151,7 +152,7 @@ function ProductViewer({
                   src={imageSrc}
                   alt={product.name}
                   fill
-                  className="object-contain p-5 sm:p-8"
+                  className="object-contain p-4 sm:p-8"
                   sizes="(max-width: 640px) 90vw, 640px"
                   priority
                 />
@@ -164,18 +165,18 @@ function ProductViewer({
             onClick={onNext}
             disabled={!hasNext}
             className={cn(
-              "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-colors",
+              "flex h-9 w-9 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full border transition-colors",
               hasNext
                 ? "border-iba-sky/20 bg-white text-iba-navy hover:border-iba-sky hover:bg-iba-sky/5 hover:text-iba-sky"
                 : "cursor-not-allowed border-iba-sky/10 bg-iba-navy/5 text-iba-sky/25",
             )}
             aria-label="Produit suivant"
           >
-            <ChevronRight className="h-5 w-5" strokeWidth={2.5} />
+            <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2.5} />
           </button>
         </div>
 
-        <p className="mt-4 text-center text-[11px] font-bold uppercase tracking-widest text-iba-sky/60">
+        <p className="mt-4 text-center text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-iba-sky/60">
           {index + 1} / {total}
         </p>
       </motion.div>
@@ -201,32 +202,37 @@ const ProductCard = memo(function ProductCard({
 
   return (
     <>
-      <article className="group relative flex flex-col justify-between border border-iba-sky/10 bg-white p-6 shadow-sm shadow-iba-sky/[0.04] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-iba-navy/40 hover:shadow-[0_8px_28px_rgba(0,170,226,0.1)]">
+      {/* Mobile 3-column requires significantly reduced padding (p-2) to avoid squishing */}
+      <article className="group relative flex flex-col justify-between border border-iba-sky/10 bg-white p-2 sm:p-4 lg:p-6 shadow-sm shadow-iba-sky/[0.04] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-iba-navy/40 hover:shadow-[0_8px_28px_rgba(0,170,226,0.1)]">
+        
+        {/* Corner Accents - Hidden on mobile to save space */}
         <div
-          className="absolute left-0 top-0 h-3 w-3 border-l-2 border-t-2 border-iba-sky/25 transition-colors group-hover:border-iba-navy"
+          className="hidden sm:block absolute left-0 top-0 h-3 w-3 border-l-2 border-t-2 border-iba-sky/25 transition-colors group-hover:border-iba-navy"
           aria-hidden
         />
         <div
-          className="absolute right-0 top-0 h-3 w-3 border-r-2 border-t-2 border-iba-sky/25 transition-colors group-hover:border-iba-navy"
+          className="hidden sm:block absolute right-0 top-0 h-3 w-3 border-r-2 border-t-2 border-iba-sky/25 transition-colors group-hover:border-iba-navy"
           aria-hidden
         />
 
-        <div className="mb-6 flex items-start justify-between">
-          <span className="rounded-full border border-iba-sky/10 bg-iba-navy/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest text-iba-navy transition-colors group-hover:text-iba-sky">
+        <div className="mb-2 sm:mb-4 lg:mb-6 flex items-start justify-between">
+          {/* Badge text shrunk heavily and truncated to prevent overflowing 3 columns */}
+          <span className="max-w-full truncate rounded-full border border-iba-sky/10 bg-iba-navy/10 px-1.5 py-0.5 text-[6.5px] font-bold uppercase tracking-widest text-iba-navy transition-colors group-hover:text-iba-sky sm:px-2.5 sm:py-1 sm:text-[9px]">
             {badgeLabel}
           </span>
-          <span className="text-[10px] text-iba-sky/20 transition-colors group-hover:text-iba-navy/50" aria-hidden>
+          {/* Decorative hex icon hidden on mobile */}
+          <span className="hidden sm:inline-block text-[10px] text-iba-sky/20 transition-colors group-hover:text-iba-navy/50" aria-hidden>
             ⬢
           </span>
         </div>
 
-        <div className="group/img relative mb-6 aspect-square w-full overflow-hidden rounded-lg border border-iba-sky/5 bg-iba-navy/[0.06] transition-colors group-hover:bg-iba-navy/10">
+        <div className="group/img relative mb-2 sm:mb-4 lg:mb-6 aspect-square w-full overflow-hidden rounded-md sm:rounded-lg border border-iba-sky/5 bg-iba-navy/[0.06] transition-colors group-hover:bg-iba-navy/10">
           <Image
             src={imageSrc}
             alt=""
             fill
-            className="z-0 object-contain p-2 drop-shadow-md transition-transform duration-300 ease-out group-hover/img:scale-105"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            className="z-0 object-contain p-1 sm:p-2 drop-shadow-md transition-transform duration-300 ease-out group-hover/img:scale-105"
+            sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 20vw"
           />
 
           <div
@@ -234,8 +240,9 @@ const ProductCard = memo(function ProductCard({
             aria-hidden
           />
 
+          {/* Hover instruction hidden on mobile since hover doesn't exist on touch screens */}
           <div
-            className="pointer-events-none absolute bottom-3 left-1/2 z-[2] -translate-x-1/2 opacity-0 transition-opacity duration-300 group-hover/img:opacity-100"
+            className="pointer-events-none absolute bottom-3 left-1/2 z-[2] -translate-x-1/2 hidden sm:block opacity-0 transition-opacity duration-300 group-hover/img:opacity-100"
             aria-hidden
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-iba-sky/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg backdrop-blur-sm">
@@ -254,12 +261,13 @@ const ProductCard = memo(function ProductCard({
           </button>
         </div>
 
-        <h3 className="line-clamp-2 text-center font-sans text-lg font-black uppercase leading-tight tracking-tight text-iba-navy transition-colors group-hover:text-iba-sky">
+        {/* Title heavily shrunk for mobile to prevent massive text wrapping blocks */}
+        <h3 className="line-clamp-2 text-center font-sans text-[8.5px] font-black uppercase leading-tight tracking-tight text-iba-navy transition-colors group-hover:text-iba-sky sm:text-sm lg:text-lg">
           {product.name}
         </h3>
 
         <div
-          className="absolute bottom-0 left-0 h-1 w-0 bg-iba-sky transition-[width] duration-300 ease-out group-hover:w-full"
+          className="absolute bottom-0 left-0 h-0.5 sm:h-1 w-0 bg-iba-sky transition-[width] duration-300 ease-out group-hover:w-full"
           aria-hidden
         />
       </article>
@@ -394,36 +402,36 @@ export default function ProductsPage() {
         <div className="relative z-10 mx-auto max-w-[90rem] px-5 sm:px-8 md:px-16 lg:px-20">
           <motion.div {...fade} className="max-w-4xl">
             <div
-              className="absolute -left-6 -top-10 -z-10 select-none text-[8rem] font-black leading-none text-white/[0.06] md:-left-10 md:-top-16 md:text-[12rem]"
+              className="absolute -left-6 -top-10 -z-10 select-none text-[6rem] font-black leading-none text-white/[0.06] sm:text-[8rem] md:-left-10 md:-top-16 md:text-[12rem]"
               aria-hidden
             >
               MAT
             </div>
 
-            <div className="mb-6 flex items-center gap-4">
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md">
+            <div className="mb-4 sm:mb-6 flex items-center gap-4">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1.5 sm:px-4 sm:py-2 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md">
                 <span className="h-1.5 w-1.5 rounded-full bg-iba-sky shadow-[0_0_8px_rgba(40,37,97,0.5)]" />
                 PRODUITS
               </span>
               <div className="h-px flex-1 bg-gradient-to-r from-iba-sky/35 to-transparent" aria-hidden />
             </div>
 
-            <h1 className="mt-4 text-5xl font-black uppercase leading-[0.95] tracking-tighter text-white sm:text-6xl md:text-8xl">
+            <h1 className="mt-4 text-4xl font-black uppercase leading-[0.95] tracking-tighter text-white sm:text-6xl md:text-8xl">
               Catalogue{" "}
               <span className="text-iba-sky">produits</span>
             </h1>
-            <p className="mt-8 max-w-2xl border-l-2 border-iba-sky pl-6 text-lg font-medium leading-relaxed text-white/85 md:text-xl">
+            <p className="mt-6 sm:mt-8 max-w-2xl border-l-2 border-iba-sky pl-4 sm:pl-6 text-sm sm:text-lg font-medium leading-relaxed text-white/85 md:text-xl">
               Une sélection rigoureuse de matériaux de construction de première qualité. Du gros œuvre aux finitions spécialisées, nous équipons vos chantiers avec les standards internationaux.
             </p>
           </motion.div>
         </div>
-        <SectionWave edge="bottom" fillClassName="fill-background" heightClassName="h-12 md:h-16" />
+        <SectionWave edge="bottom" fillClassName="fill-background" heightClassName="h-10 sm:h-12 md:h-16" />
       </section>
 
       {/* 2. Catalogue : filtres à gauche (sidebar) + contenu */}
       <section
         id="catalog-content"
-        className="scroll-mt-24 relative min-h-[50vh] bg-background py-10 md:py-16 lg:py-20"
+        className="scroll-mt-24 relative min-h-[50vh] bg-background py-8 sm:py-10 md:py-16 lg:py-20"
       >
         <div
           className="pointer-events-none absolute inset-0 z-0 opacity-[0.04]"
@@ -434,22 +442,22 @@ export default function ProductsPage() {
           aria-hidden
         />
 
-        <div className="relative z-10 mx-auto max-w-[90rem] px-5 sm:px-8 md:px-16 lg:px-20">
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-10 xl:gap-12">
+        <div className="relative z-10 mx-auto max-w-[90rem] px-3 sm:px-8 md:px-16 lg:px-20">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10 xl:gap-12">
             {/* Sidebar filtres */}
             <nav
               aria-label="Filtrer par catégorie"
               className="shrink-0 lg:sticky lg:top-24 lg:w-[min(100%,15.5rem)] xl:w-64"
             >
-              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-iba-sky/45">
+              <p className="mb-3 pl-1 sm:pl-0 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-iba-sky/45">
                 Catégories
               </p>
-              <div className="grid grid-cols-2 gap-2 border-b border-iba-sky/10 pb-6 sm:grid-cols-3 lg:flex lg:flex-col lg:border-b-0 lg:border-r lg:border-iba-sky/10 lg:pb-0 lg:pr-6 xl:pr-8">
+              <div className="grid grid-cols-2 gap-1.5 sm:gap-2 border-b border-iba-sky/10 pb-5 sm:grid-cols-3 lg:flex lg:flex-col lg:border-b-0 lg:border-r lg:border-iba-sky/10 lg:pb-0 lg:pr-6 xl:pr-8">
                 <button
                   type="button"
                   onClick={() => handleCategoryChange("all")}
                   className={cn(
-                    "flex w-full items-center justify-center lg:justify-start rounded-lg border px-2 py-3 text-center lg:text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-wide transition-all",
+                    "flex w-full items-center justify-center lg:justify-start rounded-lg border px-1.5 py-2.5 sm:px-2 sm:py-3 text-center lg:text-left text-[9px] sm:text-[11px] font-bold uppercase tracking-wide transition-all",
                     activeCategory === "all"
                       ? "border-iba-sky bg-iba-sky text-white shadow-md shadow-iba-sky/15"
                       : "border-iba-sky/12 bg-white text-iba-navy hover:border-iba-navy/45 hover:text-iba-sky",
@@ -463,7 +471,7 @@ export default function ProductsPage() {
                     key={cat.id}
                     onClick={() => handleCategoryChange(cat.id)}
                     className={cn(
-                      "flex w-full items-center justify-center lg:justify-start rounded-lg border px-2 py-3 text-center lg:text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-wide transition-all",
+                      "flex w-full items-center justify-center lg:justify-start rounded-lg border px-1.5 py-2.5 sm:px-2 sm:py-3 text-center lg:text-left text-[9px] sm:text-[11px] font-bold uppercase tracking-wide transition-all",
                       activeCategory === cat.id
                         ? "border-iba-navy bg-iba-navy text-white shadow-md shadow-iba-navy/20"
                         : "border-iba-sky/12 bg-white text-iba-navy hover:border-iba-navy/45 hover:text-iba-sky",
@@ -484,16 +492,16 @@ export default function ProductsPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -4 }}
                   transition={{ duration: 0.18, ease: [0.25, 1, 0.5, 1] as const }}
-                  className="mb-8 flex items-start gap-4 border-l-4 border-iba-sky bg-iba-navy/10 p-5 ring-1 ring-iba-sky/5 sm:p-6 lg:mb-10"
+                  className="mb-6 flex items-start gap-3 sm:gap-4 border-l-4 border-iba-sky bg-iba-navy/10 p-4 ring-1 ring-iba-sky/5 sm:p-6 lg:mb-10"
                 >
-                  <Boxes className="h-6 w-6 shrink-0 text-iba-sky" aria-hidden />
+                  <Boxes className="h-5 w-5 sm:h-6 sm:w-6 shrink-0 text-iba-sky" aria-hidden />
                   <div>
-                    <h2 className="font-bold uppercase tracking-tight text-iba-navy">
+                    <h2 className="text-sm sm:text-base font-bold uppercase tracking-tight text-iba-navy">
                       {activeCategory === "all"
                         ? "Inventaire complet"
                         : productCategories.find((c) => c.id === activeCategory)?.label}
                     </h2>
-                    <p className="mt-1 text-sm font-medium text-iba-sky/70">
+                    <p className="mt-1 text-xs sm:text-sm font-medium text-iba-sky/70">
                       {activeCategory === "all"
                         ? "Parcourez l'intégralité de nos références disponibles en stock."
                         : productCategories.find((c) => c.id === activeCategory)?.description}
@@ -503,14 +511,14 @@ export default function ProductsPage() {
               </AnimatePresence>
 
               {activeSubcategories.length > 0 ? (
-                <div className="mb-6 flex flex-wrap gap-2 lg:mb-8">
+                <div className="mb-5 flex flex-wrap gap-1.5 sm:gap-2 lg:mb-8">
                   {activeSubcategories.map((sub) => (
                     <button
                       type="button"
                       key={sub.id}
                       onClick={() => setActiveSubcategory(sub.id)}
                       className={cn(
-                        "rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide transition-all",
+                        "rounded-full border px-2.5 py-1 sm:px-3 sm:py-1.5 text-[8px] sm:text-[10px] font-bold uppercase tracking-wide transition-all",
                         activeSubcategory === sub.id
                           ? "border-iba-navy bg-iba-navy text-white shadow-sm shadow-iba-navy/15"
                           : "border-iba-sky/15 bg-white text-iba-navy hover:border-iba-navy/40 hover:text-iba-sky",
@@ -522,7 +530,8 @@ export default function ProductsPage() {
                 </div>
               ) : null}
 
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+              {/* GRID UPDATE: grid-cols-3 forced on mobile layout */}
+              <div className="grid grid-cols-3 gap-1.5 sm:gap-5 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                 {filteredProducts.map((product, index) => (
                   <ProductCard
                     key={product.id}
@@ -534,10 +543,10 @@ export default function ProductsPage() {
               </div>
 
               {filteredProducts.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-20 text-center lg:py-24">
-                  <PackageSearch className="mb-4 h-16 w-16 text-iba-navy/40" aria-hidden />
-                  <p className="text-xl font-bold uppercase text-iba-sky">Aucun produit trouvé</p>
-                  <p className="mt-2 text-sm text-iba-sky/60">Veuillez sélectionner une autre catégorie.</p>
+                <div className="flex flex-col items-center justify-center py-16 text-center lg:py-24">
+                  <PackageSearch className="mb-3 sm:mb-4 h-12 w-12 sm:h-16 sm:w-16 text-iba-navy/40" aria-hidden />
+                  <p className="text-lg sm:text-xl font-bold uppercase text-iba-sky">Aucun produit trouvé</p>
+                  <p className="mt-1 sm:mt-2 text-xs sm:text-sm text-iba-sky/60">Veuillez sélectionner une autre catégorie.</p>
                 </div>
               ) : null}
             </div>
@@ -546,27 +555,27 @@ export default function ProductsPage() {
       </section>
 
       {/* 3. CTA — bandeau navy, accent marine */}
-      <section className="relative overflow-hidden border-t border-white/20 bg-iba-navy py-20 text-center text-white">
-        <div className="pointer-events-none absolute right-1/4 top-0 z-0 h-[400px] w-[400px] rounded-full bg-white/[0.08] blur-[100px]" aria-hidden />
+      <section className="relative overflow-hidden border-t border-white/20 bg-iba-navy py-16 sm:py-20 text-center text-white">
+        <div className="pointer-events-none absolute right-1/4 top-0 z-0 h-[300px] w-[300px] sm:h-[400px] sm:w-[400px] rounded-full bg-white/[0.08] blur-[100px]" aria-hidden />
         <div className="relative z-10 mx-auto max-w-3xl px-5">
-          <h2 className="mb-6 text-3xl font-black uppercase tracking-tight md:text-5xl">
+          <h2 className="mb-4 sm:mb-6 text-2xl font-black uppercase tracking-tight sm:text-3xl md:text-5xl">
             Commandes en gros &{" "}
             <span className="text-iba-sky">devis</span>
           </h2>
-          <p className="mb-10 text-lg font-medium text-white/90">
+          <p className="mb-8 sm:mb-10 text-sm sm:text-lg font-medium text-white/90">
             Besoin de grandes quantités pour votre chantier ? Contactez notre équipe commerciale pour obtenir une tarification adaptée et organiser la logistique.
           </p>
           <Link
             href="/quotation"
-            className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-iba-orange px-8 py-4 text-sm font-bold uppercase tracking-widest text-white shadow-lg shadow-iba-orange/25 transition-all hover:bg-white hover:text-iba-orange"
+            className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-iba-orange px-6 py-3 sm:px-8 sm:py-4 text-xs sm:text-sm font-bold uppercase tracking-widest text-white shadow-lg shadow-iba-orange/25 transition-all hover:bg-white hover:text-iba-orange"
           >
             <span className="relative z-10 flex items-center">
               Demander un devis
-              <ArrowRight className="ml-3 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+              <ArrowRight className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </Link>
         </div>
-        <SectionWave edge="top" fillClassName="fill-background" heightClassName="h-8 md:h-12" />
+        <SectionWave edge="top" fillClassName="fill-background" heightClassName="h-6 sm:h-8 md:h-12" />
       </section>
 
       {mounted
