@@ -27,26 +27,14 @@ function projectImage(file: string): string {
   return `/images/projects/${encodeURIComponent(file)}`;
 }
 
-function siteImage(file: string): string {
-  return `/images/${encodeURIComponent(file)}`;
-}
-
 const flotteFluvialeGallery = [
-  { file: "image.png", alt: "Vue d'ensemble du bateau LOMELA amarré" },
-  { file: "image copy.png", alt: "Flotte de barges de transport fluvial" },
-  { file: "image copy 2.png", alt: "Barge industrielle en maintenance" },
-  { file: "image copy 3.png", alt: "Navire fluvial multi-niveaux" },
+  { file: "river1.webp", alt: "Vue du chantier fluvial — texte provisoire" },
+  { file: "river2.webp", alt: "Activités de transport sur les voies navigables — texte provisoire" },
 ] as const;
 
 const complexeCommercialGallery = [
-  {
-    file: "project2_image1-ezgif.com-png-to-webp-converter.webp",
-    alt: "Vue extérieure du complexe commercial en cours de réalisation",
-  },
-  {
-    file: "project2_image2-ezgif.com-png-to-webp-converter.webp",
-    alt: "Façade et aménagements du projet commercial",
-  },
+  { file: "factory1.webp", alt: "Vue du site de construction — texte provisoire" },
+  { file: "factory2.webp", alt: "Avancement des travaux immobiliers — texte provisoire" },
 ] as const;
 
 export const projectData: Record<string, Omit<ProjectRecord, "id">> = {
@@ -67,12 +55,12 @@ export const projectData: Record<string, Omit<ProjectRecord, "id">> = {
     title: "Complexe commercial",
     category: "Bâtiment & Aménagement",
     location: "Kinshasa, République Démocratique du Congo",
-    image: siteImage(complexeCommercialGallery[0].file),
+    image: projectImage(complexeCommercialGallery[0].file),
     description:
       "SIG est un partenaire de confiance dans le secteur de la construction immobilière. Nous l’accompagnons dans la réalisation de ses projets en fournissant des matériaux de qualité, notamment des barres de fer, peintures et béton, essentiels à la construction d’immeubles durables et modernes.",
     objectives: [],
     gallery: complexeCommercialGallery.map(({ file, alt }) => ({
-      src: siteImage(file),
+      src: projectImage(file),
       alt,
     })),
   },

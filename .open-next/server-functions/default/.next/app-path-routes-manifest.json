@@ -1,0 +1,14 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/about/page": "/about",
+  "/api/contact/route": "/api/contact",
+  "/api/quote/route": "/api/quote",
+  "/api/send/route": "/api/send",
+  "/contact/page": "/contact",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/",
+  "/products/page": "/products",
+  "/projects/page": "/projects",
+  "/quotation/page": "/quotation"
+}

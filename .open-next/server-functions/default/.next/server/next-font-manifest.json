@@ -1,0 +1,28 @@
+{
+  "app": {
+    "[project]/app/_not-found/page": [
+      "static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2"
+    ],
+    "[project]/app/about/page": [
+      "static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2"
+    ],
+    "[project]/app/contact/page": [
+      "static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2"
+    ],
+    "[project]/app/page": [
+      "static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2"
+    ],
+    "[project]/app/products/page": [
+      "static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2"
+    ],
+    "[project]/app/projects/page": [
+      "static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2"
+    ],
+    "[project]/app/quotation/page": [
+      "static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}
