@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion, useInView } from "framer-motion";
-import { ArrowRight, MapPin, Calendar, Ruler, X, Maximize2 } from "lucide-react";
+import { ArrowRight, MapPin, X, Maximize2 } from "lucide-react";
 import { SectionWave } from "@/components/SectionWave";
 import { cn } from "@/lib/utils";
 
@@ -17,11 +17,6 @@ export type ProjectRecord = {
   image: string;
   description: string;
   objectives: string[];
-  highlights: {
-    phase: string;
-    program: string;
-    designLanguage: string;
-  };
   gallery: {
     src: string;
     alt: string;
@@ -61,17 +56,8 @@ export const projectData: Record<string, Omit<ProjectRecord, "id">> = {
     location: "République Démocratique du Congo",
     image: projectImage(flotteFluvialeGallery[0].file),
     description:
-      "Projet de conception, d’approvisionnement et de mise en service d’une flotte de barges et navires fluviaux dédiés au transport et à la logistique sur les voies navigables. Texte provisoire — contenu à compléter.",
-    objectives: [
-      "Renforcer les capacités de transport fluvial pour les opérations industrielles et logistiques.",
-      "Assurer la conformité technique et la fiabilité des équipements en conditions réelles d’exploitation.",
-      "Accompagner la mise en service et la maintenance des unités livrées sur le terrain.",
-    ],
-    highlights: {
-      phase: "Études & Réalisation",
-      program: "Barges et navires fluviaux",
-      designLanguage: "Industriel, robuste et opérationnel",
-    },
+      "Chani_metal est un partenaire de confiance dans le secteur du transport fluvial et de la construction navale. Nous l’accompagnons dans ses projets en fournissant des matériaux de qualité, notamment des tôles noires, tôles navales, tubes, cornières et autres produits sidérurgiques essentiels à ses activités. Cette collaboration témoigne de notre engagement à soutenir le développement des infrastructures fluviales en RDC.",
+    objectives: [],
     gallery: flotteFluvialeGallery.map(({ file, alt }) => ({
       src: projectImage(file),
       alt,
@@ -83,17 +69,8 @@ export const projectData: Record<string, Omit<ProjectRecord, "id">> = {
     location: "Kinshasa, République Démocratique du Congo",
     image: siteImage(complexeCommercialGallery[0].file),
     description:
-      "Projet d’aménagement et de construction d’un complexe commercial intégrant espaces de vente, circulation et finitions modernes. Texte provisoire — contenu à compléter.",
-    objectives: [
-      "Livrer une infrastructure commerciale adaptée aux besoins locaux et aux standards de qualité IBA.",
-      "Coordonner l’approvisionnement en matériaux et la logistique chantier dans les délais convenus.",
-      "Garantir des finitions durables et une mise en service conforme aux attentes du maître d’ouvrage.",
-    ],
-    highlights: {
-      phase: "Construction & Finitions",
-      program: "Complexe commercial multi-espaces",
-      designLanguage: "Moderne, fonctionnel et durable",
-    },
+      "SIG est un partenaire de confiance dans le secteur de la construction immobilière. Nous l’accompagnons dans la réalisation de ses projets en fournissant des matériaux de qualité, notamment des barres de fer, peintures et béton, essentiels à la construction d’immeubles durables et modernes.",
+    objectives: [],
     gallery: complexeCommercialGallery.map(({ file, alt }) => ({
       src: siteImage(file),
       alt,
@@ -345,33 +322,13 @@ function ProjectBlock({ project, isEven }: { project: ProjectRecord; isEven: boo
             </div>
           )}
 
-        <div className="mb-8 grid grid-cols-1 gap-4 border-y border-iba-sky/10 py-6 sm:grid-cols-2">
-          <div className="flex items-center gap-4">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-iba-orange text-background">
-              <MapPin className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-[9px] font-bold uppercase tracking-widest text-iba-sky/55">Localisation</p>
-              <p className="font-bold text-iba-sky">{project.location}</p>
-            </div>
+        <div className="mb-8 flex items-center gap-4 border-y border-iba-sky/10 py-6">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-iba-orange text-background">
+            <MapPin className="h-5 w-5" />
           </div>
-          <div className="flex items-center gap-4">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-iba-orange text-background">
-              <Calendar className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-[9px] font-bold uppercase tracking-widest text-iba-sky/55">Phase</p>
-              <p className="font-bold text-iba-sky">{project.highlights.phase}</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-4 sm:col-span-2">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-iba-orange text-background">
-              <Ruler className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-[9px] font-bold uppercase tracking-widest text-iba-sky/55">Programme</p>
-              <p className="font-bold text-iba-sky">{project.highlights.program}</p>
-            </div>
+          <div>
+            <p className="text-[9px] font-bold uppercase tracking-widest text-iba-sky/55">Localisation</p>
+            <p className="font-bold text-iba-sky">{project.location}</p>
           </div>
         </div>
 
