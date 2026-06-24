@@ -10,7 +10,7 @@ import {
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useSiteReady } from "@/components/site-ready-context";
-import { ABOUT_VISION_VIMEO_EMBED_URL, VIMEO_PLAYER_SCRIPT_URL } from "@/lib/about-vision-vimeo";
+import { ABOUT_VISION_VIMEO_EMBED_URL, ABOUT_VISION_VIMEO_TITLE, VIMEO_PLAYER_SCRIPT_URL } from "@/lib/about-vision-vimeo";
 
 type VimeoPlayerApi = {
   ready(): Promise<void>;
@@ -97,7 +97,7 @@ export function VimeoVisionProvider({ children }: { children: React.ReactNode })
 
     const iframe = document.createElement("iframe");
     iframe.src = ABOUT_VISION_VIMEO_EMBED_URL;
-    iframe.title = "IBA FAMECO SCREEN EMPIRE";
+    iframe.title = ABOUT_VISION_VIMEO_TITLE;
     iframe.className = "pointer-events-none absolute inset-0 h-full w-full border-0";
     iframe.allow = "autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share";
     iframe.referrerPolicy = "strict-origin-when-cross-origin";

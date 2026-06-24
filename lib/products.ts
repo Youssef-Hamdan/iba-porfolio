@@ -247,10 +247,10 @@ const consommablesFiles = [
 ] as const;
 
 const peintureAEauFiles = [
-  "LATEC AFRICA.webp",
+  "LATEX AFRCIA.webp",
   "LATEX INT EAGLE.webp",
   "LATEX INT KINPAINT.webp",
-  "latex eagle.png",
+  "LATEX EXT EAGLE.png",
   // "MASTIC AFRICA.webp",
   // "MASTIC INT EAGLE.webp",
   // "MASTIC INT KINPAINT.webp",

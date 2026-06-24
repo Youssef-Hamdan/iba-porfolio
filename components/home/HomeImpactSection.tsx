@@ -7,9 +7,14 @@ import { Handshake, Store, Target, Users } from "lucide-react";
 import { ParallaxImageBlock } from "@/components/home/ParallaxImageBlock";
 import { SectionWave } from "@/components/SectionWave";
 
-const parallaxBlocks = [
+const parallaxBlocks: {
+  images: string[];
+  title: string;
+  titleNode: React.ReactNode;
+  desc: string;
+}[] = [
   {
-    src: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2071&auto=format&fit=crop",
+    images: ["/images/pillar1.webp", "/images/pillar2.webp"],
     title: "Infrastructures & Grands Ouvrages",
     titleNode: <>Infrastructures & <span className="text-iba-sky">Grands Ouvrages</span></>,
     desc: "Parce que chaque chantier mérite le meilleur, IBA vous accompagne avec des solutions adaptées, des matériaux certifiés et un engagement constant envers la qualité.",
@@ -111,8 +116,7 @@ export function HomeImpactSection() {
         {parallaxBlocks.map((block, i) => (
           <ParallaxImageBlock
             key={block.title}
-            src={"src" in block ? block.src : undefined}
-            images={"images" in block ? block.images : undefined}
+            images={block.images}
             title={block.title}
             titleNode={block.titleNode}
             desc={block.desc}
