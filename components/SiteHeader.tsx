@@ -7,6 +7,7 @@ import { Menu, X, ArrowRight } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
 
 const nav = [
+  { href: "/", label: "Accueil" },
   { href: "/about", label: "À Propos" },
   { href: "/projects", label: "Projets" },
   { href: "/products", label: "Produits" },

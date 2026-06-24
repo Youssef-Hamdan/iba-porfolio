@@ -61,13 +61,13 @@ export const productSubcategories: ProductSubcategory[] = [
 ];
 
 export const productCategories: ProductCategory[] = [
-  // {
-  //   id: "acier-fer",
-  //   label: "Acier & Fer",
-  //   description: "Fer à béton, clous, tôles, profilés et tubes acier pour structures robustes.",
-  //   coverStorageFolder: "sheet-metal-pipes-wood",
-  //   coverFile: "tole IBR.png",
-  // },
+  {
+    id: "acier-fer",
+    label: "Acier & Fer",
+    description: "Fer à béton, clous, tôles, profilés et tubes acier pour structures robustes.",
+    coverStorageFolder: "sheet-metal-pipes-wood",
+    coverFile: "tole IBR.png",
+  },
   {
     id: "ciment",
     label: "Ciment",
@@ -219,7 +219,6 @@ const acierFiles = [
   "CORNIERE.jpg",
   "Fer-plat.jpg",
   "TÔLE NOIR.png",
-  "tole IBR.png",
   "UPN.webp",
 ] as const;
 

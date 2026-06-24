@@ -27,14 +27,34 @@ function projectImage(file: string): string {
   return `/images/projects/${encodeURIComponent(file)}`;
 }
 
+function siteImage(file: string): string {
+  return `/images/${encodeURIComponent(file)}`;
+}
+
 const flotteFluvialeGallery = [
-  { file: "river1.webp", alt: "Vue du chantier fluvial — texte provisoire" },
-  { file: "river2.webp", alt: "Activités de transport sur les voies navigables — texte provisoire" },
+  { file: "image.png", alt: "Vue d'ensemble du bateau LOMELA amarré" },
+  { file: "image copy.png", alt: "Flotte de barges de transport fluvial" },
 ] as const;
 
 const complexeCommercialGallery = [
-  { file: "factory1.webp", alt: "Vue du site de construction — texte provisoire" },
-  { file: "factory2.webp", alt: "Avancement des travaux immobiliers — texte provisoire" },
+  {
+    file: "project2_image1-ezgif.com-png-to-webp-converter.webp",
+    alt: "Vue extérieure du complexe commercial en cours de réalisation",
+  },
+  {
+    file: "project2_image2-ezgif.com-png-to-webp-converter.webp",
+    alt: "Façade et aménagements du projet commercial",
+  },
+] as const;
+
+const riverTowerGallery = [
+  { file: "river1.webp", alt: "Vue extérieure de la River Tower" },
+  { file: "river2.webp", alt: "Détails architecturaux de la River Tower" },
+] as const;
+
+const factoryGallery = [
+  { file: "factory1.webp", alt: "Vue d'ensemble de l'unité de production" },
+  { file: "factory2.webp", alt: "Structures métalliques et aménagements industriels" },
 ] as const;
 
 export const projectData: Record<string, Omit<ProjectRecord, "id">> = {
@@ -52,23 +72,56 @@ export const projectData: Record<string, Omit<ProjectRecord, "id">> = {
     })),
   },
   "complexe-commercial": {
-    title: "Complexe commercial",
-    category: "Bâtiment & Aménagement",
+    title: "Complexe Résidentiel",
+    category: "Approvisionnement en fer, béton et peintures par IBA",
     location: "Kinshasa, République Démocratique du Congo",
-    image: projectImage(complexeCommercialGallery[0].file),
+    image: siteImage(complexeCommercialGallery[0].file),
     description:
       "SIG est un partenaire de confiance dans le secteur de la construction immobilière. Nous l’accompagnons dans la réalisation de ses projets en fournissant des matériaux de qualité, notamment des barres de fer, peintures et béton, essentiels à la construction d’immeubles durables et modernes.",
     objectives: [],
     gallery: complexeCommercialGallery.map(({ file, alt }) => ({
+      src: siteImage(file),
+      alt,
+    })),
+  },
+  "river-tower": {
+    title: "River Tower",
+    category: "MATÉRIAUX DE CONSTRUCTION FOURNIS PAR IBA",
+    location: "Kinshasa, République Démocratique du Congo",
+    image: projectImage(riverTowerGallery[0].file),
+    description:
+      "River Tower est un projet immobilier d’envergure associant espaces résidentiels et commerciaux. IBA a participé à sa réalisation en assurant la fourniture de matériaux de construction de qualité, contribuant ainsi à l’avancement des travaux. Cette collaboration illustre notre capacité à répondre aux besoins des grands projets de construction en RDC.",
+    objectives: [],
+    gallery: riverTowerGallery.map(({ file, alt }) => ({
+      src: projectImage(file),
+      alt,
+    })),
+  },
+  usine: {
+    title: "Projet Industriel",
+    category: "Fourniture de matériaux métalliques par IBA",
+    location: "République Démocratique du Congo",
+    image: projectImage(factoryGallery[0].file),
+    description:
+      "Ce projet industriel a nécessité l’utilisation de matériaux robustes et adaptés aux exigences du secteur. IBA a contribué à sa réalisation en fournissant une gamme de produits sidérurgiques, notamment de l’acier, des tôles, des tubes et d’autres matériaux essentiels à la construction du site. Cette collaboration témoigne de notre capacité à accompagner les projets industriels avec des solutions fiables et de qualité.",
+    objectives: [],
+    gallery: factoryGallery.map(({ file, alt }) => ({
       src: projectImage(file),
       alt,
     })),
   },
 };
 
-const projects: ProjectRecord[] = Object.entries(projectData).map(([key, data], index) => ({
+const projectOrder = [
+  "flotte-fluviale",
+  "complexe-commercial",
+  "river-tower",
+  "usine",
+] as const;
+
+const projects: ProjectRecord[] = projectOrder.map((key, index) => ({
   id: (index + 1).toString().padStart(2, "0"),
-  ...data,
+  ...projectData[key],
 }));
 
 const fade = {
