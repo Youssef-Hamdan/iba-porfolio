@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { validatePhoneValue } from "@/lib/phone-validation";
 
 /**
  * Même pile que `/api/quote` (Resend) :
@@ -50,12 +51,9 @@ function validateContactInput(o: Record<string, unknown>): {
   }
 
   const phone = typeof o.phone === "string" ? o.phone.trim() : "";
-  if (typeof o.phone !== "string") {
-    errors.phone = "Le format du téléphone est invalide.";
-  } else if (!phone) {
-    errors.phone = "Le numéro de téléphone est requis.";
-  } else if (phone.length > 80) {
-    errors.phone = "Le téléphone ne doit pas dépasser 80 caractères.";
+  const phoneError = validatePhoneValue(o.phone);
+  if (phoneError) {
+    errors.phone = phoneError;
   }
 
   let message = "";
@@ -210,13 +208,8 @@ export async function POST(request: Request) {
     );
   }
 
-  const usingTestFrom = /onboarding@resend\.dev/i.test(from);
   return NextResponse.json({
     ok: true as const,
     id: data?.id,
-    ...(usingTestFrom && {
-      deliveryHint:
-        "Mode test Resend : tant que l’expéditeur est onboarding@resend.dev, seule l’adresse du compte Resend reçoit réellement le message. Vérifiez CONTACT_TO_EMAIL / QUOTE_TO_EMAIL et le journal sur resend.com.",
-    }),
   });
 }

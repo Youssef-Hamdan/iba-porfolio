@@ -55,17 +55,11 @@ export async function POST() {
       return NextResponse.json({ error }, { status: 500 });
     }
 
-    const usingTestFrom = /onboarding@resend\.dev/i.test(from);
-
     return NextResponse.json({
       ok: true as const,
       id: data?.id,
       to,
       from,
-      ...(usingTestFrom && {
-        deliveryHint:
-          "Expéditeur de test Resend : avec onboarding@resend.dev, seules les livraisons vers l’adresse de votre compte Resend sont garanties ; vérifiez que SEND_TO_EMAIL (ou la valeur par défaut) correspond à cette adresse. Consultez aussi les courriers indésirables / Promotions Gmail et le journal « Emails » sur resend.com pour le statut réel (livré, rebond, retard). Pour envoyer vers n’importe quelle boîte, vérifiez un domaine et utilisez RESEND_FROM_EMAIL.",
-      }),
     });
   } catch (error) {
     console.error("[api/send]", error);

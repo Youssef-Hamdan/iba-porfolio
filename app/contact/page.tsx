@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { SectionWave } from "@/components/SectionWave";
 import { cn } from "@/lib/utils";
+import { PHONE_MAX_LENGTH, validatePhoneValue } from "@/lib/phone-validation";
 import type { ContactFieldKey } from "@/app/api/contact/route";
 
 type FieldErrors = Partial<Record<ContactFieldKey, string>>;
@@ -30,7 +31,6 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [deliveryHint, setDeliveryHint] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
   const clearFieldError = (key: ContactFieldKey) => {
@@ -51,7 +51,6 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitError(null);
-    setDeliveryHint(null);
     setFieldErrors({});
     setIsSubmitting(true);
 
@@ -64,6 +63,14 @@ export default function ContactPage() {
       message: String(formData.get("message") ?? "").trim(),
     };
 
+    const phoneError = validatePhoneValue(payload.phone);
+    if (phoneError) {
+      setFieldErrors({ phone: phoneError });
+      setSubmitError("Veuillez corriger les champs indiqués.");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -72,7 +79,6 @@ export default function ContactPage() {
       });
       const json = (await res.json().catch(() => ({}))) as {
         error?: string;
-        deliveryHint?: string;
         errors?: FieldErrors;
       };
 
@@ -89,9 +95,6 @@ export default function ContactPage() {
       }
 
       setFieldErrors({});
-      setDeliveryHint(
-        typeof json.deliveryHint === "string" ? json.deliveryHint : null,
-      );
       setIsSuccess(true);
     } catch {
       setSubmitError("Problème de connexion. Vérifiez votre réseau et réessayez.");
@@ -173,17 +176,11 @@ export default function ContactPage() {
                 <p className="max-w-lg text-lg font-medium text-iba-navy/75">
                   Merci pour votre message. Nous vous recontactons très prochainement.
                 </p>
-                {deliveryHint ? (
-                  <p className="mt-6 max-w-xl rounded-sm border border-amber-200 bg-amber-50 px-4 py-3 text-left text-sm text-amber-950">
-                    {deliveryHint}
-                  </p>
-                ) : null}
                 <button
                   type="button"
                   onClick={() => {
                     setIsSuccess(false);
                     setSubmitError(null);
-                    setDeliveryHint(null);
                     setFieldErrors({});
                   }}
                   className="mt-8 font-mono text-sm font-bold uppercase tracking-widest text-iba-navy transition-colors hover:text-iba-sky"
@@ -316,7 +313,9 @@ export default function ContactPage() {
                             id="contact-phone"
                             name="phone"
                             type="tel"
+                            inputMode="tel"
                             required
+                            maxLength={PHONE_MAX_LENGTH}
                             autoComplete="tel"
                             aria-invalid={fieldErrors.phone ? true : undefined}
                             aria-describedby={fieldErrors.phone ? "contact-phone-error" : undefined}

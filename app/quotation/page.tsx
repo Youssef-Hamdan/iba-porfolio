@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { SectionWave } from "@/components/SectionWave";
 import { cn } from "@/lib/utils";
+import { PHONE_MAX_LENGTH, validatePhoneValue } from "@/lib/phone-validation";
 import type { QuoteFieldKey } from "@/app/api/quote/route";
 
 type FieldErrors = Partial<Record<QuoteFieldKey, string>>;
@@ -29,7 +30,6 @@ export default function QuotePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [deliveryHint, setDeliveryHint] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
   const [requestText, setRequestText] = useState("");
@@ -53,7 +53,6 @@ export default function QuotePage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitError(null);
-    setDeliveryHint(null);
     setFieldErrors({});
     setIsSubmitting(true);
 
@@ -67,6 +66,14 @@ export default function QuotePage() {
       items: [] as const,
     };
 
+    const phoneError = validatePhoneValue(payload.phone);
+    if (phoneError) {
+      setFieldErrors({ phone: phoneError });
+      setSubmitError("Veuillez corriger les champs indiqués.");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const res = await fetch("/api/quote", {
         method: "POST",
@@ -75,7 +82,6 @@ export default function QuotePage() {
       });
       const json = (await res.json().catch(() => ({}))) as {
         error?: string;
-        deliveryHint?: string;
         errors?: FieldErrors;
       };
 
@@ -92,9 +98,6 @@ export default function QuotePage() {
       }
 
       setFieldErrors({});
-      setDeliveryHint(
-        typeof json.deliveryHint === "string" ? json.deliveryHint : null,
-      );
       setIsSuccess(true);
     } catch {
       setSubmitError("Problème de connexion. Vérifiez votre réseau et réessayez.");
@@ -173,12 +176,7 @@ export default function QuotePage() {
               <p className="max-w-lg text-lg font-medium text-iba-navy/75">
                 Votre manifeste a été envoyé à notre bureau d&apos;études. Un ingénieur commercial prendra contact avec vous sous 24h ouvrées.
               </p>
-              {deliveryHint ? (
-                <p className="mt-6 max-w-xl rounded-sm border border-amber-200 bg-amber-50 px-4 py-3 text-left text-sm text-amber-950">
-                  {deliveryHint}
-                </p>
-              ) : null}
-              <button onClick={() => { setIsSuccess(false); setRequestText(""); setSubmitError(null); setDeliveryHint(null); setFieldErrors({}); }} className="mt-8 font-mono text-sm font-bold uppercase tracking-widest text-iba-navy hover:text-iba-sky transition-colors">
+              <button onClick={() => { setIsSuccess(false); setRequestText(""); setSubmitError(null); setFieldErrors({}); }} className="mt-8 font-mono text-sm font-bold uppercase tracking-widest text-iba-navy hover:text-iba-sky transition-colors">
                 Nouveau Devis →
               </button>
             </motion.div>
@@ -286,6 +284,8 @@ export default function QuotePage() {
                         required
                         name="phone"
                         type="tel"
+                        inputMode="tel"
+                        maxLength={PHONE_MAX_LENGTH}
                         autoComplete="tel"
                         aria-invalid={fieldErrors.phone ? true : undefined}
                         aria-describedby={fieldErrors.phone ? "quote-phone-error" : undefined}
