@@ -194,24 +194,24 @@ const cimentColleFiles = [
 
 const sikaFiles = [
   "Super Sikalite.webp",
-  "SIKA ANCHORFIX 3030(AB)CRT 12X385ML.webp",
+  "SIKA ANCHORFIX 3030(AB).webp",
   "SIKA IGOL P 25KG.webp",
-  "SikaGrout 212 AO 30KG.webp",
-  "SikaLatex Light AO 5LT.webp",
-  "SikaTop - 107 Seal AO COMP. B 20KG.webp",
+  "SIKAGROUT 212  30KG.webp",
+  "SIKALATEX LIGHT  5 L.webp",
+  "SIKATOP -107 SEAL  COMP.B 20KG.webp",
   "Sikadur-31+ 1.2kg.webp",
   "Sikaflex 11FC.webp",
-  "Sikaflex Pro 3.webp",
-  "Sikafloor- 3 Quartz Top AO Cinza 25 Kg.webp",
+  "SIKA FLEX PRO-3 600ML.webp",
+  "SIKAFLOOR-3 QUARTZ TOP 25 KG.webp",
   // "Sikagard 570 pele elástica+fibra.webp",
-  "Sikaprimer 3N.webp",
+  "SIKA PRIMER-3N 250 ML.webp",
 ] as const;
 
-const platreFiles = ["gyproc.webp", "PLATRE ET FILLASSE.webp"] as const;
+const platreFiles = ["gyproc.webp", "PLATRE.webp", "FILLASSE.webp"] as const;
 
 const betonFiles = ["CENTRALE A BETON.png"] as const;
 
-const ferABetonFiles = ["Barre Fameco 1.webp", "Barre Fameco 2.webp"] as const;
+const ferABetonFiles = ["Barre Fameco 1.webp", "barre fameco.jpeg"] as const;
 
 const clousFiles = ["CLOUS.png"] as const;
 

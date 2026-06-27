@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { validatePhoneValue } from "@/lib/phone-validation";
+import { mapResendSendError } from "@/lib/resend-errors";
 
 /**
  * Env requis en production :
@@ -273,16 +274,10 @@ export async function POST(req: Request) {
       typeof error === "object" && error && "message" in error
         ? String((error as { message?: unknown }).message)
         : "";
-    const isResendTestRecipientLimit =
-      /only send testing emails to your own email/i.test(msg) ||
-      /verify a domain at resend\.com\/domains/i.test(msg);
-    if (isResendTestRecipientLimit) {
+    const mapped = mapResendSendError(msg);
+    if (mapped) {
       return NextResponse.json(
-        {
-          error:
-            "Resend (expéditeur de test) : avec onboarding@resend.dev, la livraison n’est autorisée que vers l’adresse e-mail de votre compte Resend. Mettez cette adresse dans QUOTE_TO_EMAIL, ou vérifiez un domaine sur resend.com/domains et utilisez RESEND_FROM_EMAIL = « Nom <devis@votredomaine.com> » pour envoyer vers n’importe quelle boîte.",
-          code: "RESEND_UNVERIFIED_SENDER" as const,
-        },
+        { error: mapped.error, code: mapped.code },
         { status: 403 },
       );
     }

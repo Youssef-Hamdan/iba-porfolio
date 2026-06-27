@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { EmailTemplate } from "@/components/email-template";
+import { mapResendSendError } from "@/lib/resend-errors";
 
 /** Destinataire par défaut ; surcharge possible avec SEND_TO_EMAIL (ex. même adresse que le compte Resend). */
 const DEFAULT_TO_EMAIL = "youssefhamdan.work@gmail.com";
@@ -39,16 +40,10 @@ export async function POST() {
         typeof error === "object" && error && "message" in error
           ? String((error as { message?: unknown }).message)
           : "";
-      const isResendTestRecipientLimit =
-        /only send testing emails to your own email/i.test(msg) ||
-        /verify a domain at resend\.com\/domains/i.test(msg);
-      if (isResendTestRecipientLimit) {
+      const mapped = mapResendSendError(msg);
+      if (mapped) {
         return NextResponse.json(
-          {
-            error:
-              "Resend (expéditeur de test) : avec onboarding@resend.dev, la livraison n’est autorisée que vers l’adresse e-mail associée à votre compte Resend. Utilisez SEND_TO_EMAIL avec cette adresse, ou vérifiez un domaine sur resend.com/domains et définissez RESEND_FROM_EMAIL.",
-            code: "RESEND_UNVERIFIED_SENDER" as const,
-          },
+          { error: mapped.error, code: mapped.code },
           { status: 403 },
         );
       }
