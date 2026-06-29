@@ -9,14 +9,14 @@ const FOOTER_LOGO_SRC = "/images/logo/iba-logo.png";
 const PHONE_DISPLAY = "+243 900 009 22";
 const PHONE_HREF = "tel:+24390000922";
 const WHATSAPP_HREF = `https://wa.me/${PHONE_HREF.replace(/\D/g, "")}`;
-const EMAIL = "commercial@rdcsteel.com";
+const EMAIL = "info@rdcsteel.com";
 
 const ADDRESS =
   "Imm. Infinity Center, Bureau n°501, Ave de la Libération, Gombe, République démocratique du Congo";
 
 /** Bannière — image industrielle (domaine autorisé dans next.config). */
 const FOOTER_HERO_SRC =
-  "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=2070&auto=format&fit=crop";
+  "/images/hero.webp";
 
 const mainNav = [
   { href: "/", label: "Accueil" },
@@ -176,33 +176,6 @@ export function SiteFooter() {
                 </div>
               </div>
             </div>
-
-            <nav
-              className="grid grid-cols-2 gap-x-4 gap-y-3 border-t border-white/15 py-10 text-sm font-medium text-white/70 md:grid-cols-4 lg:flex lg:flex-wrap lg:justify-center lg:gap-x-8 lg:gap-y-2"
-              aria-label="Pied de page"
-            >
-              {mainNav.map((item) => (
-                <Link key={item.href} href={item.href} className="hover:text-iba-orange">
-                  {item.label}
-                </Link>
-              ))}
-              {secondaryNav.map((item) => (
-                <Link key={item.href} href={item.href} className="hover:text-iba-orange">
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-
-            <nav
-              className="flex flex-wrap justify-center gap-x-6 gap-y-2 border-t border-white/10 py-6 text-xs text-white/55"
-              aria-label="Mentions légales"
-            >
-              {legalLinks.map((item) => (
-                <Link key={item.href} href={item.href} className="hover:text-iba-orange">
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
 
             <div className="flex flex-col items-center justify-between gap-6 border-t border-white/15 py-8 md:flex-row">
               <span className="text-center text-sm font-semibold text-white/90 md:text-left">

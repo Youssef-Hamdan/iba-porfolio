@@ -1,11 +1,19 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { ExternalLink, MapPin, Phone, User, Building2 } from "lucide-react";
 import { SectionWave } from "@/components/SectionWave";
 
-const sites = [
+interface Site {
+  name: string;
+  manager: string;
+  phone: string;
+  address: string;
+  mapQuery?: string;
+}
+
+const sites: Site[] = [
   {
     name: "Poids Lourd",
     manager: "Yanick",
@@ -84,10 +92,28 @@ const sites = [
   }
 ];
 
+// Animation presets for performance & readability
+const gridContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.06,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] },
+  },
+};
+
 export function HomeSitesSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const headerRef = useRef(null);
-  const isHeaderInView = useInView(headerRef, { once: true, margin: "-10%" });
 
   return (
     <section
@@ -103,13 +129,11 @@ export function HomeSitesSection() {
       <div className="mx-auto w-full max-w-[90rem] px-3 sm:px-8 md:px-16 lg:px-20 mt-8 md:mt-12">
 
         {/* Section Header */}
-        <div 
-          ref={headerRef}
-          className="mb-10 md:mb-16 lg:mb-20 px-1 sm:px-0"
-        >
+        <div className="mb-10 md:mb-16 lg:mb-20 px-1 sm:px-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="flex max-w-[min(100%,42rem)] flex-col gap-4 sm:gap-5"
           >
@@ -118,7 +142,7 @@ export function HomeSitesSection() {
             </span>
 
             <div className="flex items-start gap-3">
-              <span className="mt-2 h-[2px] w-8 shrink-0 bg-iba-orange" aria-hidden />
+              <span className="mt-2 h-[2px] w-8 shrink-0 bg-iba-orange" aria-hidden="true" />
               <p className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-iba-navy/70">
                 Implantation Locale
               </p>
@@ -126,35 +150,36 @@ export function HomeSitesSection() {
 
             <h2 className="text-balance text-3xl font-extrabold uppercase leading-[1.08] tracking-tight text-iba-navy sm:text-4xl md:text-5xl lg:text-6xl">
               Nos sites à travers la{" "}
-              <span className="text-iba-orange">
-                capitale
-              </span>
+              <span className="text-iba-orange">capitale</span>
             </h2>
           </motion.div>
         </div>
 
-        {/* Sites Grid - FORCED TO 2 COLUMNS ON MOBILE */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+        {/* Sites Grid - Optimized performance via orchestrated entry */}
+        <motion.div 
+          variants={gridContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-5%" }}
+          className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4"
+        >
           {sites.map((site, index) => (
             <SiteCard key={site.name} site={site} index={index} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-function SiteCard({ site, index }: { site: typeof sites[0]; index: number }) {
-  const cardRef = useRef(null);
-  const isInView = useInView(cardRef, { once: true, margin: "-5%" });
+function SiteCard({ site, index }: { site: Site; index: number }) {
+  // Built standard Google Maps search URL wrapper safely handles coordinates & text descriptions
+  const fallbackQuery = `${site.name}, Kinshasa`;
+  const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery || fallbackQuery)}`;
 
   return (
     <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.5, delay: index * 0.05, ease: "easeOut" }}
-      // Padding severely reduced for mobile (p-3) to fit 2 columns
+      variants={cardVariants}
       className="group relative flex h-full flex-col justify-between overflow-hidden border border-iba-navy/10 bg-white p-3 sm:p-6 shadow-sm transition-all duration-300 hover:border-iba-navy/30 hover:shadow-md"
       style={{
         clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 1rem), calc(100% - 1rem) 100%, 0 100%)"
@@ -167,10 +192,10 @@ function SiteCard({ site, index }: { site: typeof sites[0]; index: number }) {
         {(index + 1).toString().padStart(2, "0")}
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 min-w-0 w-full">
         {/* Header: Name and Icon */}
         <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-2 sm:gap-4">
-          <h3 className="font-sans text-sm sm:text-xl font-bold uppercase tracking-tight text-iba-navy pr-4 sm:pr-0">
+          <h3 className="font-sans text-sm sm:text-xl font-bold uppercase tracking-tight text-iba-navy pr-4 sm:pr-0 break-words">
             {site.name}
           </h3>
           <div className="flex h-7 w-7 sm:h-10 sm:w-10 shrink-0 items-center justify-center bg-iba-navy/5 text-iba-orange transition-transform duration-300 group-hover:scale-110 group-hover:bg-iba-orange group-hover:text-white">
@@ -181,22 +206,22 @@ function SiteCard({ site, index }: { site: typeof sites[0]; index: number }) {
         {/* Details List */}
         <ul className="flex flex-col gap-3 sm:gap-5">
           {/* Manager */}
-          <li className="flex items-start gap-2 sm:gap-3">
+          <li className="flex items-start gap-2 sm:gap-3 min-w-0">
             <User className="mt-0.5 h-3 w-3 sm:h-4 sm:w-4 shrink-0 text-iba-sky" />
-            <div className="flex flex-col">
+            <div className="flex flex-col min-w-0">
               <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-iba-navy/50">Gérant</span>
-              <span className="text-xs sm:text-sm font-semibold text-iba-navy/90">{site.manager}</span>
+              <span className="text-xs sm:text-sm font-semibold text-iba-navy/90 truncate">{site.manager}</span>
             </div>
           </li>
 
           {/* Phone */}
-          <li className="flex items-start gap-2 sm:gap-3">
+          <li className="flex items-start gap-2 sm:gap-3 min-w-0">
             <Phone className="mt-0.5 h-3 w-3 sm:h-4 sm:w-4 shrink-0 text-iba-sky" />
-            <div className="flex flex-col">
+            <div className="flex flex-col min-w-0">
               <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-iba-navy/50">Téléphone</span>
               <a 
                 href={`tel:${site.phone.replace(/\s+/g, '')}`} 
-                className="inline-block py-0.5 text-xs sm:text-sm font-medium text-iba-navy/90 transition-colors hover:text-iba-orange active:text-iba-orange/70"
+                className="inline-block py-0.5 text-xs sm:text-sm font-medium text-iba-navy/90 transition-colors hover:text-iba-orange active:text-iba-orange/70 break-all"
               >
                 {site.phone}
               </a>
@@ -204,23 +229,24 @@ function SiteCard({ site, index }: { site: typeof sites[0]; index: number }) {
           </li>
 
           {/* Address */}
-          <li className="flex items-start gap-2 sm:gap-3">
+          <li className="flex items-start gap-2 sm:gap-3 min-w-0">
             <MapPin className="mt-0.5 h-3 w-3 sm:h-4 sm:w-4 shrink-0 text-iba-sky" />
-            <div className="flex flex-col">
+            <div className="flex flex-col min-w-0 w-full">
               <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-iba-navy/50">Adresse</span>
-              <span className="text-[11px] sm:text-sm font-medium leading-relaxed text-iba-navy/80 line-clamp-3 sm:line-clamp-none">{site.address}</span>
-              {site.mapQuery && (
-                <a 
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-2 sm:mt-3 inline-flex w-fit items-center gap-1 sm:gap-1.5 rounded-full border border-iba-navy/10 bg-iba-navy/5 px-2 py-1 sm:px-3 sm:py-1.5 text-[8px] sm:text-[10px] font-bold uppercase tracking-wider text-iba-navy transition-all active:scale-95 hover:border-iba-sky hover:bg-iba-sky hover:text-white"
-                >
-                  <span className="hidden sm:inline">Voir sur la carte</span>
-                  <span className="sm:hidden">Carte</span>
-                  <ExternalLink className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
-                </a>
-              )}
+              <span className="text-[11px] sm:text-sm font-medium leading-relaxed text-iba-navy/80 line-clamp-4 sm:line-clamp-none break-words">
+                {site.address}
+              </span>
+              
+              <a 
+                href={mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 sm:mt-3 inline-flex w-fit items-center gap-1 sm:gap-1.5 rounded-full border border-iba-navy/10 bg-iba-navy/5 px-2 py-1 sm:px-3 sm:py-1.5 text-[8px] sm:text-[10px] font-bold uppercase tracking-wider text-iba-navy transition-all active:scale-95 hover:border-iba-sky hover:bg-iba-sky hover:text-white"
+              >
+                <span className="hidden sm:inline">Voir sur la carte</span>
+                <span className="sm:hidden">Carte</span>
+                <ExternalLink className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+              </a>
             </div>
           </li>
         </ul>
