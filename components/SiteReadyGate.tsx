@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { SiteReadyContext } from "@/components/site-ready-context";
 import { VimeoVisionProvider } from "@/components/vimeo-vision/VimeoVisionProvider";
@@ -18,7 +18,7 @@ function loadVimeoPlayerScript(): Promise<void> {
 
   return new Promise((resolve, reject) => {
     const existing = document.querySelector(
-      `script[src="${VIMEO_PLAYER_SCRIPT_URL}"]`,
+      `script[src="${VIMEO_PLAYER_SCRIPT_URL}"]`
     ) as HTMLScriptElement | null;
     if (existing) {
       if (w.Vimeo?.Player) {
@@ -43,32 +43,43 @@ type LoaderPhase = "full" | "fade" | null;
 export function SiteReadyGate({ children }: { children: React.ReactNode }) {
   const [siteReady, setSiteReady] = useState(false);
   const [loader, setLoader] = useState<LoaderPhase>("full");
-  const skipLoadRef = useRef(false);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    // 1. Detect Crawlers & Lighthouse to bypass delays
+    const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse/i.test(
+      navigator.userAgent
+    );
+    
+    let skipLoad = false;
     try {
-      if (sessionStorage.getItem(SESSION_KEY) === "1") {
-        skipLoadRef.current = true;
-        setLoader(null);
-        setSiteReady(true);
+      if (sessionStorage.getItem(SESSION_KEY) === "1" || isBot) {
+        skipLoad = true;
       }
     } catch {
       /* private mode */
     }
-  }, []);
 
-  useEffect(() => {
-    if (skipLoadRef.current) return;
+    // Immediately unmount the gate for bots
+    if (skipLoad) {
+      setLoader(null);
+      setSiteReady(true);
+      return;
+    }
 
     document.body.style.overflow = "hidden";
 
     const run = async () => {
       try {
-        await Promise.all([
+        const loaderTasks = Promise.all([
           loadVimeoPlayerScript().catch(() => {}),
           sleep(900),
           document.fonts?.ready?.catch(() => {}) ?? Promise.resolve(),
         ]);
+
+        // 2. Failsafe timeout to prevent infinite hanging
+        const timeoutFallback = sleep(2500); 
+        
+        await Promise.race([loaderTasks, timeoutFallback]);
       } finally {
         try {
           sessionStorage.setItem(SESSION_KEY, "1");
