@@ -66,7 +66,7 @@ export const productCategories: ProductCategory[] = [
     label: "Acier & Fer",
     description: "Fer à béton, clous, tôles, profilés et tubes acier pour structures robustes.",
     coverStorageFolder: "sheet-metal-pipes-wood",
-    coverFile: "tole IBR.png",
+    coverFile: "tole IBR.webp",
   },
   {
     id: "ciment",
@@ -209,16 +209,16 @@ const sikaFiles = [
 
 const platreFiles = ["gyproc.webp", "PLATRE.webp", "FILLASSE.webp"] as const;
 
-const betonFiles = ["CENTRALE A BETON.png"] as const;
+const betonFiles = ["CENTRALE A BETON.webp"] as const;
 
 const ferABetonFiles = ["Barre Fameco 1.webp", "barre fameco.jpeg"] as const;
 
-const clousFiles = ["CLOUS.png"] as const;
+const clousFiles = ["CLOUS.webp"] as const;
 
 const acierFiles = [
   "CORNIERE.jpg",
   "Fer-plat.jpg",
-  "TÔLE NOIR.png",
+  "TÔLE NOIR.webp",
   "UPN.webp",
 ] as const;
 
@@ -241,7 +241,7 @@ const consommablesFiles = [
   "PAPIER VERRE.png",
   "Plateau Poncage.png",
   "ROULEAU PONCAGE.png",
-  "ROULEAU ETANCHE.png",
+  "ROULEAU ETANCHE.webp",
   "ROULEAUX PEINTURE.png",
   "TAMIS DE CONSTRUCTION.png",
 ] as const;
@@ -258,8 +258,8 @@ const peintureAEauFiles = [
 ] as const;
 
 const peintureAHuileFiles = [
-  "EMAIL AFRICA.JPG",
-  "EMAIL EAGLE COULEUR.JPG",
+  "EMAIL AFRICA.webp",
+  "EMAIL EAGLE COULEUR.webp",
   "EMAIL EAGLE.webp",
 ] as const;
 
@@ -269,7 +269,7 @@ const antirouilleFiles = [
 ] as const;
 
 const briqueFiles = [
-  "BRIQUE 2 RECTANGULAIRE.png",
+  "BRIQUE 2 RECTANGULAIRE.webp",
   "BRIQUE 10 PLEINE.webp",
   "BRIQUE 10 RECTANGULAIRE.webp",
   "BRIQUE 12 RECTANGULAIRE.webp",

@@ -1,6 +1,6 @@
-/** Lecteur principal (À propos) — `preload=auto` pour démarrer le tampon plus tôt. */
 export const ABOUT_VISION_VIMEO_EMBED_URL =
-  "https://player.vimeo.com/video/1204237776?autoplay=1&muted=1&controls=0&playsinline=1&loop=1&preload=auto&title=0&byline=0&portrait=0&badge=0&dnt=1&sidedock=0&autopause=0&app_id=58479";
+  "https://player.vimeo.com/video/1204237776?background=1&quality=540p&dnt=1&autopause=0&playsinline=1&api=1"; 
+  // Added &api=1 to ensure Vimeo knows we want to use the JS API
 
 export const ABOUT_VISION_VIMEO_TITLE = "IBA - CCA FINAL 2";
 

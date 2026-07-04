@@ -1,13 +1,11 @@
 "use client";
 
 import { useVimeoVisionSlot } from "@/components/vimeo-vision/VimeoVisionProvider";
+import { cn } from "@/lib/utils";
 
-/**
- * Slot pour le lecteur Vimeo global (`VimeoVisionProvider`) : un seul iframe,
- * préchargé hors page puis déplacé ici → lecture quasi instantanée.
- */
 export function AboutVisionVideoSection() {
-  const { setSlotElement } = useVimeoVisionSlot();
+  // Grab the actual playing state from the provider
+  const { setSlotElement, isActuallyPlaying } = useVimeoVisionSlot();
 
   return (
     <section
@@ -23,10 +21,29 @@ export function AboutVisionVideoSection() {
         aria-hidden
       />
 
-      <div
-        ref={setSlotElement}
-        className="relative z-10 mx-auto aspect-video  max-w-full min-w-0 overflow-hidden bg-white border border-iba-sky/15 shadow-[0_24px_60px_-24px_rgba(40,37,97,0.25)]"
-      />
+      <div className="relative z-10 mx-auto aspect-video max-w-full min-w-0 overflow-hidden bg-white border border-iba-sky/15 shadow-[0_24px_60px_-24px_rgba(40,37,97,0.25)]">
+        
+        {/* 1. The Thumbnail Layer */}
+        <div 
+          className={cn(
+            "absolute inset-0 z-20 transition-opacity duration-700 ease-in-out",
+            // The thumbnail only disappears once the video timeline is moving
+            isActuallyPlaying ? "opacity-0 pointer-events-none" : "opacity-100"
+          )}
+        >
+          <img
+            src="/images/iba-video-thumbnail.jpg"
+            alt="IBA Vision Video Thumbnail"
+            className="h-full w-full object-cover"
+          />
+        </div>
+
+        {/* 2. The Video Slot */}
+        <div
+          ref={setSlotElement}
+          className="relative z-10 h-full w-full"
+        />
+      </div>
     </section>
   );
 }

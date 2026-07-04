@@ -9,6 +9,8 @@ import { AboutVisionVideoSection } from "@/components/about/AboutVisionVideoSect
 import { aboutPageData } from "@/lib/about-page-data";
 import { cn } from "@/lib/utils";
 import { HomeCharterSection } from "./HomeCharacterSection";
+// 1. Added the import for the embed URL
+import { ABOUT_VISION_VIMEO_EMBED_URL } from "@/lib/about-vision-vimeo"; 
 
 const fade = {
   initial: { opacity: 0, y: 20 },
@@ -23,9 +25,28 @@ export function AboutPage() {
   // Duplication des principes pour créer un effet de boucle infinie fluide (Marquee)
   const marqueeItems = [...charter.principles, ...charter.principles, ...charter.principles];
 
+  // 2. Define the SEO structured data for Google
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "International Business Alliance (IBA) - Notre Mission et Vision",
+    "description": "IBA s'engage à approvisionner, soutenir et construire durablement en fournissant des matériaux de construction de qualité. Découvrez notre vision pour le développement urbain, nos valeurs d'intégrité et de transparence, et notre impact sur le marché international.",
+    "uploadDate": "2026-07-01T08:00:00+01:00",
+    "embedUrl": ABOUT_VISION_VIMEO_EMBED_URL,
+    "thumbnailUrl": [
+      "https://www.afromosia-rdc.com/images/iba-video-thumbnail.jpg"
+    ]
+  };
+
   return (
     <main className="flex min-h-[100dvh] md:min-h-screen flex-col bg-background selection:bg-iba-navy selection:text-white">
       
+      {/* 3. Inject the JSON-LD schema into the DOM */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* 1. INTRO ARCHITECTURALE (Blueprint Grid) */}
       <section
         className="relative scroll-mt-20 bg-background pt-[calc(6rem+1.5rem)] pb-16 sm:pt-[calc(7rem+1.5rem)] md:pb-24 overflow-hidden"
@@ -62,8 +83,6 @@ export function AboutPage() {
 
       <SectionWave />
       </section>
-
-
 
       {/* 2. MISSION — BANDEAU navy (Structural Layout) */}
       <section className="relative overflow-hidden bg-iba-navy py-20 text-white md:py-28 lg:py-32">
@@ -121,6 +140,7 @@ export function AboutPage() {
       </section>
 
       <AboutVisionVideoSection />
+      
       {/* 3. VISION — FOND BLANC (Oversized Typography) */}
       <section className="relative bg-background py-20 md:py-32">
         <div className="mx-auto max-w-[90rem] px-5 sm:px-8 md:px-16 lg:px-20 text-center flex flex-col items-center">

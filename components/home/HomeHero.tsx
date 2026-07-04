@@ -49,8 +49,10 @@ export function HomeHero() {
     >
       {/* 1. ANIMATED PARALLAX BACKGROUND */}
       <motion.div
-        className="absolute inset-0 z-0 h-[115%] w-full will-change-transform"
-        style={{ y: backgroundY }}
+        // Added transform-gpu and backface-visibility-hidden to prevent flickering
+        className="absolute inset-0 z-0 h-[115%] w-full transform-gpu overflow-hidden backface-hidden will-change-transform"
+        // Adding z: 0 forces Framer Motion to use translate3d(), locking it on the GPU
+        style={{ y: backgroundY, z: 0 }}
       >
         <Image
           src="/images/hero.webp"
@@ -58,7 +60,8 @@ export function HomeHero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          // Added transform-gpu here as well just to be safe
+          className="object-cover transform-gpu"
         />
       </motion.div>
 

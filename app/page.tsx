@@ -10,10 +10,8 @@ export default function HomePage() {
     <main className="flex min-h-[100dvh] md:min-h-screen flex-col bg-background">
       <HomeHero />
       <HomeImpactSection />
-      {/* <HomePillarsSection /> */}
       <HomeSitesSection />
       <HomePartnersSection />
-      {/* <HomeCatalogSection /> */}
     </main>
   );
 }

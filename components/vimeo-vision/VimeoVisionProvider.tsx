@@ -17,11 +17,13 @@ type VimeoPlayerApi = {
   play(): Promise<void>;
   pause(): Promise<void>;
   destroy(): void;
+  // We need to listen to time updates to ensure frames are rendering
+  on(event: string, callback: (data?: any) => void): void; 
 };
 
-function getVimeoPlayerCtor(): (new (el: HTMLIFrameElement) => VimeoPlayerApi) | null {
+function getVimeoPlayerCtor(): (new (el: HTMLIFrameElement, options?: Record<string, any>) => VimeoPlayerApi) | null {
   if (typeof window === "undefined") return null;
-  const Vimeo = (window as unknown as { Vimeo?: { Player: new (el: HTMLIFrameElement) => VimeoPlayerApi } })
+  const Vimeo = (window as unknown as { Vimeo?: { Player: new (el: HTMLIFrameElement, options?: Record<string, any>) => VimeoPlayerApi } })
     .Vimeo;
   return Vimeo?.Player ?? null;
 }
@@ -50,6 +52,7 @@ function ensureVimeoPlayerScript(onReady: () => void): void {
 
 type VimeoVisionContextValue = {
   setSlotElement: (el: HTMLDivElement | null) => void;
+  isActuallyPlaying: boolean; 
 };
 
 const VimeoVisionContext = createContext<VimeoVisionContextValue | null>(null);
@@ -62,10 +65,6 @@ export function useVimeoVisionSlot() {
   return ctx;
 }
 
-/**
- * Un seul iframe Vimeo pour toute l’app : créé après `siteReady`, lu hors écran pour buffer,
- * puis déplacé dans le slot À propos (même nœud DOM = pas de rechargement).
- */
 export function VimeoVisionProvider({ children }: { children: React.ReactNode }) {
   const siteReady = useSiteReady();
   const pathname = usePathname();
@@ -79,6 +78,8 @@ export function VimeoVisionProvider({ children }: { children: React.ReactNode })
   const [scriptReady, setScriptReady] = useState(false);
   const [iframeReady, setIframeReady] = useState(false);
   const [playerBound, setPlayerBound] = useState(false);
+  
+  const [isActuallyPlaying, setIsActuallyPlaying] = useState(false);
 
   useEffect(() => {
     if (!siteReady) return;
@@ -116,16 +117,29 @@ export function VimeoVisionProvider({ children }: { children: React.ReactNode })
       const Ctor = getVimeoPlayerCtor();
       if (!Ctor) return;
       try {
-        const player = new Ctor(iframe);
+        // --- THE FIX ---
+        // Explicitly pass the current origin to the Vimeo Player constructor
+        const currentOrigin = window.location.origin; 
+        
+        const player = new Ctor(iframe, {
+          url: ABOUT_VISION_VIMEO_EMBED_URL,
+          origin: currentOrigin 
+        });
+
         await player.ready();
         if (cancelled) {
           try {
             player.destroy();
-          } catch {
-            /* ignore */
-          }
+          } catch { /* ignore */ }
           return;
         }
+        
+        player.on("timeupdate", (data: any) => {
+          if (data.seconds > 0.1) {
+            setIsActuallyPlaying(true);
+          }
+        });
+
         playerRef.current = player;
         setPlayerBound(true);
       } catch {
@@ -135,16 +149,13 @@ export function VimeoVisionProvider({ children }: { children: React.ReactNode })
 
     return () => {
       cancelled = true;
-      try {
-        playerRef.current?.destroy();
-      } catch {
-        /* ignore */
-      }
+      try { playerRef.current?.destroy(); } catch { /* ignore */ }
       playerRef.current = null;
       iframe.remove();
       iframeRef.current = null;
       setIframeReady(false);
       setPlayerBound(false);
+      setIsActuallyPlaying(false);
     };
   }, [siteReady, scriptReady]);
 
@@ -153,7 +164,6 @@ export function VimeoVisionProvider({ children }: { children: React.ReactNode })
     setSlotNonce((n) => n + 1);
   }, []);
 
-  /** Place l’iframe dans le slot À propos ou dans le holder ; pas de remount. */
   useEffect(() => {
     const iframe = iframeRef.current;
     const holder = holderRef.current;
@@ -171,13 +181,11 @@ export function VimeoVisionProvider({ children }: { children: React.ReactNode })
     }
   }, [pathname, slotNonce, iframeReady]);
 
-  /** Pause hors page À propos (évite lecture invisible). */
   useEffect(() => {
     if (!playerBound || pathname === "/about") return;
     void playerRef.current?.pause().catch(() => {});
   }, [pathname, playerBound]);
 
-  /** Lecture seulement quand le bloc est dans le viewport (À propos). */
   useEffect(() => {
     if (!playerBound || pathname !== "/about") return;
     const slot = slotRef.current;
@@ -191,14 +199,14 @@ export function VimeoVisionProvider({ children }: { children: React.ReactNode })
         if (vis) void p.play().catch(() => {});
         else void p.pause().catch(() => {});
       },
-      { threshold: 0, rootMargin: "0px" },
+      { threshold: 0, rootMargin: "800px 0px 800px 0px" },
     );
     io.observe(slot);
     return () => io.disconnect();
   }, [playerBound, pathname, slotNonce]);
 
   return (
-    <VimeoVisionContext.Provider value={{ setSlotElement }}>
+    <VimeoVisionContext.Provider value={{ setSlotElement, isActuallyPlaying }}>
       <div
         ref={holderRef}
         className="pointer-events-none fixed left-[-9999px] top-0 z-0 h-[200px] w-[356px] overflow-hidden opacity-0"

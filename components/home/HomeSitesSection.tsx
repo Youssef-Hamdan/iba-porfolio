@@ -88,7 +88,8 @@ const sites: Site[] = [
     name: "UPN",
     manager: "Kabo",
     phone: "099 999 2905",
-    address: "Route Matadi n°563 Biza UPN"
+    address: "Route Matadi n°563 Biza UPN",
+    mapQuery: "4°24'34.67\"S 15°15'24.98\"E"
   }
 ];
 

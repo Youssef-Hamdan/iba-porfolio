@@ -94,6 +94,12 @@
       "regex": "^/quotation(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/quotation(?:/)?$"
+    },
+    {
+      "page": "/robots.txt",
+      "regex": "^/robots\\.txt(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/robots\\.txt(?:/)?$"
     }
   ],
   "dataRoutes": [],

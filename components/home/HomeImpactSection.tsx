@@ -21,17 +21,18 @@ const parallaxBlocks: {
   },
   {
     images: [
-      "/images/2D7A8728-ezgif.com-png-to-webp-converter-2.webp",
-      "/images/2D7A8731-ezgif.com-png-to-webp-converter.webp",
+      "/images/2D7A8740-ezgif.com-png-to-webp-converter.webp",
+      "/images/2D7A8755-ezgif.com-png-to-webp-converter.webp",
     ],
     title: "Commerce & valorisation des filières",
     titleNode: <>Commerce & <span className="text-iba-sky">valorisation des filières</span></>,
     desc: "En collaborant avec des fournisseurs et acteurs de référence, nous contribuons au développement d’un secteur de la construction plus performant et durable.",
   },
   {
+
     images: [
-      "/images/2D7A8740-ezgif.com-png-to-webp-converter.webp",
-      "/images/2D7A8755-ezgif.com-png-to-webp-converter.webp",
+      "/images/2D7A8728-ezgif.com-png-to-webp-converter-2.webp",
+      "/images/2D7A8731-ezgif.com-png-to-webp-converter.webp",
     ],
     title: "Innovation & standards internationaux",
     titleNode: <>Innovation & <span className="text-iba-sky">standards internationaux</span></>,

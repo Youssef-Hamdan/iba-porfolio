@@ -989,6 +989,8 @@ module.exports = (sourcePath)=>({
       case "server/chunks/ssr/_next-internal_server_app_quotation_page_actions_15y8ox-.js": return require("/Users/youssefhamdan/Documents/nextjs/www/iba-portoflio/.open-next/server-functions/default/.next/server/chunks/ssr/_next-internal_server_app_quotation_page_actions_15y8ox-.js");
       case "server/chunks/ssr/app_quotation_page_tsx_02arply._.js": return require("/Users/youssefhamdan/Documents/nextjs/www/iba-portoflio/.open-next/server-functions/default/.next/server/chunks/ssr/app_quotation_page_tsx_02arply._.js");
       case "server/chunks/ssr/node_modules_next_dist_esm_build_templates_app-page_1jb6dx1.js": return require("/Users/youssefhamdan/Documents/nextjs/www/iba-portoflio/.open-next/server-functions/default/.next/server/chunks/ssr/node_modules_next_dist_esm_build_templates_app-page_1jb6dx1.js");
+      case "server/chunks/_next-internal_server_app_robots_txt_route_actions_15vc_89.js": return require("/Users/youssefhamdan/Documents/nextjs/www/iba-portoflio/.open-next/server-functions/default/.next/server/chunks/_next-internal_server_app_robots_txt_route_actions_15vc_89.js");
+      case "server/chunks/node_modules_next_dist_1u-e4cg._.js": return require("/Users/youssefhamdan/Documents/nextjs/www/iba-portoflio/.open-next/server-functions/default/.next/server/chunks/node_modules_next_dist_1u-e4cg._.js");
       default:
         throw new Error(`Not found ${chunkPath}`);
     }

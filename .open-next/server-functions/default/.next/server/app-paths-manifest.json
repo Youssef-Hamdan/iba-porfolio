@@ -10,5 +10,6 @@
   "/page": "app/page.js",
   "/products/page": "app/products/page.js",
   "/projects/page": "app/projects/page.js",
-  "/quotation/page": "app/quotation/page.js"
+  "/quotation/page": "app/quotation/page.js",
+  "/robots.txt/route": "app/robots.txt/route.js"
 }

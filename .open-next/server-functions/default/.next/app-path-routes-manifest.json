@@ -10,5 +10,6 @@
   "/page": "/",
   "/products/page": "/products",
   "/projects/page": "/projects",
-  "/quotation/page": "/quotation"
+  "/quotation/page": "/quotation",
+  "/robots.txt/route": "/robots.txt"
 }

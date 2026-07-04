@@ -34,7 +34,7 @@ const partners: CatalogPartner[] = [
   },
   {
     name: "Famico",
-    img: partnerLogo("fameco logo grey.png"),
+    img: partnerLogo("fameco logo grey.webp"),
     caption: "Distribution",
   },
   {
