@@ -1,8 +1,10 @@
-import type { Metadata, Viewport } from "next";
+import type { Viewport } from "next";
 import { Montserrat } from "next/font/google";
+import { JsonLd } from "@/components/JsonLd";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteReadyGate } from "@/components/SiteReadyGate";
+import { rootMetadata } from "@/lib/seo";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -20,11 +22,7 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
-export const metadata: Metadata = {
-  title: "International Business Alliance",
-  description:
-    "Nous connectons les gouvernements, les industries et les capitaux pour bâtir une économie mondiale résiliente, transparente et durable.",
-};
+export const metadata = rootMetadata();
 
 export default function RootLayout({
   children,
@@ -34,6 +32,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${montserrat.variable} h-full`}>
       <body className="font-sans flex min-h-full flex-col antialiased">
+        <JsonLd />
         <SiteReadyGate>
           <SiteHeader />
           {children}

@@ -120,10 +120,22 @@ export function VimeoVisionProvider({ children }: { children: React.ReactNode })
         // --- THE FIX ---
         // Explicitly pass the current origin to the Vimeo Player constructor
         const currentOrigin = window.location.origin; 
-        
+        const url = "https://player.vimeo.com/video/1204237776?background=1";
         const player = new Ctor(iframe, {
-          url: ABOUT_VISION_VIMEO_EMBED_URL,
-          origin: currentOrigin 
+          url: url,
+          origin: currentOrigin,
+          api: 1, 
+          background: true,
+          byline: false,
+          portrait: false,
+          title: false,
+          controls: false,
+          muted: true,
+          playsinline: true,
+          loop: true,
+          preload: "auto",
+          quality: "540p",
+          dnt: true,
         });
 
         await player.ready();
@@ -168,23 +180,36 @@ export function VimeoVisionProvider({ children }: { children: React.ReactNode })
     const iframe = iframeRef.current;
     const holder = holderRef.current;
     if (!iframe || !holder || !iframeReady) return;
-
+  
     const slot = slotRef.current;
     const onAbout = pathname === "/about";
-
+  
+    // --- THE FIX ---
+    // Reset the playing state to false whenever the iframe is moved.
+    // This guarantees the thumbnail becomes visible again while the iframe reloads.
+    setIsActuallyPlaying(false);
+  
     if (onAbout && slot) {
       slot.appendChild(iframe);
+      // Ensure it is playing when it hits the slot
       void playerRef.current?.play().catch(() => {});
     } else {
       holder.appendChild(iframe);
-      void playerRef.current?.pause().catch(() => {});
+      // Keep it playing muted so it is always ready to go!
+      void playerRef.current?.play().catch(() => {}); 
     }
   }, [pathname, slotNonce, iframeReady]);
 
-  useEffect(() => {
-    if (!playerBound || pathname === "/about") return;
-    void playerRef.current?.pause().catch(() => {});
-  }, [pathname, playerBound]);
+    /** 
+     * DELETE THIS EFFECT ENTIRELY: 
+     * It is forcing a pause whenever you leave the About page.
+     */
+    /*
+    useEffect(() => {
+      if (!playerBound || pathname === "/about") return;
+      void playerRef.current?.pause().catch(() => {});
+    }, [pathname, playerBound]);
+    */
 
   useEffect(() => {
     if (!playerBound || pathname !== "/about") return;

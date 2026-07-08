@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact | International Business Alliance",
+export const metadata = createPageMetadata({
+  title: "Contact",
   description:
-    "Écrivez à l’IBA : demande d’information, partenariat ou prise de contact générale. Réponse sous 24h ouvrées.",
-};
+    "Écrivez à l’IBA : demande d’information, partenariat ou prise de contact générale. Réponse sous 24 h ouvrées.",
+  path: "/contact",
+});
 
 export default function ContactLayout({
   children,
