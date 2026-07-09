@@ -15,28 +15,27 @@ const parallaxBlocks: {
 }[] = [
   {
     images: ["/images/pillar1.webp", "/images/pillar2.webp"],
-    title: "Infrastructures & Grands Ouvrages",
-    titleNode: <>Infrastructures & <span className="text-iba-sky">Grands Ouvrages</span></>,
-    desc: "Parce que chaque chantier mérite le meilleur, IBA vous accompagne avec des solutions adaptées, des matériaux certifiés et un engagement constant envers la qualité.",
+    title: "Innovation & standards internationaux",
+    titleNode: <>Innovation & <span className="text-iba-sky">standards internationaux</span></>,
+    desc: "Nous améliorons continuellement nos procédés et notre offre pour proposer des solutions performantes, durables et adaptées aux besoins du marché.",
   },
   {
     images: [
       "/images/2D7A8740-ezgif.com-png-to-webp-converter.webp",
       "/images/2D7A8755-ezgif.com-png-to-webp-converter.webp",
     ],
-    title: "Commerce & valorisation des filières",
-    titleNode: <>Commerce & <span className="text-iba-sky">valorisation des filières</span></>,
-    desc: "En collaborant avec des fournisseurs et acteurs de référence, nous contribuons au développement d’un secteur de la construction plus performant et durable.",
+    title: "Un approvisionnement fiable et continu",
+    titleNode: <>Un approvisionnement <span className="text-iba-sky">fiable et continu</span></>,
+    desc: "Notre entrepôt moderne et notre gestion rigoureuse des stocks garantissent une disponibilité permanente de nos matériaux de construction. Nous assurons un approvisionnement rapide, des produits stockés dans des conditions optimales et une réponse efficace aux besoins de chacun de vos projets.",
   },
   {
-
     images: [
       "/images/2D7A8728-ezgif.com-png-to-webp-converter-2.webp",
       "/images/2D7A8731-ezgif.com-png-to-webp-converter.webp",
     ],
-    title: "Innovation & standards internationaux",
-    titleNode: <>Innovation & <span className="text-iba-sky">standards internationaux</span></>,
-    desc: "Nous améliorons continuellement nos procédés et notre offre pour proposer des solutions performantes, durables et adaptées aux besoins du marché.",
+    title: "Commerce & valorisation des filières",
+    titleNode: <>Commerce & <span className="text-iba-sky">valorisation des filières</span></>,
+    desc: "En collaborant avec des fournisseurs et acteurs de référence, nous contribuons au développement d’un secteur de la construction plus performant et durable.",
   },
 ];
 
