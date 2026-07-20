@@ -11,6 +11,8 @@ export type YTPlayerInstance = {
   getDuration: () => number
   getPlayerState: () => number
   seekTo: (seconds: number, allowSeekAhead?: boolean) => void
+  unloadModule: (module: string) => void
+  setOption: (module: string, option: string, value: unknown) => void
   destroy: () => void
 }
 

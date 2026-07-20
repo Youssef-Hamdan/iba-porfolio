@@ -1,21 +1,41 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { loadYoutubeIframeAPI, type YTPlayerInstance } from "@/lib/youtube-iframe-api";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
+
+const SCROLL_SPRING = { stiffness: 120, damping: 32, mass: 0.35 };
+const STIFF_SPRING = { stiffness: 8000, damping: 120, mass: 0.2 };
 
 export function AboutVisionVideoSection() {
-  const [isPlaying, setIsPlaying] = useState(false);
   const [isPlayerReady, setIsPlayerReady] = useState(false);
-  
+  const reduceMotion = useReducedMotion();
+
   const sectionRef = useRef<HTMLElement>(null);
   const playerHostRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<YTPlayerInstance | null>(null);
 
   // ---> INSERT YOUR IBA YOUTUBE VIDEO ID HERE <---
   // If you don't have one yet, it will use the factory desktop video temporarily.
-  const videoId = "Ix3MqljB6Gk"; 
+  const videoId = "CijA6Ql2RgE";
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "center center"],
+  });
+
+  // Spring + transform (not width) — avoids layout thrash with the YouTube iframe.
+  const smoothed = useSpring(
+    scrollYProgress,
+    reduceMotion ? STIFF_SPRING : SCROLL_SPRING,
+  );
+  const videoScale = useTransform(smoothed, [0, 1], [0.78, 1]);
 
   useEffect(() => {
     let cancelled = false;
@@ -39,6 +59,10 @@ export function AboutVisionVideoSection() {
         playerVars: {
           autoplay: 0,
           controls: 0,
+          disablekb: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          cc_load_policy: 0,
           mute: 1, // Must be muted to autoplay in background
           loop: 1,
           playlist: videoId, // Required by YT API to loop a single video
@@ -50,17 +74,14 @@ export function AboutVisionVideoSection() {
           onReady: (e: { target: YTPlayerInstance }) => {
             if (cancelled) return;
             playerRef.current = e.target;
-            setIsPlayerReady(true);
-          },
-          onStateChange: (e: { data: number }) => {
-            if (cancelled) return;
-            // YT.PlayerState.PLAYING is 1
-            if (e.data === 1) {
-              setIsPlaying(true);
-            } else {
-              // Re-show thumbnail if it pauses or buffers heavily
-              setIsPlaying(false);
+            try {
+              e.target.unloadModule("captions");
+              e.target.unloadModule("cc");
+              e.target.setOption("captions", "track", {});
+            } catch {
+              /* captions API not always available */
             }
+            setIsPlayerReady(true);
           },
         },
       });
@@ -95,7 +116,7 @@ export function AboutVisionVideoSection() {
         }
       },
       // Root margin triggers playback slightly before it scrolls into view
-      { threshold: 0, rootMargin: "400px 0px 400px 0px" } 
+      { threshold: 0, rootMargin: "400px 0px 400px 0px" }
     );
 
     observer.observe(sectionRef.current);
@@ -117,31 +138,15 @@ export function AboutVisionVideoSection() {
         aria-hidden
       />
 
-      <div className="relative z-10 mx-auto aspect-video max-w-full min-w-0 overflow-hidden bg-white border border-iba-sky/15 shadow-[0_24px_60px_-24px_rgba(40,37,97,0.25)]">
-        
-        {/* 1. The Thumbnail Layer */}
-        <div 
-          className={cn(
-            "absolute inset-0 z-20 transition-opacity duration-700 ease-in-out bg-black",
-            // The thumbnail only disappears once the YouTube API fires the "PLAYING" state
-            isPlaying ? "opacity-0 pointer-events-none" : "opacity-100"
-          )}
-        >
-          {/* Using standard img to match your previous code, 
-              though next/image with `priority` is recommended here */}
-          <img
-            src="/images/iba-video-thumbnail.jpg"
-            alt="IBA Vision Video Thumbnail"
-            className="h-full w-full object-cover"
-          />
-        </div>
-
-        {/* 2. The Video Host Layer */}
+      <motion.div
+        className="relative z-10 mx-auto aspect-video w-full min-w-0 overflow-hidden rounded-none border border-iba-sky/15 bg-white shadow-[0_24px_60px_-24px_rgba(40,37,97,0.25)] will-change-transform [transform:translateZ(0)]"
+        style={{ scale: videoScale }}
+      >
         <div
           ref={playerHostRef}
           className="relative z-10 h-full w-full pointer-events-none [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:h-full [&_iframe]:w-full [&_iframe]:border-0"
         />
-      </div>
+      </motion.div>
     </section>
   );
 }

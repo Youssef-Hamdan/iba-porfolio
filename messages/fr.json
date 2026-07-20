@@ -1,0 +1,463 @@
+{
+  "Meta": {
+    "siteName": "International Business Alliance",
+    "siteDescription": "Nous connectons les gouvernements, les industries et les capitaux pour bâtir une économie mondiale résiliente, transparente et durable.",
+    "brandFull": "International Business Alliance",
+    "home": {
+      "title": "International Business Alliance",
+      "description": "Nous connectons les gouvernements, les industries et les capitaux pour bâtir une économie mondiale résiliente, transparente et durable."
+    },
+    "about": {
+      "title": "À propos",
+      "description": "Mission, vision et valeurs d’IBA : approvisionnement durable, partenariats de référence et gouvernance éthique au service de la construction."
+    },
+    "products": {
+      "title": "Catalogue produits",
+      "description": "Matériaux de construction de première qualité : ciment, acier, peintures, pavés et outillage. Approvisionnement IBA pour vos chantiers en RDC."
+    },
+    "projects": {
+      "title": "Nos réalisations",
+      "description": "Portfolio IBA : infrastructures fluviales, complexes résidentiels, River Tower et projets industriels. Matériaux de construction pour grands chantiers en RDC."
+    },
+    "quotation": {
+      "title": "Demande de devis",
+      "description": "Demandez un devis pour vos matériaux de construction. L’équipe commerciale IBA vous répond sous 24 h ouvrées avec une cotation adaptée à votre chantier."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Écrivez à l’IBA : demande d’information, partenariat ou prise de contact générale. Réponse sous 24 h ouvrées."
+    }
+  },
+  "Nav": {
+    "home": "Accueil",
+    "about": "À Propos",
+    "projects": "Projets",
+    "products": "Produits",
+    "quotation": "Devis",
+    "contact": "Nous Contacter",
+    "ariaMain": "Principal",
+    "ariaMobile": "Mobile",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "brandAria": "International Business Alliance",
+    "homeAria": "International Business Alliance — accueil"
+  },
+  "Footer": {
+    "heroImageAlt": "Chantier et infrastructure",
+    "ctaHeadlineBefore": "Alliances stratégiques pour une",
+    "ctaHeadlineAccent": "croissance durable",
+    "ctaHeadlineAfter": ".",
+    "socialHeading": "Réseaux sociaux",
+    "contactHeading": "Contact",
+    "addressLabel": "Adresse",
+    "phoneLabel": "Téléphone",
+    "emailLabel": "E-mail",
+    "copyright": "© {year} International Business Alliance. Tous droits réservés.",
+    "backToTop": "Haut de page",
+    "whatsappAria": "WhatsApp",
+    "instagramAria": "Instagram",
+    "tiktokAria": "TikTok",
+    "logoAlt": "International Business Alliance"
+  },
+  "HomeHero": {
+    "titlePart1": "La Force",
+    "titlePart2": "qui bâtit",
+    "titlePart3": "l'avenir.",
+    "imageAlt": "International Business Alliance",
+    "subtitle": "Nous accompagnons le développement des villes, des entreprises et des communautés grâce à des solutions de construction durables, contribuant à un avenir plus solide et prospère.",
+    "ctaVision": "Notre Vision",
+    "ctaProducts": "Découvrir les Produits"
+  },
+  "HomeImpact": {
+    "badge": "En chiffres",
+    "kicker": "01 — Notre réseau",
+    "titleBefore": "Présence &",
+    "titleAccent": "performance",
+    "stats": {
+      "partners": "Partenaires",
+      "stores": "Magasins",
+      "projects": "Projets",
+      "employees": "Employés"
+    },
+    "pillars": {
+      "innovation": {
+        "title": "Innovation & standards internationaux",
+        "titleBefore": "Innovation &",
+        "titleAccent": "standards internationaux",
+        "description": "Nous améliorons continuellement nos procédés et notre offre pour proposer des solutions performantes, durables et adaptées aux besoins du marché."
+      },
+      "supply": {
+        "title": "Un approvisionnement fiable et continu",
+        "titleBefore": "Un approvisionnement",
+        "titleAccent": "fiable et continu",
+        "description": "Notre entrepôt moderne et notre gestion rigoureuse des stocks garantissent une disponibilité permanente de nos matériaux de construction. Nous assurons un approvisionnement rapide, des produits stockés dans des conditions optimales et une réponse efficace aux besoins de chacun de vos projets."
+      },
+      "trade": {
+        "title": "Commerce & valorisation des filières",
+        "titleBefore": "Commerce &",
+        "titleAccent": "valorisation des filières",
+        "description": "En collaborant avec des fournisseurs et acteurs de référence, nous contribuons au développement d’un secteur de la construction plus performant et durable."
+      }
+    }
+  },
+  "HomeSites": {
+    "badge": "Notre Réseau",
+    "kicker": "Implantation Locale",
+    "titleBefore": "Nos sites à travers la",
+    "titleAccent": "capitale",
+    "manager": "Gérant",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "viewOnMap": "Voir sur la carte",
+    "mapShort": "Carte"
+  },
+  "HomePartners": {
+    "badge": "Notre réseau",
+    "kicker": "03 — Partenaires & fournisseurs",
+    "titleBefore": "L'excellence des",
+    "titleAccent": "matériaux",
+    "subtitle": "Une sélection rigoureuse approuvée par les leaders mondiaux :",
+    "captions": {
+      "materials": "Matériaux",
+      "paints": "Peintures & finitions",
+      "mortars": "Mortiers & solutions",
+      "distribution": "Distribution"
+    },
+    "srPartners": "Partenaires"
+  },
+  "HomeCatalog": {
+    "badge": "Notre catalogue",
+    "kicker": "04 — Réseau et catalogue",
+    "titleBefore": "Matière",
+    "titleAccent": "Première.",
+    "explore": "Explorer",
+    "ctaBadge": "Nos Réalisations",
+    "ctaTitle": "L'ambition architecturale.",
+    "ctaDescription": "Une sélection de projets illustrant notre maîtrise technique et notre impact concret sur les infrastructures.",
+    "ctaButton": "Voir les projets",
+    "ctaImageAlt": "Projets emblématiques",
+    "collections": {
+      "acierFer": {
+        "title": "Acier & Fer",
+        "desc": "Tôles, profilés et tubes acier pour structures robustes."
+      },
+      "ciments": {
+        "title": "Ciments",
+        "desc": "Liens hydrauliques et ciments en sac — uniquement."
+      },
+      "beton": {
+        "title": "Béton Prêt à l'Emploi",
+        "desc": "Béton prêt à l'emploi livré directement sur vos chantiers."
+      },
+      "brique": {
+        "title": "Brique",
+        "desc": "Briques de construction pleines et creuses de haute qualité."
+      },
+      "peinture": {
+        "title": "Peinture",
+        "desc": "Peintures et mastiques pour finitions durables."
+      },
+      "bois": {
+        "title": "Bois",
+        "desc": "Bois de charpente, coffrage et menuiserie."
+      },
+      "outillage": {
+        "title": "Outillage Quincaillerie JKL",
+        "desc": "Outils professionnels et quincaillerie générale."
+      },
+      "plafonds": {
+        "title": "Plafonds",
+        "desc": "Solutions complètes pour plafonds suspendus et isolation."
+      },
+      "panneaux": {
+        "title": "Panneaux Sandwich",
+        "desc": "Panneaux isolants pour toitures et bardages industriels."
+      },
+      "pave": {
+        "title": "Pavé",
+        "desc": "Pavés autobloquants pour aménagements extérieurs."
+      },
+      "transport": {
+        "title": "Service Transport",
+        "desc": "Livraison rapide et sécurisée de tous vos matériaux."
+      }
+    }
+  },
+  "HomePillars": {
+    "badge": "Nos piliers",
+    "kicker": "02 — Axes stratégiques",
+    "titleBefore": "Ce qui structure",
+    "titleAccent": "notre action",
+    "intro": "Quatre leviers complémentaires pour transformer les ambitions en projets concrets, avec rigueur et vision long terme.",
+    "tablistAria": "Piliers stratégiques",
+    "pillarLabel": "Pilier {current} / {total}",
+    "floatingBadge": "Vision intégrée",
+    "items": {
+      "partnerships": {
+        "title": "Partenariats stratégiques",
+        "description": "Nous tissons des alliances durables avec des institutions financières, des bailleurs et des acteurs industriels pour sécuriser les chaînes d’approvisionnement, mutualiser l’expertise et accélérer des projets d’envergure au service du développement national et régional."
+      },
+      "growth": {
+        "title": "Croissance économique",
+        "description": "Nos initiatives visent à renforcer les filières locales, à créer de l’emploi qualifié et à soutenir une croissance mesurable et équilibrée sur les territoires où nous investissons, en reliant production, distribution et besoins du marché."
+      },
+      "infrastructure": {
+        "title": "Infrastructure",
+        "description": "Nous contribuons à des infrastructures résilientes — du gros œuvre aux équipements urbains — en respectant les normes techniques, les délais convenus et les exigences de qualité et de sécurité propres aux grands chantiers."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "description": "Nous intégrons des solutions matériaux, des procédés et des modèles de gouvernance qui améliorent la performance, la traçabilité et la durabilité des ouvrages, tout en restant alignés sur les standards internationaux du secteur."
+      }
+    }
+  },
+  "About": {
+    "pageTitle": "À propos",
+    "pageIntro": "International Business Alliance — matériaux, partenariats et standards au service de la construction durable.",
+    "mission": {
+      "waterNumber": "01",
+      "badge": "Notre mission",
+      "kicker": "01 — Notre mission",
+      "headline": "Approvisionner, soutenir et",
+      "headlineAccent": "construire durablement.",
+      "intro": "Mettre à disposition des professionnels et des particuliers des matériaux de qualité pour garantir la réussite de leurs projets de construction. Nous nous engageons à offrir des solutions adaptées, un service efficace et un accompagnement de proximité pour chaque chantier.",
+      "narrativeTitle": "Une force qui bâtit l’avenir",
+      "narrativeLead": "Nous sommes la force qui bâtit l’avenir — une confiance qui s’inscrit dans la durée et à l’échelle mondiale.",
+      "narrativeBody": "Nous ne nous contentons pas de fournir des matériaux. Nous accompagnons nos partenaires et nos clients dans la réalisation de projets fiables et durables, en favorisant la transparence, la sécurité et la qualité.",
+      "international": {
+        "title": "Portée internationale",
+        "body": "IBA collabore avec des partenaires et fournisseurs étrangers et locaux, et respecte des standards internationaux, ce qui lui permet de s’inscrire dans une dynamique d’ouverture sur le marché international des matériaux de construction."
+      }
+    },
+    "vision": {
+      "waterNumber": "02",
+      "badge": "Notre vision",
+      "kicker": "02 — Notre vision",
+      "headline": "Être un partenaire de",
+      "headlineAccent": "référence dans la construction.",
+      "intro": "Un avenir où chaque projet, petit ou grand, repose sur des matériaux solides et un approvisionnement fiable. Nous aspirons à devenir un acteur clé du secteur en contribuant activement au développement urbain et à la modernisation des infrastructures."
+    },
+    "focusAreas": {
+      "waterNumber": "03",
+      "badge": "Notre impact",
+      "kicker": "03 — Axes d’action",
+      "headline": "Agir avec",
+      "headlineAccent": "exigence et mesure",
+      "intro": "Trois leviers complémentaires pour ancrer notre mission dans des résultats concrets sur le terrain.",
+      "cards": {
+        "impact": {
+          "title": "Impact ciblé",
+          "body": "IBA vise à améliorer durablement le secteur de la construction en fournissant des matériaux de qualité, en contribuant au développement des infrastructures et en participant à la croissance économique locale et régionale."
+        },
+        "projects": {
+          "title": "Nos projets",
+          "body": "Une trajectoire de chantiers et de partenariats qui illustrent notre capacité à livrer, à respecter les normes et à tenir nos engagements opérationnels.",
+          "ctaLabel": "Explorer"
+        },
+        "governance": {
+          "title": "Gouvernance éthique",
+          "body": "IBA adopte une gestion transparente et responsable, fondée sur l’intégrité, le respect des normes, la conformité légale et l’engagement envers ses partenaires, employés et clients."
+        }
+      }
+    },
+    "charter": {
+      "waterNumber": "04",
+      "badge": "Notre charte",
+      "kicker": "04 — Valeurs & principes",
+      "headline": "Notre",
+      "headlineAccent": "philosophie",
+      "intro": "Chez IBA, nous croyons que le développement du secteur de la construction repose sur une gestion responsable, des partenariats solides et une vision durable. Notre approche valorise le savoir-faire local tout en s’alignant sur les standards internationaux.",
+      "principles": {
+        "integrity": "Intégrité et transparence",
+        "sustainability": "Développement durable",
+        "innovation": "Innovation collaborative",
+        "social": "Responsabilité sociale"
+      }
+    }
+  },
+  "Products": {
+    "heroBadge": "PRODUITS",
+    "heroTitle": "Catalogue",
+    "heroTitleAccent": "produits",
+    "heroDescription": "Une sélection rigoureuse de matériaux de construction de première qualité. Du gros œuvre aux finitions spécialisées, nous équipons vos chantiers avec les standards internationaux.",
+    "categoriesHeading": "Catégories de produits",
+    "categoriesLabel": "Catégories",
+    "allProducts": "Tous les produits",
+    "fullInventory": "Inventaire complet",
+    "fullInventoryDesc": "Parcourez l'intégralité de nos références disponibles en stock.",
+    "filterAria": "Filtrer par catégorie",
+    "closePreview": "Fermer l'aperçu",
+    "close": "Fermer",
+    "previousProduct": "Produit précédent",
+    "nextProduct": "Produit suivant",
+    "expand": "s'élargir",
+    "enlargeImage": "Agrandir l'image : {name}",
+    "openZoom": "Ouvrir la vue agrandie",
+    "previousPage": "Page précédente",
+    "nextPage": "Page suivante",
+    "noProducts": "Aucun produit trouvé",
+    "noProductsHint": "Veuillez sélectionner une autre catégorie.",
+    "ctaTitleBefore": "Commandes en gros &",
+    "ctaTitleAccent": "devis",
+    "ctaDescription": "Besoin de grandes quantités pour votre chantier ? Contactez notre équipe commerciale pour obtenir une tarification adaptée et organiser la logistique.",
+    "ctaButton": "Demander un devis",
+    "categories": {
+      "acier-fer": {
+        "label": "Acier & Fer",
+        "description": "Fer à béton, clous, tôles, profilés et tubes acier pour structures robustes."
+      },
+      "ciment": {
+        "label": "Ciment",
+        "description": "Liens hydrauliques et ciments en sac pour gros œuvre."
+      },
+      "ciment-colle": {
+        "label": "Ciment Colle",
+        "description": "Ciments-colles et mortiers-colles pour carrelage et finitions."
+      },
+      "produits-sika": {
+        "label": "Produits Sika",
+        "description": "Produits Sika : ancrages, joints, enduits et solutions techniques."
+      },
+      "beton": {
+        "label": "Béton Prêt à l'Emploi",
+        "description": "Béton prêt à l'emploi livré directement sur vos chantiers."
+      },
+      "brique": {
+        "label": "Brique",
+        "description": "Briques de construction pleines et creuses de haute qualité."
+      },
+      "peinture": {
+        "label": "Peinture",
+        "description": "Peintures à l'eau, à l'huile et traitements antirouille."
+      },
+      "bois": {
+        "label": "Bois",
+        "description": "Bois de charpente, coffrage, menuiserie et panneaux dérivés."
+      },
+      "outillage-quincaillerie": {
+        "label": "Outillage Quincaillerie JKL",
+        "description": "Outils de coupe, d'atelier et quincaillerie générale."
+      },
+      "plafonds": {
+        "label": "Plafonds",
+        "description": "Solutions complètes pour plafonds suspendus, plâtre et isolation."
+      },
+      "panneaux-sandwich": {
+        "label": "Panneaux Sandwich",
+        "description": "Panneaux isolants pour toitures et bardages industriels."
+      },
+      "pave": {
+        "label": "Pavé",
+        "description": "Pavés autobloquants pour aménagements extérieurs."
+      }
+    },
+    "subcategories": {
+      "fer-a-beton": "Fer à Béton",
+      "clous": "Clous",
+      "acier": "Acier",
+      "peinture-a-eau": "Peinture à Eau",
+      "peinture-a-huile": "Peinture à Huile",
+      "antirouille": "Antirouille"
+    }
+  },
+  "Contact": {
+    "badge": "Formulaire de contact",
+    "titleBefore": "Nous",
+    "titleAccent": "contacter",
+    "intro": "Une question, un projet ou un partenariat ? Décrivez votre besoin : notre équipe vous répond sous 24h ouvrées.",
+    "successTitle": "Message envoyé",
+    "successBody": "Merci pour votre message. Nous vous recontactons très prochainement.",
+    "newMessage": "Nouveau message →",
+    "sectionCoords": "Coordonnées",
+    "sectionMessage": "Votre message",
+    "nameLabel": "Nom complet *",
+    "namePlaceholder": "Jean Dupont",
+    "companyLabel": "Entreprise / organisation",
+    "companyPlaceholder": "Société ou institution (optionnel)",
+    "emailLabel": "Adresse e-mail *",
+    "emailPlaceholder": "vous@exemple.com",
+    "phoneLabel": "Téléphone *",
+    "phonePlaceholder": "+243 …",
+    "messageLabel": "Message * (min. 10 caractères)",
+    "messagePlaceholder": "Décrivez votre demande, le contexte et la meilleure façon de vous joindre…",
+    "quoteLink": "Besoin d'un devis matériaux ?",
+    "submit": "Envoyer le message",
+    "submitting": "Envoi…",
+    "fixFields": "Veuillez corriger les champs indiqués.",
+    "sendFailed": "Envoi impossible pour le moment. Réessayez plus tard.",
+    "networkError": "Problème de connexion. Vérifiez votre réseau et réessayez.",
+    "asideDirect": "Direct",
+    "asideDirectBody": "Pour une demande de prix sur des produits précis, utilisez plutôt le formulaire devis.",
+    "asideQuoteCta": "Demander un devis",
+    "asideDelay": "Délai",
+    "asideDelayBody": "Réponse visée sous 24h ouvrées après réception.",
+    "asideDelayHighlight": "24h ouvrées",
+    "phoneCtaTitleBefore": "Préférez-vous le",
+    "phoneCtaTitleAccent": "téléphone",
+    "phoneCtaTitleAfter": "?",
+    "phoneCtaBody": "Appelez-nous au",
+    "backHome": "Retour à l'accueil"
+  },
+  "Quotation": {
+    "badge": "DEVIS",
+    "titleBefore": "Demande de",
+    "titleAccent": "devis",
+    "intro": "Décrivez vos besoins en matériaux dans le formulaire. Notre équipe technique vous fournira une cotation précise dans les plus brefs délais.",
+    "successTitle": "Demande Transmise",
+    "successBody": "Votre manifeste a été envoyé à notre bureau d'études. Un ingénieur commercial prendra contact avec vous sous 24h ouvrées.",
+    "newQuote": "Nouveau Devis →",
+    "sectionId": "Identification du Client",
+    "sectionRequest": "Votre demande",
+    "nameLabel": "Nom complet *",
+    "namePlaceholder": "Jean Dupont",
+    "companyLabel": "Entreprise / Projet",
+    "companyPlaceholder": "Construction S.A.",
+    "emailLabel": "Adresse Email *",
+    "emailPlaceholder": "contact@entreprise.com",
+    "phoneLabel": "Téléphone *",
+    "phonePlaceholder": "+243 ...",
+    "requestPlaceholder": "Décrivez librement ce dont vous avez besoin : types de matériaux, quantités approximatives, références, dimensions, etc.",
+    "submit": "Soumettre le Manifeste",
+    "submitting": "Transmission...",
+    "fixFields": "Veuillez corriger les champs indiqués.",
+    "sendFailed": "Envoi impossible pour le moment. Réessayez plus tard.",
+    "networkError": "Problème de connexion. Vérifiez votre réseau et réessayez.",
+    "asideJourney": "Parcours",
+    "asideJourneyBody": "Deux étapes : vos coordonnées, puis la description de votre besoin en matériaux.",
+    "step1Title": "Identification",
+    "step1Desc": "Coordonnées et société",
+    "step2Title": "Demande",
+    "step2Desc": "Produits et quantités en texte libre",
+    "asideResponse": "Réponse ciblée sous 24h ouvrées après réception du manifeste complet.",
+    "ctaTitleBefore": "Une question avant",
+    "ctaTitleAccent": "d'envoyer",
+    "ctaTitleAfter": "?",
+    "ctaBody": "Notre équipe peut vous guider sur les matériaux et les délais avant de finaliser votre manifeste.",
+    "ctaButton": "Contacter IBA"
+  },
+  "Projects": {
+    "badge": "PROJECTS",
+    "titleBefore": "Nos",
+    "titleAccent": "réalisations",
+    "intro": "Découvrez notre portfolio d'infrastructures. De l'ingénierie civile aux charpentes métalliques de haute précision, nous bâtissons les fondations de demain.",
+    "enlargeProject": "Agrandir les visuels du projet : {title}",
+    "openZoom": "Ouvrir la vue agrandie",
+    "clickToEnlarge": "Cliquer pour agrandir",
+    "objectivesHeading": "Objectifs & Vision",
+    "locationLabel": "Localisation",
+    "closeGallery": "Fermer la galerie",
+    "viewLabel": "Vue {current} / {total}",
+    "viewButton": "Vue {n}",
+    "ctaTitleBefore": "Prêt à construire",
+    "ctaTitleAccent": "l'avenir",
+    "ctaTitleAfter": "?",
+    "ctaBody": "Soumettez-nous vos plans. Nos ingénieurs évalueront la faisabilité et les besoins en acier de votre projet.",
+    "ctaButton": "Démarrer un projet"
+  },
+  "LanguageSwitcher": {
+    "label": "Langue",
+    "fr": "Français",
+    "en": "Anglais",
+    "zh": "Chinois"
+  }
+}

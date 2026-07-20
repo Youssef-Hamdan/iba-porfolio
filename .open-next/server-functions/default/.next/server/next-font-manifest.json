@@ -1,24 +1,21 @@
 {
   "app": {
-    "[project]/app/_not-found/page": [
+    "[project]/app/[locale]/about/page": [
       "static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2"
     ],
-    "[project]/app/about/page": [
+    "[project]/app/[locale]/contact/page": [
       "static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2"
     ],
-    "[project]/app/contact/page": [
+    "[project]/app/[locale]/page": [
       "static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2"
     ],
-    "[project]/app/page": [
+    "[project]/app/[locale]/products/page": [
       "static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2"
     ],
-    "[project]/app/products/page": [
+    "[project]/app/[locale]/projects/page": [
       "static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2"
     ],
-    "[project]/app/projects/page": [
-      "static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2"
-    ],
-    "[project]/app/quotation/page": [
+    "[project]/app/[locale]/quotation/page": [
       "static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2"
     ]
   },

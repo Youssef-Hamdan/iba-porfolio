@@ -111,6 +111,9 @@
       }
     },
     "outputFileTracingRoot": "/Users/youssefhamdan/Documents/nextjs/www/iba-portoflio",
+    "allowedDevOrigins": [
+      "192.168.3.135"
+    ],
     "cacheComponents": false,
     "cacheLife": {
       "default": {
@@ -310,6 +313,9 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
     "turbopack": {
+      "resolveAlias": {
+        "next-intl/config": "./i18n/request.ts"
+      },
       "root": "/Users/youssefhamdan/Documents/nextjs/www/iba-portoflio"
     },
     "distDirRoot": ".next"

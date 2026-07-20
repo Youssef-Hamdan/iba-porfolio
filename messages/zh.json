@@ -1,0 +1,463 @@
+{
+  "Meta": {
+    "siteName": "International Business Alliance",
+    "siteDescription": "我们连接政府、产业与资本，共建富有韧性、透明且可持续的全球经济。",
+    "brandFull": "International Business Alliance — 国际商务联盟",
+    "home": {
+      "title": "International Business Alliance",
+      "description": "我们连接政府、产业与资本，共建富有韧性、透明且可持续的全球经济。"
+    },
+    "about": {
+      "title": "关于我们",
+      "description": "国际商务联盟的使命、愿景与价值观：可持续供应、可靠合作与服务于建筑业的道德治理。"
+    },
+    "products": {
+      "title": "产品目录",
+      "description": "优质建筑材料：水泥、钢材、油漆、铺路石与工具。国际商务联盟为刚果（金）工地提供供应保障。"
+    },
+    "projects": {
+      "title": "我们的项目",
+      "description": "国际商务联盟项目组合：内河基础设施、住宅综合体、River Tower与工业项目。为刚果（金）大型工地提供建筑材料。"
+    },
+    "quotation": {
+      "title": "报价申请",
+      "description": "申请建筑材料报价。国际商务联盟商务团队将在24个工作小时内根据您的工地需求提供报价。"
+    },
+    "contact": {
+      "title": "联系我们",
+      "description": "联系国际商务联盟：信息咨询、合作洽谈或一般问询。将在24个工作小时内回复。"
+    }
+  },
+  "Nav": {
+    "home": "首页",
+    "about": "关于我们",
+    "projects": "项目",
+    "products": "产品",
+    "quotation": "报价",
+    "contact": "联系我们",
+    "ariaMain": "主导航",
+    "ariaMobile": "移动导航",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "brandAria": "国际商务联盟",
+    "homeAria": "国际商务联盟 — 首页"
+  },
+  "Footer": {
+    "heroImageAlt": "工地与基础设施",
+    "ctaHeadlineBefore": "战略联盟，共创",
+    "ctaHeadlineAccent": "可持续增长",
+    "ctaHeadlineAfter": "。",
+    "socialHeading": "社交媒体",
+    "contactHeading": "联系方式",
+    "addressLabel": "地址",
+    "phoneLabel": "电话",
+    "emailLabel": "电子邮箱",
+    "copyright": "© {year} 国际商务联盟。保留所有权利。",
+    "backToTop": "回到顶部",
+    "whatsappAria": "WhatsApp",
+    "instagramAria": "Instagram",
+    "tiktokAria": "TikTok",
+    "logoAlt": "国际商务联盟"
+  },
+  "HomeHero": {
+    "titlePart1": "力量",
+    "titlePart2": "铸就",
+    "titlePart3": "未来。",
+    "imageAlt": "国际商务联盟",
+    "subtitle": "我们以可持续的建筑解决方案，助力城市、企业与社区发展，共建更加坚实繁荣的未来。",
+    "ctaVision": "我们的愿景",
+    "ctaProducts": "了解产品"
+  },
+  "HomeImpact": {
+    "badge": "数据一览",
+    "kicker": "01 — 我们的网络",
+    "titleBefore": "布局与",
+    "titleAccent": "实力",
+    "stats": {
+      "partners": "合作伙伴",
+      "stores": "门店",
+      "projects": "项目",
+      "employees": "员工"
+    },
+    "pillars": {
+      "innovation": {
+        "title": "创新与国际标准",
+        "titleBefore": "创新与",
+        "titleAccent": "国际标准",
+        "description": "我们持续优化生产工艺和产品体系，为市场提供高性能、可持续且符合客户需求的解决方案。"
+      },
+      "supply": {
+        "title": "现代化仓储与高效物流",
+        "titleBefore": "现代化仓储与",
+        "titleAccent": "高效物流",
+        "description": "我们拥有现代化的仓储设施和严格的库存管理体系，确保各类建筑材料长期稳定供应。我们提供快速配送服务，保证产品在最佳条件下储存，并高效满足您的各类工程项目需求。"
+      },
+      "trade": {
+        "title": "商业与合作",
+        "titleBefore": "商业与",
+        "titleAccent": "合作",
+        "description": "我们与优秀的供应商和合作伙伴一起合作，共同推动建筑行业的发展，让建筑行业更加高效、更加环保。"
+      }
+    }
+  },
+  "HomeSites": {
+    "badge": "我们的网络",
+    "kicker": "本地布局",
+    "titleBefore": "遍布",
+    "titleAccent": "首都的门店",
+    "manager": "经理",
+    "phone": "电话",
+    "address": "地址",
+    "viewOnMap": "在地图上查看",
+    "mapShort": "地图"
+  },
+  "HomePartners": {
+    "badge": "我们的网络",
+    "kicker": "03 — 合作伙伴与供应商",
+    "titleBefore": "卓越",
+    "titleAccent": "材料",
+    "subtitle": "经全球领先品牌严格甄选的产品：",
+    "captions": {
+      "materials": "材料",
+      "paints": "油漆与饰面",
+      "mortars": "砂浆与解决方案",
+      "distribution": "分销"
+    },
+    "srPartners": "合作伙伴"
+  },
+  "HomeCatalog": {
+    "badge": "我们的目录",
+    "kicker": "04 — 网络与目录",
+    "titleBefore": "原",
+    "titleAccent": "材料。",
+    "explore": "探索",
+    "ctaBadge": "我们的成果",
+    "ctaTitle": "建筑雄心。",
+    "ctaDescription": "精选项目，展现我们的技术实力及对基础设施的切实影响。",
+    "ctaButton": "查看项目",
+    "ctaImageAlt": "标志性项目",
+    "collections": {
+      "acierFer": {
+        "title": "钢材与钢筋",
+        "desc": "用于坚固结构的钢板、型材与钢管。"
+      },
+      "ciments": {
+        "title": "水泥",
+        "desc": "水硬性胶凝材料与袋装水泥。"
+      },
+      "beton": {
+        "title": "预拌混凝土",
+        "desc": "预拌混凝土直接送达您的工地。"
+      },
+      "brique": {
+        "title": "水泥砖",
+        "desc": "高品质实心与空心建筑砖。"
+      },
+      "peinture": {
+        "title": "油漆",
+        "desc": "用于持久饰面的油漆与腻子。"
+      },
+      "bois": {
+        "title": "木材",
+        "desc": "用于木结构、模板与木工的木材。"
+      },
+      "outillage": {
+        "title": "JKL工具五金",
+        "desc": "专业工具与通用五金。"
+      },
+      "plafonds": {
+        "title": "天花板",
+        "desc": "吊顶与隔热完整解决方案。"
+      },
+      "panneaux": {
+        "title": "夹心板",
+        "desc": "工业屋顶与外墙用隔热夹心板。"
+      },
+      "pave": {
+        "title": "铺路石",
+        "desc": "用于室外铺装的自锁铺路石。"
+      },
+      "transport": {
+        "title": "运输服务",
+        "desc": "所有材料的快速安全配送。"
+      }
+    }
+  },
+  "HomePillars": {
+    "badge": "我们的支柱",
+    "kicker": "02 — 战略方向",
+    "titleBefore": "支撑",
+    "titleAccent": "我们行动的力量",
+    "intro": "四大互补支柱，以严谨态度与长远视野，将雄心转化为具体项目。",
+    "tablistAria": "战略支柱",
+    "pillarLabel": "支柱 {current} / {total}",
+    "floatingBadge": "整体愿景",
+    "items": {
+      "partnerships": {
+        "title": "战略合作",
+        "description": "我们与金融机构、出资方及产业伙伴建立持久联盟，保障供应链、共享专业能力，并加速服务国家与区域发展的大型项目。"
+      },
+      "growth": {
+        "title": "经济增长",
+        "description": "我们的举措旨在强化本地产业链、创造优质就业，并在投资所在区域支持可衡量、均衡的增长，连接生产、分销与市场需求。"
+      },
+      "infrastructure": {
+        "title": "基础设施",
+        "description": "我们助力韧性基础设施建设——从主体结构到城市配套——恪守技术规范、约定工期以及大型工地的质量与安全要求。"
+      },
+      "innovation": {
+        "title": "创新",
+        "description": "我们整合材料方案、工艺与治理模式，提升工程性能、可追溯性与可持续性，并始终对齐国际行业标准。"
+      }
+    }
+  },
+  "About": {
+    "pageTitle": "关于我们",
+    "pageIntro": "国际商务联盟 — 以材料、合作与标准服务可持续建筑。",
+    "mission": {
+      "waterNumber": "01",
+      "badge": "我们的使命",
+      "kicker": "01 — 我们的使命",
+      "headline": "供应、支持并",
+      "headlineAccent": "可持续地建设。",
+      "intro": "为专业人士与个人提供优质材料，保障其建筑项目成功。我们致力于为每个工地提供适配方案、高效服务与贴近式支持。",
+      "narrativeTitle": "铸就未来的力量",
+      "narrativeLead": "我们是铸就未来的力量——一种持久且具有全球视野的信任。",
+      "narrativeBody": "我们不止于供应材料。我们陪伴合作伙伴与客户实现可靠、持久的项目，倡导透明、安全与质量。",
+      "international": {
+        "title": "国际视野",
+        "body": "国际商务联盟与国内外合作伙伴及供应商协作，并遵循国际标准，从而积极融入国际建筑材料市场。"
+      }
+    },
+    "vision": {
+      "waterNumber": "02",
+      "badge": "我们的愿景",
+      "kicker": "02 — 我们的愿景",
+      "headline": "成为",
+      "headlineAccent": "建筑领域的标杆伙伴。",
+      "intro": "愿每个项目——无论大小——都建立在坚实材料与可靠供应之上。我们立志成为行业关键力量，积极推动城市发展与基础设施现代化。"
+    },
+    "focusAreas": {
+      "waterNumber": "03",
+      "badge": "我们的影响",
+      "kicker": "03 — 行动方向",
+      "headline": "以",
+      "headlineAccent": "严谨与审慎行动",
+      "intro": "三大互补支柱，将我们的使命落实为实地成果。",
+      "cards": {
+        "impact": {
+          "title": "精准影响",
+          "body": "国际商务联盟致力于通过供应优质材料、推动基础设施发展并参与本地与区域经济增长，持续改善建筑行业。"
+        },
+        "projects": {
+          "title": "我们的项目",
+          "body": "一系列工地与合作案例，展现我们交付成果、恪守规范并履行运营承诺的能力。",
+          "ctaLabel": "探索"
+        },
+        "governance": {
+          "title": "道德治理",
+          "body": "国际商务联盟实行透明负责任的管理，以诚信、尊重规范、合法合规以及对合作伙伴、员工与客户的承诺为基础。"
+        }
+      }
+    },
+    "charter": {
+      "waterNumber": "04",
+      "badge": "我们的章程",
+      "kicker": "04 — 价值观与原则",
+      "headline": "我们的",
+      "headlineAccent": "理念",
+      "intro": "在国际商务联盟，我们相信建筑行业发展建立在负责任的管理、坚实的合作与可持续愿景之上。我们的方法既重视本地专长，也对齐国际标准。",
+      "principles": {
+        "integrity": "诚信与透明",
+        "sustainability": "可持续发展",
+        "innovation": "协作创新",
+        "social": "社会责任"
+      }
+    }
+  },
+  "Products": {
+    "heroBadge": "产品",
+    "heroTitle": "产品",
+    "heroTitleAccent": "目录",
+    "heroDescription": "严格甄选优质建筑材料。从主体结构到专业精装修，我们以国际标准为您的工地提供全面支持。",
+    "categoriesHeading": "产品类别",
+    "categoriesLabel": "类别",
+    "allProducts": "所有产品",
+    "fullInventory": "完整库存",
+    "fullInventoryDesc": "浏览我们库存中的全部产品。",
+    "filterAria": "按类别筛选",
+    "closePreview": "关闭预览",
+    "close": "关闭",
+    "previousProduct": "上一个产品",
+    "nextProduct": "下一个产品",
+    "expand": "放大",
+    "enlargeImage": "放大图片：{name}",
+    "openZoom": "打开放大视图",
+    "previousPage": "上一页",
+    "nextPage": "下一页",
+    "noProducts": "未找到产品",
+    "noProductsHint": "请选择其他类别。",
+    "ctaTitleBefore": "批发订单与",
+    "ctaTitleAccent": "报价",
+    "ctaDescription": "工地需要大批量供应？联系我们的商务团队获取定制报价并安排物流。",
+    "ctaButton": "申请报价",
+    "categories": {
+      "acier-fer": {
+        "label": "钢材与钢筋",
+        "description": "钢筋、钉子、钢板、型材与钢管，用于坚固结构。"
+      },
+      "ciment": {
+        "label": "水泥",
+        "description": "用于主体结构的水硬性胶凝材料与袋装水泥。"
+      },
+      "ciment-colle": {
+        "label": "瓷砖胶和石膏粉",
+        "description": "用于铺砖与饰面的瓷砖胶与粘结砂浆。"
+      },
+      "produits-sika": {
+        "label": "西卡产品",
+        "description": "西卡产品：锚固、接缝、涂料与技术解决方案。"
+      },
+      "beton": {
+        "label": "预拌混凝土",
+        "description": "预拌混凝土直接送达您的工地。"
+      },
+      "brique": {
+        "label": "水泥砖",
+        "description": "高品质实心与空心建筑砖。"
+      },
+      "peinture": {
+        "label": "油漆",
+        "description": "水性漆、油漆与防锈处理产品。"
+      },
+      "bois": {
+        "label": "木材",
+        "description": "用于木结构、模板、木工与人造板的木材。"
+      },
+      "outillage-quincaillerie": {
+        "label": "JKL工具五金",
+        "description": "切削工具、车间工具与通用五金。"
+      },
+      "plafonds": {
+        "label": "天花板",
+        "description": "吊顶、石膏与隔热完整解决方案。"
+      },
+      "panneaux-sandwich": {
+        "label": "夹心板",
+        "description": "工业屋顶与外墙用隔热夹心板。"
+      },
+      "pave": {
+        "label": "铺路石",
+        "description": "用于室外铺装的自锁铺路石。"
+      }
+    },
+    "subcategories": {
+      "fer-a-beton": "钢筋",
+      "clous": "钉子",
+      "acier": "钢材",
+      "peinture-a-eau": "水性漆",
+      "peinture-a-huile": "油漆",
+      "antirouille": "防锈漆"
+    }
+  },
+  "Contact": {
+    "badge": "联系表单",
+    "titleBefore": "联系",
+    "titleAccent": "我们",
+    "intro": "有问题、项目或合作意向？请描述您的需求：我们的团队将在24个工作小时内回复。",
+    "successTitle": "消息已发送",
+    "successBody": "感谢您的留言。我们将尽快与您联系。",
+    "newMessage": "新消息 →",
+    "sectionCoords": "联系方式",
+    "sectionMessage": "您的留言",
+    "nameLabel": "全名 *",
+    "namePlaceholder": "张三",
+    "companyLabel": "公司 / 机构",
+    "companyPlaceholder": "公司或机构（可选）",
+    "emailLabel": "电子邮箱 *",
+    "emailPlaceholder": "you@example.com",
+    "phoneLabel": "电话 *",
+    "phonePlaceholder": "+243 …",
+    "messageLabel": "留言 *（至少10个字符）",
+    "messagePlaceholder": "请描述您的需求、背景以及最佳联系方式…",
+    "quoteLink": "需要材料报价？",
+    "submit": "发送消息",
+    "submitting": "发送中…",
+    "fixFields": "请修正标出的字段。",
+    "sendFailed": "暂时无法发送。请稍后再试。",
+    "networkError": "连接问题。请检查网络后重试。",
+    "asideDirect": "快捷",
+    "asideDirectBody": "如需特定产品报价，请使用报价表单。",
+    "asideQuoteCta": "申请报价",
+    "asideDelay": "时效",
+    "asideDelayBody": "收到后目标回复时间为24个工作小时内。",
+    "asideDelayHighlight": "24个工作小时",
+    "phoneCtaTitleBefore": "更愿意",
+    "phoneCtaTitleAccent": "电话联系",
+    "phoneCtaTitleAfter": "？",
+    "phoneCtaBody": "请致电",
+    "backHome": "返回首页"
+  },
+  "Quotation": {
+    "badge": "报价",
+    "titleBefore": "申请",
+    "titleAccent": "报价",
+    "intro": "请在表单中描述您的材料需求。我们的技术团队将尽快提供准确报价。",
+    "successTitle": "申请已提交",
+    "successBody": "您的申请已发送至我们的工程报价部门。商务工程师将在24个工作小时内与您联系。",
+    "newQuote": "新报价 →",
+    "sectionId": "客户信息",
+    "sectionRequest": "您的需求",
+    "nameLabel": "全名 *",
+    "namePlaceholder": "张三",
+    "companyLabel": "公司 / 项目",
+    "companyPlaceholder": "建筑公司",
+    "emailLabel": "电子邮箱 *",
+    "emailPlaceholder": "contact@company.com",
+    "phoneLabel": "电话 *",
+    "phonePlaceholder": "+243 ...",
+    "requestPlaceholder": "请自由描述您的需求：材料类型、大致数量、型号、尺寸等。",
+    "submit": "提交申请",
+    "submitting": "提交中...",
+    "fixFields": "请修正标出的字段。",
+    "sendFailed": "暂时无法发送。请稍后再试。",
+    "networkError": "连接问题。请检查网络后重试。",
+    "asideJourney": "流程",
+    "asideJourneyBody": "两步：填写联系方式，再描述材料需求。",
+    "step1Title": "身份信息",
+    "step1Desc": "联系方式与公司",
+    "step2Title": "需求",
+    "step2Desc": "以自由文本填写产品与数量",
+    "asideResponse": "完整申请收到后，目标回复时间为24个工作小时内。",
+    "ctaTitleBefore": "发送前有",
+    "ctaTitleAccent": "疑问",
+    "ctaTitleAfter": "？",
+    "ctaBody": "在最终提交申请前，我们的团队可为您提供材料与交期方面的指导。",
+    "ctaButton": "联系国际商务联盟"
+  },
+  "Projects": {
+    "badge": "项目",
+    "titleBefore": "我们的",
+    "titleAccent": "成果",
+    "intro": "探索我们的基础设施项目组合。从土木工程到高精度钢结构，我们筑就明日之基。",
+    "enlargeProject": "放大项目图片：{title}",
+    "openZoom": "打开放大视图",
+    "clickToEnlarge": "点击放大",
+    "objectivesHeading": "目标与愿景",
+    "locationLabel": "位置",
+    "closeGallery": "关闭图库",
+    "viewLabel": "视图 {current} / {total}",
+    "viewButton": "视图 {n}",
+    "ctaTitleBefore": "准备好建设",
+    "ctaTitleAccent": "未来",
+    "ctaTitleAfter": "？",
+    "ctaBody": "向我们提交方案。我们的工程师将评估可行性及项目钢材需求。",
+    "ctaButton": "启动项目"
+  },
+  "LanguageSwitcher": {
+    "label": "语言",
+    "fr": "法语",
+    "en": "英语",
+    "zh": "中文"
+  }
+}

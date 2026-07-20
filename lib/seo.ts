@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { routing, type Locale } from "@/i18n/routing";
 import { siteConfig } from "@/lib/site-config";
 
 type PageSeoInput = {
@@ -6,10 +7,38 @@ type PageSeoInput = {
   description: string;
   path?: string;
   noIndex?: boolean;
+  locale?: string;
+};
+
+const ogLocaleByLang: Record<Locale, string> = {
+  fr: "fr_FR",
+  en: "en_US",
+  zh: "zh_CN",
 };
 
 function absoluteUrl(path: string) {
   return new URL(path, siteConfig.url).toString();
+}
+
+/** Locale-prefixed path (`as-needed`: default locale has no prefix). */
+export function localizedHref(path: string, locale: string): string {
+  const normalized = path === "/" ? "/" : path.startsWith("/") ? path : `/${path}`;
+  if (locale === routing.defaultLocale) {
+    return normalized;
+  }
+  if (normalized === "/") {
+    return `/${locale}`;
+  }
+  return `/${locale}${normalized}`;
+}
+
+function languageAlternates(path: string): Record<string, string> {
+  const languages: Record<string, string> = {};
+  for (const locale of routing.locales) {
+    languages[locale] = absoluteUrl(localizedHref(path, locale));
+  }
+  languages["x-default"] = absoluteUrl(localizedHref(path, routing.defaultLocale));
+  return languages;
 }
 
 export function createPageMetadata({
@@ -17,19 +46,23 @@ export function createPageMetadata({
   description,
   path = "/",
   noIndex = false,
+  locale = routing.defaultLocale,
 }: PageSeoInput): Metadata {
-  const canonical = absoluteUrl(path);
+  const canonical = absoluteUrl(localizedHref(path, locale));
   const ogImage = absoluteUrl(siteConfig.ogImagePath);
+  const ogLocale =
+    ogLocaleByLang[locale as Locale] ?? siteConfig.locale;
 
   return {
     title,
     description,
     alternates: {
       canonical,
+      languages: languageAlternates(path),
     },
     openGraph: {
       type: "website",
-      locale: siteConfig.locale,
+      locale: ogLocale,
       url: canonical,
       siteName: siteConfig.name,
       title,

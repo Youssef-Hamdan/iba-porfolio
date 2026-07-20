@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Marquee } from "@/components/ui/marquee";
 import { cn } from "@/lib/utils";
 
@@ -7,8 +8,7 @@ export type CatalogPartner = {
   name: string;
   /** Official logo URL — optional; wordmark is shown when omitted */
   img: string | null;
-  /** Short line under the name (optional) */
-  caption?: string;
+  captionKey: "materials" | "paints" | "mortars" | "distribution";
 };
 
 /** Logos locaux (`public/images/partners/`) — encoder les espaces dans les noms de fichier. */
@@ -20,34 +20,42 @@ const partners: CatalogPartner[] = [
   {
     name: "BBC",
     img: partnerLogo("BBC logo grey.png"),
-    caption: "Matériaux",
+    captionKey: "materials",
   },
   {
     name: "Eagle Color",
     img: partnerLogo("eagle logo grey.png"),
-    caption: "Peintures & finitions",
+    captionKey: "paints",
   },
   {
     name: "Sika",
     img: partnerLogo("Logo_Sika.png"),
-    caption: "Mortiers & solutions",
+    captionKey: "mortars",
   },
   {
     name: "Famico",
     img: partnerLogo("fameco logo grey.webp"),
-    caption: "Distribution",
+    captionKey: "distribution",
   },
   {
     name: "JKL",
     img: partnerLogo("JKL Logo grey-01.png"),
-    caption: "Distribution",
+    captionKey: "distribution",
   },
 ];
 
 /** Repeat sequence so the strip feels full before the infinite clone. */
 const partnersTrack = [...partners, ...partners, ...partners];
 
-function PartnerLogoBlock({ name, img, caption }: CatalogPartner) {
+function PartnerLogoBlock({
+  name,
+  img,
+  caption,
+}: {
+  name: string;
+  img: string | null;
+  caption: string;
+}) {
   return (
     <div
       className={cn(
@@ -63,22 +71,18 @@ function PartnerLogoBlock({ name, img, caption }: CatalogPartner) {
             alt={name}
             className="max-h-16 w-auto max-w-[10rem] object-contain object-center opacity-90 drop-shadow-[0_2px_12px_rgba(0,0,0,0.2)] transition-[transform,opacity] duration-300 ease-out group-hover/logo:scale-105 group-hover/logo:opacity-100 sm:max-h-24 sm:max-w-[14rem] md:max-h-32 md:max-w-[20rem] lg:max-h-36 lg:max-w-[22rem]"
           />
-          {caption ? (
-            <p className="text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
-              {caption}
-            </p>
-          ) : null}
+          <p className="text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
+            {caption}
+          </p>
         </>
       ) : (
         <>
           <p className="text-center text-sm font-extrabold uppercase leading-tight tracking-[0.12em] text-white">
             {name}
           </p>
-          {caption ? (
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
-              {caption}
-            </p>
-          ) : null}
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
+            {caption}
+          </p>
         </>
       )}
     </div>
@@ -94,16 +98,24 @@ function PartnerSeparator() {
   );
 }
 
-function PartnerMarqueeGroup({ partner }: { partner: CatalogPartner }) {
+function PartnerMarqueeGroup({
+  partner,
+  caption,
+}: {
+  partner: CatalogPartner;
+  caption: string;
+}) {
   return (
     <div className="flex shrink-0 items-center">
-      <PartnerLogoBlock {...partner} />
+      <PartnerLogoBlock name={partner.name} img={partner.img} caption={caption} />
       <PartnerSeparator />
     </div>
   );
 }
 
 export function CatalogPartnerMarquee() {
+  const t = useTranslations("HomePartners");
+
   return (
     <div className="w-full min-w-0">
       <div className="mx-auto mb-6 max-w-[90rem] px-5 sm:px-8 md:mb-10 md:px-16 lg:px-20">
@@ -112,23 +124,23 @@ export function CatalogPartnerMarquee() {
             03
           </div>
           <span className="inline-flex w-fit items-center rounded-full border border-white/25 bg-white/10 px-5 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-sm">
-            Notre réseau
+            {t("badge")}
           </span>
           <div className="flex items-start gap-3">
             <span className="mt-2 h-[2px] w-8 shrink-0 bg-iba-orange" aria-hidden />
             <p className="text-xs font-bold uppercase tracking-widest text-white/70">
-              03 — Partenaires &amp; fournisseurs
+              {t("kicker")}
             </p>
           </div>
           <h2
             id="partners-heading"
             className="text-4xl font-extrabold uppercase leading-[1.08] tracking-tight text-white md:text-5xl lg:text-6xl"
           >
-            L&apos;excellence des{" "}
-            <span className="text-iba-sky">matériaux</span>
+            {t("titleBefore")}{" "}
+            <span className="text-iba-sky">{t("titleAccent")}</span>
           </h2>
           <p className="max-w-xl text-lg font-medium leading-relaxed text-white/80">
-            Une sélection rigoureuse approuvée par les leaders mondiaux&nbsp;:
+            {t("subtitle")}
           </p>
         </div>
       </div>
@@ -144,12 +156,16 @@ export function CatalogPartnerMarquee() {
           pauseOnHover
         >
           {partnersTrack.map((partner, i) => (
-            <PartnerMarqueeGroup key={`${partner.name}-${i}`} partner={partner} />
+            <PartnerMarqueeGroup
+              key={`${partner.name}-${i}`}
+              partner={partner}
+              caption={t(`captions.${partner.captionKey}`)}
+            />
           ))}
         </Marquee>
 
         <p className="sr-only">
-          Partenaires&nbsp;: {partners.map((p) => p.name).join(", ")}
+          {t("srPartners")}&nbsp;: {partners.map((p) => p.name).join(", ")}
         </p>
       </div>
     </div>

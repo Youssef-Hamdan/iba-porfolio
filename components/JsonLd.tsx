@@ -1,14 +1,24 @@
+import { getLocale } from "next-intl/server";
 import { siteConfig } from "@/lib/site-config";
 
 function absoluteUrl(path: string) {
   return new URL(path, siteConfig.url).toString();
 }
 
-export function JsonLd() {
+const inLanguageByLocale: Record<string, string> = {
+  fr: "fr",
+  en: "en",
+  zh: "zh-CN",
+};
+
+export async function JsonLd() {
+  const locale = await getLocale();
+
   const organization = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: siteConfig.name,
+    alternateName: "国际商务联盟",
     url: siteConfig.url,
     logo: absoluteUrl(siteConfig.logoPath),
     email: siteConfig.email,
@@ -26,7 +36,7 @@ export function JsonLd() {
     "@type": "WebSite",
     name: siteConfig.name,
     url: siteConfig.url,
-    inLanguage: "fr",
+    inLanguage: inLanguageByLocale[locale] ?? "fr",
     publisher: {
       "@type": "Organization",
       name: siteConfig.name,

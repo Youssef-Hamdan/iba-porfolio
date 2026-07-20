@@ -2,13 +2,15 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { SectionWave } from "@/components/SectionWave";
+import { Link } from "@/i18n/navigation";
 
 export function HomeHero() {
+  const t = useTranslations("HomeHero");
   const heroRef = useRef(null);
-  
+
   // Parallax Setup
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -26,7 +28,7 @@ export function HomeHero() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2, // Délai entre l'apparition de chaque élément
+        staggerChildren: 0.2,
         delayChildren: 0.1,
       },
     },
@@ -44,33 +46,26 @@ export function HomeHero() {
   return (
     <section
       ref={heroRef}
-      // using only 100dvh natively fixes the iOS Safari jumping bug
       className="relative flex min-h-[100dvh] w-full items-center justify-start overflow-hidden bg-iba-sky text-white"
     >
-      {/* 1. ANIMATED PARALLAX BACKGROUND */}
       <motion.div
-        // Added transform-gpu and backface-visibility-hidden to prevent flickering
         className="absolute inset-0 z-0 h-[115%] w-full transform-gpu overflow-hidden backface-hidden will-change-transform"
-        // Adding z: 0 forces Framer Motion to use translate3d(), locking it on the GPU
         style={{ y: backgroundY, z: 0 }}
       >
         <Image
           src="/images/hero.webp"
-          alt="International Business Alliance"
+          alt={t("imageAlt")}
           fill
           priority
           sizes="100vw"
-          // Added transform-gpu here as well just to be safe
           className="object-cover transform-gpu"
         />
       </motion.div>
 
-      <div className="absolute inset-0 z-[1] bg-gradient-to-tr from-iba-navy via-iba-navy/30 to-transparent mix-blend-multiply" />    
-      
-      {/* 2. MAIN CONTENT WITH STAGGERED FADE-IN */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-tr from-iba-navy via-iba-navy/30 to-transparent mix-blend-multiply" />
+
       <motion.div
         style={{ opacity: contentOpacity }}
-        // Adjusted top padding for mobile to ensure it doesn't get pushed too far down on small screens like iPhone SE
         className="relative z-10 mx-auto w-full max-w-[90rem] px-5 pt-16 text-left will-change-[opacity] sm:px-8 sm:pt-24 md:px-16 lg:px-20 lg:pt-28"
       >
         <motion.div
@@ -79,49 +74,39 @@ export function HomeHero() {
           animate="visible"
           className="flex flex-col items-start"
         >
-          {/* Typography */}
-          <motion.h1 
+          <motion.h1
             variants={itemVariants}
-            // Shrunk mobile font slightly and tightened leading to prevent awkward text wrapping
             className="mb-5 text-[2.5rem] font-extrabold leading-[1.05] tracking-tighter drop-shadow-md sm:mb-6 sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            <span className="text-iba-sky">La Force </span><br className="hidden sm:block" />
-            <span className="text-white">
-              qui bâtit
-            </span>{" "}
-            <span className="text-iba-sky">l&apos;avenir.</span>
+            <span className="text-iba-sky">{t("titlePart1")} </span>
+            <br className="hidden sm:block" />
+            <span className="text-white">{t("titlePart2")}</span>{" "}
+            <span className="text-iba-sky">{t("titlePart3")}</span>
           </motion.h1>
 
-          {/* Subtitle */}
-          <motion.p 
+          <motion.p
             variants={itemVariants}
-            // Adjusted mobile text size and margin
             className="mb-8 max-w-2xl text-base leading-relaxed text-gray-200 sm:mb-10 sm:text-lg md:text-xl"
           >
-            Nous accompagnons le développement des villes, des entreprises et des communautés grâce à des
-            solutions de construction durables, contribuant à un avenir plus solide et prospère.
+            {t("subtitle")}
           </motion.p>
 
-          {/* Action Buttons */}
-          <motion.div 
-            variants={itemVariants} 
-            // Changed gap-5 to gap-3 on mobile. Buttons now correctly span 100% width on mobile and snap to auto on SM+
+          <motion.div
+            variants={itemVariants}
             className="flex w-fit flex-col gap-3 sm:w-auto sm:flex-row sm:justify-start sm:gap-5"
           >
             <Link
               href="/about"
-              // Added flex, items-center, and justify-center so text centers nicely on mobile when button is 100% wide
               className="group relative flex w-fit items-center justify-center overflow-hidden rounded-full bg-iba-orange px-8 py-3.5 text-sm font-semibold text-white shadow-[0_0_30px_rgba(255,157,0,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_50px_rgba(255,157,0,0.6)] sm:w-auto sm:py-4 sm:text-base"
             >
-              <span className="relative z-10">Notre Vision</span>
+              <span className="relative z-10">{t("ctaVision")}</span>
               <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
             </Link>
             <Link
               href="/products"
-              // Same flex and alignment fixes applied here
               className="flex w-fit items-center justify-center rounded-full border border-white/30 bg-white/5 px-8 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all hover:bg-white/15 hover:border-white/50 sm:w-auto sm:py-4 sm:text-base"
             >
-              Découvrir les Produits
+              {t("ctaProducts")}
             </Link>
           </motion.div>
         </motion.div>
